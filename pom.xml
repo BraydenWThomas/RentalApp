@@ -40,6 +40,18 @@
 			<artifactId>spring-security-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+		
+		<dependency>
+		    <groupId>org.mongodb</groupId>
+		    <artifactId>mongodb-driver-core</artifactId>
+		    <version>4.10.2</version> <!-- Update to the same version as mongodb-driver-sync -->
+		</dependency>
+		<dependency>
+		    <groupId>org.mongodb</groupId>
+		    <artifactId>mongodb-driver-sync</artifactId>
+		    <version>4.10.2</version> <!-- Update to the same version as mongodb-driver-core -->
+		</dependency>
+		
 	</dependencies>
 
 	<build>
