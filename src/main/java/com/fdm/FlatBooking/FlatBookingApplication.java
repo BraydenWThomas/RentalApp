@@ -27,7 +27,7 @@ public class FlatBookingApplication implements CommandLineRunner{
     }
 
 	private void createUser() {
-        userRepository.save(new User("sjer", "samantha jermyn", 20, "manager"));
+//        userRepository.save(new User("sjer", "samantha jermyn", 20, "manager"));
 
 		
 	}
