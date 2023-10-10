@@ -1,6 +1,6 @@
 package com.fdm.FlatBooking.Model;
 
 public class ContactInformation {
-	private String phone;
+	private int mobile;
 	private String email;
 }
