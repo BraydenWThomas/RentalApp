@@ -8,6 +8,7 @@ public class Address {
 	private String state;
 	private String postcode;
 	private GeoLocation location;
+	
 	public String getUnit() {
 		return unit;
 	}

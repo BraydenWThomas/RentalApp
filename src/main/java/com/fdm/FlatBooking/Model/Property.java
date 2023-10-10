@@ -1,6 +1,6 @@
 package com.fdm.FlatBooking.Model;
 
-import java.util.List;
+import java.util.ArrayList;
 
 import org.bson.BsonDateTime;
 import org.bson.types.Binary;
@@ -23,23 +23,19 @@ public class Property {
 	private String propertyDescription;
 	private PropertyDetails details;
 	
-	private List<Binary> images;
+	private ArrayList<Binary> images;
 	
 	
-	private List<String> facilities;
+	private ArrayList<String> facilities;
 	
 	private BsonDateTime latestUpdate;
 	private boolean currentlyAvailable;
 	
 	
-	
-	
-	
-	public Property(int propertyId, String propertyType, int rentalPrice, int bondFee, User landlord, User leasee,
-			Address address, String propertyDescription, PropertyDetails details, List<Binary> images,
-			List<String> facilities, BsonDateTime latestUpdate, boolean currentlyAvailable) {
+	public Property(String propertyType, int rentalPrice, int bondFee, User landlord, User leasee,
+			Address address, String propertyDescription, PropertyDetails details, ArrayList<Binary> images,
+			ArrayList<String> facilities, BsonDateTime latestUpdate, boolean currentlyAvailable) {
 		super();
-		this.propertyId = propertyId;
 		this.propertyType = propertyType;
 		this.rentalPrice = rentalPrice;
 		this.bondFee = bondFee;
@@ -53,6 +49,7 @@ public class Property {
 		this.latestUpdate = latestUpdate;
 		this.currentlyAvailable = currentlyAvailable;
 	}
+	
 	public int getPropertyId() {
 		return propertyId;
 	}
@@ -80,10 +77,10 @@ public class Property {
 	public PropertyDetails getDetails() {
 		return details;
 	}
-	public List<Binary> getImages() {
+	public ArrayList<Binary> getImages() {
 		return images;
 	}
-	public List<String> getFacilities() {
+	public ArrayList<String> getFacilities() {
 		return facilities;
 	}
 	public BsonDateTime getLatestUpdate() {
@@ -119,10 +116,10 @@ public class Property {
 	public void setDetails(PropertyDetails details) {
 		this.details = details;
 	}
-	public void setImages(List<Binary> images) {
+	public void setImages(ArrayList<Binary> images) {
 		this.images = images;
 	}
-	public void setFacilities(List<String> facilities) {
+	public void setFacilities(ArrayList<String> facilities) {
 		this.facilities = facilities;
 	}
 	public void setLatestUpdate(BsonDateTime latestUpdate) {
