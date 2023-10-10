@@ -13,7 +13,6 @@ import org.springframework.data.mongodb.repository.config.EnableMongoRepositorie
 
 import com.fdm.FlatBooking.Model.Address;
 import com.fdm.FlatBooking.Model.ContactInformation;
-import com.fdm.FlatBooking.Model.DigitalWallet;
 import com.fdm.FlatBooking.Model.GeoLocation;
 import com.fdm.FlatBooking.Model.Property;
 import com.fdm.FlatBooking.Model.PropertyDetails;
@@ -50,7 +49,7 @@ public class FlatBookingApplication implements CommandLineRunner{
 	private void createUser() {
 //        userRepository.save(new User("sjer", "samantha jermyn", 20, "manager"));
 //		User user = new User("Samantha", "Jermyn", "password", "Female", new BsonDateTime(20000000), "Manager", "123 Road Street", true, new ArrayList<Property>() , new ArrayList<Transaction>(), new DigitalWallet("398761", 1000000), new ContactInformation(012375983, "sam@jermyn.com"), new ArrayList<PropertySearch>());
-		User user = new User("Samantha", "Jerrmyn", "password", "Female", new BsonDateTime(20000000), "Manager", "123 Road Street", true, new ArrayList<String>(), new ArrayList<String>(), new DigitalWallet("123", 1_000_000), new ContactInformation(123123123, "sam@jermyn.com"), new ArrayList<PropertySearch>());
+		User user = new User("Samantha", "Jerrmyn", "password", "Female", new BsonDateTime(20000000), "Manager", "123 Road Street", true, new ArrayList<String>(), new ArrayList<String>(),1_000_000, new ContactInformation(123123123, "sam@jermyn.com"), new ArrayList<PropertySearch>());
 		Address addr = new Address("1", "Road", "Town", "State", "1234", new GeoLocation(123f, 123f));
 		PropertyDetails pd = new PropertyDetails(2, 2, 2, 23000, 2);
 		userRepository.save(user);

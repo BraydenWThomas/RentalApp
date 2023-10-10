@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import com.fdm.FlatBooking.Model.Property;
 
 @Repository
-public interface PropertyRepository extends MongoRepository<Property, Integer> {
+public interface PropertyRepository extends MongoRepository<Property, String> {
 
 }

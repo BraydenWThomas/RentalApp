@@ -28,14 +28,14 @@ public class User {
 	// Could be an array of Transaction objects??
 	private ArrayList<String> transactionHistory;
 	
-	private DigitalWallet digitalWallet;
+	private double balance;
 	private ContactInformation contactInformation;
 	private ArrayList<PropertySearch> propertySearchPreferences;
 	
 	
 	public User(String firstName, String lastName, String password, String gender, BsonDateTime dateOfBirth,
 			String occupation, String currentAddress, boolean isActive, ArrayList<String> bookmarkedProperties,
-			ArrayList<String> arrayList, DigitalWallet digitalWallet, ContactInformation contactInformation,
+			ArrayList<String> arrayList, double balance, ContactInformation contactInformation,
 			ArrayList<PropertySearch> propertySearchPreferences) {
 		super();
 		this.firstName = firstName;
@@ -48,7 +48,7 @@ public class User {
 		this.isActive = isActive;
 		this.bookmarkedProperties = bookmarkedProperties;
 		this.transactionHistory = arrayList;
-		this.digitalWallet = digitalWallet;
+		this.balance = balance;
 		this.contactInformation = contactInformation;
 		this.propertySearchPreferences = propertySearchPreferences;
 	}
@@ -167,13 +167,13 @@ public class User {
 	}
 
 
-	public DigitalWallet getDigitalWallet() {
-		return digitalWallet;
+	public double getBalance() {
+		return this.balance;
 	}
 
 
-	public void setDigitalWallet(DigitalWallet digitalWallet) {
-		this.digitalWallet = digitalWallet;
+	public void setBalance(double balance) {
+		this.balance = balance;
 	}
 
 
