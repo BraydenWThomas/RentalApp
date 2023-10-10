@@ -8,11 +8,11 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import com.fdm.FlatBooking.Model.Transaction;
 
-@Document
+@Document("User")
 public class User {
 	
 	@Id
-	private String _id;
+	private String id;
 	
 	private String firstName;
 	private String lastName;
@@ -24,9 +24,9 @@ public class User {
 	private boolean isActive;
 	
 	// Could be an array of Property objects??
-	private ArrayList<Property> bookmarkedProperties;
+	private ArrayList<String> bookmarkedProperties;
 	// Could be an array of Transaction objects??
-	private ArrayList<Transaction> transactionHistory;
+	private ArrayList<String> transactionHistory;
 	
 	private DigitalWallet digitalWallet;
 	private ContactInformation contactInformation;
@@ -34,8 +34,8 @@ public class User {
 	
 	
 	public User(String firstName, String lastName, String password, String gender, BsonDateTime dateOfBirth,
-			String occupation, String currentAddress, boolean isActive, ArrayList<Property> bookmarkedProperties,
-			ArrayList<Transaction> arrayList, DigitalWallet digitalWallet, ContactInformation contactInformation,
+			String occupation, String currentAddress, boolean isActive, ArrayList<String> bookmarkedProperties,
+			ArrayList<String> arrayList, DigitalWallet digitalWallet, ContactInformation contactInformation,
 			ArrayList<PropertySearch> propertySearchPreferences) {
 		super();
 		this.firstName = firstName;
@@ -57,13 +57,13 @@ public class User {
 	
 
 
-	public String get_id() {
-		return _id;
+	public String getId() {
+		return id;
 	}
 
 
-	public void set_id(String _id) {
-		this._id = _id;
+	public void setId(String id) {
+		this.id = id;
 	}
 
 
@@ -147,22 +147,22 @@ public class User {
 	}
 
 
-	public List<Property> getBookmarkedProperties() {
+	public List<String> getBookmarkedProperties() {
 		return bookmarkedProperties;
 	}
 
 
-	public void setBookmarkedProperties(ArrayList<Property> bookmarkedProperties) {
+	public void setBookmarkedProperties(ArrayList<String> bookmarkedProperties) {
 		this.bookmarkedProperties = bookmarkedProperties;
 	}
 
 
-	public List<Transaction> getTransactionHistory() {
+	public List<String> getTransactionHistory() {
 		return transactionHistory;
 	}
 
 
-	public void setTransactionHistory(ArrayList<Transaction> transactionHistory) {
+	public void setTransactionHistory(ArrayList<String> transactionHistory) {
 		this.transactionHistory = transactionHistory;
 	}
 

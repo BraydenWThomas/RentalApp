@@ -12,35 +12,33 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class Property {
 	
 	@Id
-	private int propertyId;
+	private String propertyId;
 	private String propertyType;
 	private int rentalPrice;
 	private int bondFee;
-	private User landlord;
-	private User leasee;
+	private String landlordId;
+	private String leaseeId;
 	
 	private Address address;
 	private String propertyDescription;
 	private PropertyDetails details;
 	
 	private ArrayList<Binary> images;
-	
-	
 	private ArrayList<String> facilities;
 	
 	private BsonDateTime latestUpdate;
 	private boolean currentlyAvailable;
 	
 	
-	public Property(String propertyType, int rentalPrice, int bondFee, User landlord, User leasee,
+	public Property(String propertyType, int rentalPrice, int bondFee, String landlordId, String leaseeId,
 			Address address, String propertyDescription, PropertyDetails details, ArrayList<Binary> images,
 			ArrayList<String> facilities, BsonDateTime latestUpdate, boolean currentlyAvailable) {
 		super();
 		this.propertyType = propertyType;
 		this.rentalPrice = rentalPrice;
 		this.bondFee = bondFee;
-		this.landlord = landlord;
-		this.leasee = leasee;
+		this.landlordId = landlordId;
+		this.leaseeId = leaseeId;
 		this.address = address;
 		this.propertyDescription = propertyDescription;
 		this.details = details;
@@ -50,7 +48,7 @@ public class Property {
 		this.currentlyAvailable = currentlyAvailable;
 	}
 	
-	public int getPropertyId() {
+	public String getPropertyId() {
 		return propertyId;
 	}
 	public String getPropertyType() {
@@ -62,11 +60,11 @@ public class Property {
 	public int getBondFee() {
 		return bondFee;
 	}
-	public User getLandlord() {
-		return landlord;
+	public String getLandlord() {
+		return landlordId;
 	}
-	public User getLeasee() {
-		return leasee;
+	public String getLeasee() {
+		return leaseeId;
 	}
 	public Address getAddress() {
 		return address;
@@ -89,7 +87,7 @@ public class Property {
 	public boolean isCurrentlyAvailable() {
 		return currentlyAvailable;
 	}
-	public void setPropertyId(int propertyId) {
+	public void setPropertyId(String propertyId) {
 		this.propertyId = propertyId;
 	}
 	public void setPropertyType(String propertyType) {
@@ -101,11 +99,11 @@ public class Property {
 	public void setBondFee(int bondFee) {
 		this.bondFee = bondFee;
 	}
-	public void setLandlord(User landlord) {
-		this.landlord = landlord;
+	public void setLandlord(String landlord) {
+		this.landlordId = landlord;
 	}
-	public void setLeasee(User leasee) {
-		this.leasee = leasee;
+	public void setLeasee(String leasee) {
+		this.leaseeId = leaseeId;
 	}
 	public void setAddress(Address address) {
 		this.address = address;

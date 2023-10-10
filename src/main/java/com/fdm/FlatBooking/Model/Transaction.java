@@ -9,19 +9,19 @@ public class Transaction {
 	@Id
 	private String transactionId;
 	
-	private User sender;
-	private User receiver;
+	private String senderId;
+	private String receiverId;
 	
 	private BsonDateTime date;
 	private double amount;
 	private String reference;
 	
 	
-	public Transaction(User sender, User receiver, BsonDateTime date, double amount,
+	public Transaction(String senderId, String receiverId, BsonDateTime date, double amount,
 			String reference) {
 		super();
-		this.sender = sender;
-		this.receiver = receiver;
+		this.senderId = senderId;
+		this.receiverId = receiverId;
 		this.date = date;
 		this.amount = amount;
 		this.reference = reference;
@@ -33,17 +33,17 @@ public class Transaction {
 	public void setTransactionId(String transactionId) {
 		this.transactionId = transactionId;
 	}
-	public User getSender() {
-		return sender;
+	public String getSender() {
+		return senderId;
 	}
-	public void setSender(User sender) {
-		this.sender = sender;
+	public void setSender(String senderId) {
+		this.senderId = senderId;
 	}
-	public User getReceiver() {
-		return receiver;
+	public String getReceiver() {
+		return receiverId;
 	}
-	public void setReceiver(User receiver) {
-		this.receiver = receiver;
+	public void setReceiver(String receiverId) {
+		this.receiverId = receiverId;
 	}
 	public BsonDateTime getDate() {
 		return date;
