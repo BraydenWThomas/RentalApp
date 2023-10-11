@@ -13,7 +13,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 
 import com.fdm.FlatBooking.Model.Address;
-import com.fdm.FlatBooking.Model.ContactInformation;
+import com.fdm.FlatBooking.Model.Credentials;
+import com.fdm.FlatBooking.Model.Gender;
 import com.fdm.FlatBooking.Model.GeoLocation;
 import com.fdm.FlatBooking.Model.Property;
 import com.fdm.FlatBooking.Model.PropertyDetails;
@@ -51,14 +52,13 @@ public class FlatBookingApplication implements CommandLineRunner{
 
 	private void createUsers() {
 //        userRepository.save(new User("sjer", "samantha jermyn", 20, "manager"));
-//		User user = new User("Samantha", "Jermyn", "password", "Female", new BsonDateTime(20000000), "Manager", "123 Road Street", true, new ArrayList<Property>() , new ArrayList<Transaction>(), new DigitalWallet("398761", 1000000), new ContactInformation(012375983, "sam@jermyn.com"), new ArrayList<PropertySearch>());
-		User user1 = new User("Samantha", "Jermyn", "samantha.jermyn", "Female", new Date(2000000000), "Cat Cafe Enthusiast", "1 Smith Street", true, new ArrayList<String>(), new ArrayList<String>(),1_000_000, new ContactInformation(12345678, "sam@jermyn.com"), new ArrayList<PropertySearch>());
-		User user2 = new User("Shuyun", "Huang", "shuyun.huang", "Female", new Date(2000000000), "COO", "2 Jess Street", true, new ArrayList<String>(), new ArrayList<String>(),1_000_00, new ContactInformation(12345678, "shuyun@huang.com"), new ArrayList<PropertySearch>());
-		User user3 = new User("Alyssa", "Chin", "alyssa.chin", "Female", new Date(2000000000), "Astronaut", "3 Dave Street", true, new ArrayList<String>(), new ArrayList<String>(),1_000_00, new ContactInformation(12345678, "alyssa@chin.com"), new ArrayList<PropertySearch>());
-		User user4 = new User("Yaness", "Yeung", "yaness.yeung", "Female", new Date(20000000), "CEO", "4 Market Street", true, new ArrayList<String>(), new ArrayList<String>(),1_000_00, new ContactInformation(12345678, "yaness@yeung.com"), new ArrayList<PropertySearch>());
-		User user5 = new User("Brayden", "Thomas", "brayden.thomas", "Male", new Date(20000000), "Engineer", "5 John Street", true, new ArrayList<String>(), new ArrayList<String>(),1_000_00, new ContactInformation(12345678, "brayden@thomas.com"), new ArrayList<PropertySearch>());
-		User user6 = new User("Oscar", "Jose", "oscar.jose", "Male", new Date(20000000), "Doctor", "6 Pike Street", true, new ArrayList<String>(), new ArrayList<String>(),1_000_00, new ContactInformation(12345678, "oscar@jose.com"), new ArrayList<PropertySearch>());
-		User user7 = new User("Jack", "Allie", "jack.allie", "Female", new Date(20000000), "Homeless", "7 High Street", true, new ArrayList<String>(), new ArrayList<String>(),1_000_000_0, new ContactInformation(12345678, "jack@allie.com"), new ArrayList<PropertySearch>());
+		User user1 = new User("Samantha", "Jermyn", 12345678, Gender.FEMALE, new Date(2000000000), "Cat Cafe Enthusiast", "1 Smith Street", true, new ArrayList<String>(), new ArrayList<String>(),1_000_000, new Credentials("samantha.jermyn", "sam@jermyn.com"), new ArrayList<PropertySearch>());
+		User user2 = new User("Shuyun", "Huang", 12345678, Gender.FEMALE, new Date(2000000000), "COO", "2 Jess Street", true, new ArrayList<String>(), new ArrayList<String>(),1_000_00, new Credentials("shuyun.huang", "shuyun@huang.com"), new ArrayList<PropertySearch>());
+		User user3 = new User("Alyssa", "Chin", 12345678, Gender.FEMALE, new Date(2000000000), "Astronaut", "3 Dave Street", true, new ArrayList<String>(), new ArrayList<String>(),1_000_00, new Credentials("alyssa.chin", "alyssa@chin.com"), new ArrayList<PropertySearch>());
+		User user4 = new User("Yaness", "Yeung", 12345678, Gender.FEMALE, new Date(20000000), "CEO", "4 Market Street", true, new ArrayList<String>(), new ArrayList<String>(),1_000_00, new Credentials("yaness.yeung", "yaness@yeung.com"), new ArrayList<PropertySearch>());
+		User user5 = new User("Brayden", "Thomas", 12345678, Gender.MALE, new Date(20000000), "Engineer", "5 John Street", true, new ArrayList<String>(), new ArrayList<String>(),1_000_00, new Credentials("brayden.thomas", "brayden@thomas.com"), new ArrayList<PropertySearch>());
+		User user6 = new User("Oscar", "Jose", 12345678, Gender.MALE, new Date(20000000), "Doctor", "6 Pike Street", true, new ArrayList<String>(), new ArrayList<String>(),1_000_00, new Credentials("oscar.jose", "oscar@jose.com"), new ArrayList<PropertySearch>());
+		User user7 = new User("Jack", "Allie", 12345678, Gender.MALE, new Date(20000000), "Homeless", "7 High Street", true, new ArrayList<String>(), new ArrayList<String>(),1_000_000_0, new Credentials("jack.allie", "jack@allie.com"), new ArrayList<PropertySearch>());
 
 		userRepository.save(user1);
 		userRepository.save(user2);

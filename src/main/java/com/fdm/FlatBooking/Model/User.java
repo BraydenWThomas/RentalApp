@@ -13,8 +13,8 @@ public class User {
 	
 	private String firstName;
 	private String lastName;
-	private String password;
-	private String gender;
+	private int mobile;
+	private Gender gender;
 //	private BsonDateTime dateOfBirth;
 	private Date dateOfBirth;
 	private String occupation;
@@ -25,18 +25,18 @@ public class User {
 	private ArrayList<String> transactionHistory;
 	
 	private double balance;
-	private ContactInformation contactInformation;
+	private Credentials credentials;
 	private ArrayList<PropertySearch> propertySearchPreferences;
 	
 	
-	public User(String firstName, String lastName, String password, String gender, Date dateOfBirth,
+	public User(String firstName, String lastName, int mobile, Gender gender, Date dateOfBirth,
 			String occupation, String currentAddress, boolean isActive, ArrayList<String> bookmarkedProperties,
-			ArrayList<String> transactionHistory, double balance, ContactInformation contactInformation,
+			ArrayList<String> transactionHistory, double balance, Credentials credentials,
 			ArrayList<PropertySearch> propertySearchPreferences) {
 		super();
 		this.firstName = firstName;
 		this.lastName = lastName;
-		this.password = password;
+		this.mobile = mobile;
 		this.gender = gender;
 		this.dateOfBirth = dateOfBirth;
 		this.occupation = occupation;
@@ -45,7 +45,7 @@ public class User {
 		this.bookmarkedProperties = bookmarkedProperties;
 		this.transactionHistory = transactionHistory;
 		this.balance = balance;
-		this.contactInformation = contactInformation;
+		this.credentials = credentials;
 		this.propertySearchPreferences = propertySearchPreferences;
 	}
 
@@ -83,22 +83,22 @@ public class User {
 	}
 
 
-	public String getPassword() {
-		return password;
+	public int getMobile() {
+		return mobile;
 	}
 
 
-	public void setPassword(String password) {
-		this.password = password;
+	public void setMobile(int mobile) {
+		this.mobile = mobile;
 	}
 
 
-	public String getGender() {
+	public Gender getGender() {
 		return gender;
 	}
 
 
-	public void setGender(String gender) {
+	public void setGender(Gender gender) {
 		this.gender = gender;
 	}
 
@@ -173,13 +173,13 @@ public class User {
 	}
 
 
-	public ContactInformation getContactInformation() {
-		return contactInformation;
+	public Credentials getCredentials() {
+		return credentials;
 	}
 
 
-	public void setContactInformation(ContactInformation contactInformation) {
-		this.contactInformation = contactInformation;
+	public void setCredentials(Credentials credentials) {
+		this.credentials = credentials;
 	}
 
 
