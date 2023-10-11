@@ -1,12 +1,9 @@
 package com.fdm.FlatBooking.Model;
 
 import java.util.ArrayList;
-import java.util.List;
-
-import org.bson.BsonDateTime;
+import java.util.Date;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-import com.fdm.FlatBooking.Model.Transaction;
 
 @Document("User")
 public class User {
@@ -18,14 +15,13 @@ public class User {
 	private String lastName;
 	private String password;
 	private String gender;
-	private BsonDateTime dateOfBirth;
+//	private BsonDateTime dateOfBirth;
+	private Date dateOfBirth;
 	private String occupation;
 	private String currentAddress;
 	private boolean isActive;
 	
-	// Could be an array of Property objects??
 	private ArrayList<String> bookmarkedProperties;
-	// Could be an array of Transaction objects??
 	private ArrayList<String> transactionHistory;
 	
 	private double balance;
@@ -33,9 +29,9 @@ public class User {
 	private ArrayList<PropertySearch> propertySearchPreferences;
 	
 	
-	public User(String firstName, String lastName, String password, String gender, BsonDateTime dateOfBirth,
+	public User(String firstName, String lastName, String password, String gender, Date dateOfBirth,
 			String occupation, String currentAddress, boolean isActive, ArrayList<String> bookmarkedProperties,
-			ArrayList<String> arrayList, double balance, ContactInformation contactInformation,
+			ArrayList<String> transactionHistory, double balance, ContactInformation contactInformation,
 			ArrayList<PropertySearch> propertySearchPreferences) {
 		super();
 		this.firstName = firstName;
@@ -47,7 +43,7 @@ public class User {
 		this.currentAddress = currentAddress;
 		this.isActive = isActive;
 		this.bookmarkedProperties = bookmarkedProperties;
-		this.transactionHistory = arrayList;
+		this.transactionHistory = transactionHistory;
 		this.balance = balance;
 		this.contactInformation = contactInformation;
 		this.propertySearchPreferences = propertySearchPreferences;
@@ -107,12 +103,12 @@ public class User {
 	}
 
 
-	public BsonDateTime getDateOfBirth() {
+	public Date getDateOfBirth() {
 		return dateOfBirth;
 	}
 
 
-	public void setDateOfBirth(BsonDateTime dateOfBirth) {
+	public void setDateOfBirth(Date dateOfBirth) {
 		this.dateOfBirth = dateOfBirth;
 	}
 
@@ -147,7 +143,7 @@ public class User {
 	}
 
 
-	public List<String> getBookmarkedProperties() {
+	public ArrayList<String> getBookmarkedProperties() {
 		return bookmarkedProperties;
 	}
 
@@ -157,7 +153,7 @@ public class User {
 	}
 
 
-	public List<String> getTransactionHistory() {
+	public ArrayList<String> getTransactionHistory() {
 		return transactionHistory;
 	}
 
@@ -187,7 +183,7 @@ public class User {
 	}
 
 
-	public List<PropertySearch> getPropertySearchPreferences() {
+	public ArrayList<PropertySearch> getPropertySearchPreferences() {
 		return propertySearchPreferences;
 	}
 

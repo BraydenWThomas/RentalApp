@@ -24,7 +24,7 @@ public class Property {
 	private PropertyDetails details;
 	
 	private ArrayList<Binary> images;
-	private ArrayList<String> facilities;
+	private ArrayList<Boolean> facilities;
 	
 	private BsonDateTime latestUpdate;
 	private boolean currentlyAvailable;
@@ -32,7 +32,7 @@ public class Property {
 	
 	public Property(String propertyType, int rentalPrice, int bondFee, String landlordId, String leaseeId,
 			Address address, String propertyDescription, PropertyDetails details, ArrayList<Binary> images,
-			ArrayList<String> facilities, BsonDateTime latestUpdate, boolean currentlyAvailable) {
+			ArrayList<Boolean> facilities, BsonDateTime latestUpdate, boolean currentlyAvailable) {
 		super();
 		this.propertyType = propertyType;
 		this.rentalPrice = rentalPrice;
@@ -78,7 +78,7 @@ public class Property {
 	public ArrayList<Binary> getImages() {
 		return images;
 	}
-	public ArrayList<String> getFacilities() {
+	public ArrayList<Boolean> getFacilities() {
 		return facilities;
 	}
 	public BsonDateTime getLatestUpdate() {
@@ -102,7 +102,7 @@ public class Property {
 	public void setLandlord(String landlord) {
 		this.landlordId = landlord;
 	}
-	public void setLeasee(String leasee) {
+	public void setLeasee(String leaseeId) {
 		this.leaseeId = leaseeId;
 	}
 	public void setAddress(Address address) {
@@ -117,7 +117,7 @@ public class Property {
 	public void setImages(ArrayList<Binary> images) {
 		this.images = images;
 	}
-	public void setFacilities(ArrayList<String> facilities) {
+	public void setFacilities(ArrayList<Boolean> facilities) {
 		this.facilities = facilities;
 	}
 	public void setLatestUpdate(BsonDateTime latestUpdate) {
