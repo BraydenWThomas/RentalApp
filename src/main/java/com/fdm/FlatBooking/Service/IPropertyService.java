@@ -1,6 +1,7 @@
 package com.fdm.FlatBooking.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 import com.fdm.FlatBooking.Model.Property;
 
@@ -42,5 +43,23 @@ public interface IPropertyService {
      * @param id
      * @return
      */
-    Property getPropertyById(String id);
+    Optional<Property> getPropertyById(String id);
+
+    /**
+     * 
+     * @param minBed
+     * @param maxBed
+     * @param minBath
+     * @param maxBath
+     * @param minBudget
+     * @param maxBudget
+     * @param minCar
+     * @param maxCar
+     * @param minSize
+     * @param maxSize
+     * @return
+     */
+    List<Property> getPropertyWithFilters(int minBed, int maxBed, int minBath, int maxBath, int minBudget,
+            int maxBudget, int minCar, int maxCar, int minSize, int maxSize);
+
 }

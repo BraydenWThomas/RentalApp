@@ -2,51 +2,54 @@ package com.fdm.FlatBooking.Service;
 
 import java.sql.Date;
 import java.util.List;
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
 
 import com.fdm.FlatBooking.Model.Transaction;
+import com.fdm.FlatBooking.Repository.TransactionRepository;
 
 public class TransactionService implements ITransactionService {
 
+    @Autowired
+    private TransactionRepository transactionRepository;
+
     @Override
     public List<Transaction> getAllTransactions() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getAllTransactions'");
+        return transactionRepository.findAll();
     }
 
     @Override
     public List<Transaction> getAllTransactionsForUser(String userId) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getAllTransactionsForUser'");
+        List<Transaction> res = transactionRepository.findBySenderId(userId);
+        res.addAll(transactionRepository.findByReceiverId(userId));
+
+        return res;
     }
 
     @Override
     public List<Transaction> getAllTransactionsForSender(String userID) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getAllTransactionsForSender'");
+        return transactionRepository.findBySenderId(userID);
     }
 
     @Override
     public List<Transaction> getAllTransactionsForReceiver(String userId) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getAllTransactionsForReceiver'");
+        return transactionRepository.findByReceiverId(userId);
     }
 
     @Override
     public List<Transaction> getAllTransactionsWithin(Date start, Date end) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getAllTransactionsWithin'");
+        return transactionRepository.findTransactionsBetweenDates(start, end);
     }
 
     @Override
     public List<Transaction> getAllTransactionsForUserWithin(String userId, Date start, Date end) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getAllTransactionsForUserWithin'");
+        return transactionRepository.findTransactionsBetweenDatesForUser(start, end, userId);
     }
 
     @Override
-    public Transaction getTransactionById(String Id) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getTransactionById'");
+    public Optional<Transaction> getTransactionById(String id) {
+        return transactionRepository.findById(id);
     }
 
 }

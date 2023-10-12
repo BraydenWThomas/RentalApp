@@ -2,6 +2,7 @@ package com.fdm.FlatBooking.Service;
 
 import java.sql.Date;
 import java.util.List;
+import java.util.Optional;
 
 import com.fdm.FlatBooking.Model.Transaction;
 
@@ -65,6 +66,6 @@ public interface ITransactionService {
      * @param Id
      * @return
      */
-    Transaction getTransactionById(String Id);
+    Optional<Transaction> getTransactionById(String Id);
 
 }
