@@ -1,5 +1,17 @@
+
+
 .formbox {
+    background-color: #b0abbe;
+    border-radius: 15px;
     margin-top: 3rem;
-    margin: 0 auto;
-    text-align: center;
+    padding: 1rem;
+}
+
+.fieldLabel {
+    text-align: left
+}
+
+.formfield {
+    border-radius: 5px;
+    background-color: white;
 }
