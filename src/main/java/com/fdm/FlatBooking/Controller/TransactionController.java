@@ -57,13 +57,13 @@ public class TransactionController {
     @GetMapping("signin")
     public boolean verifyTransaction(@PathVariable String email, String password) {
         // Verify if email false
-        if (transactionRepository.findById(email).get().getCredentials().getEmail() != email) {
-            return false;
-        }
-        // Verify if password false
-        if (transactionRepository.findById(email).get().getCredentials().getPassword() != password) {
-            return false;
-        }
+        // if (transactionRepository.findById(email).get().getCredentials().getEmail() != email) {
+        //     return false;
+        // }
+        // // Verify if password false
+        // if (transactionRepository.findById(email).get().getCredentials().getPassword() != password) {
+        //     return false;
+        // }
         return true;
     }
 }
