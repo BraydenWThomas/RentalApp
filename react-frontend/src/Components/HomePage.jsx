@@ -9,9 +9,18 @@ import {
 	ImageList,
 } from "@mui/material";
 import "../Styles/HomePage.css";
+import LoginOverlay from "./LoginOverlay";
 import SearchBar from "./SearchBar";
 
+import { useState } from "react";
+
 const HomePage = () => {
+	const [openLogin, setOpenLogin] = useState(false);
+
+	const handleLoginClick = () => {
+		setOpenLogin(true);
+	};
+
 	// Dummy data
 	const recentSearches = [
 		{
@@ -72,7 +81,11 @@ const HomePage = () => {
 			<div className="top">
 				<p className="slogan">Your Space, Your Wallet, All in One.</p>
 				<div className="login-buttons">
-					<Button variant="contained" style={buttonStyle}>
+					<Button
+						variant="contained"
+						style={buttonStyle}
+						onClick={handleLoginClick}
+					>
 						Login
 					</Button>
 					<Button variant="contained" style={buttonStyle}>
@@ -121,6 +134,7 @@ const HomePage = () => {
 					))}
 				</ImageList>
 			</Container>
+			<LoginOverlay open={[openLogin, setOpenLogin]} />
 		</div>
 	);
 };
