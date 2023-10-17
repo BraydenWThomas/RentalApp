@@ -1,0 +1,24 @@
+
+
+.formbox {
+    background-color: #A59DB740;
+    border-radius: 15px;
+    margin-top: 3rem;
+    margin-bottom: 3rem;
+    padding: 1rem;
+    font-family: 'Oswald';
+    
+}
+
+.fieldLabel {
+    text-align: left
+}
+
+.formfield {
+    border-radius: 5px;
+    background-color: white;
+}
+
+.datePicker {
+    width: 100%;
+}

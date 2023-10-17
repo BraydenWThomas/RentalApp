@@ -1,0 +1,30 @@
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: white;
+    padding: 1rem;
+    color: black;
+    padding-left: 10%;
+    padding-right: 10%;
+}
+
+.navbar-links {
+    display: flex;
+    gap: 20px;
+}
+  
+.navbar-links a {
+    text-decoration: none;
+    color: black;
+}
+  
+.navbar-toggle {
+    display: none;
+    flex-direction: column;
+    cursor: pointer;
+}
+
+.navbar-logo {
+    height: 30px;
+}
