@@ -4,6 +4,8 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import "../Styles/Profile.css";
 import * as React from 'react';
+import { useState } from "react";
+import ProfileWallet from "./ProfileWallet";
 
 const Profile = () => {
 
@@ -39,6 +41,12 @@ const Profile = () => {
         color: 'grey',
         fontFamily: 'Oswald'
     }
+
+    const [activeTab, setActiveTab] = useState('details')
+
+    const handleTabClick = (tab) => {
+        setActiveTab(tab);
+    }
     
 
     return (
@@ -51,33 +59,37 @@ const Profile = () => {
         </div>
 
         <div className="profile-navigation">
-            <div  className="profile-option-nav" style={profileBox}  >
+            <div  className="profile-option-nav" style={profileBox} 
+            onClick={() => handleTabClick('details')}>
                 <p style={optionHeading}>Personal Details</p> 
                 <p style={subtext}> Manage your Personal Details</p> 
             </div>
 
-            <div  className="profile-option-nav" style={profileBox}  >
+            <div  className="profile-option-nav" style={profileBox} 
+            onClick={() => handleTabClick('wallet')}>
                 <p style={optionHeading}>My Wallet</p> 
                 <p style={subtext}> Manage your Wallet and Transactions</p> 
             </div>
 
-            <div  className="profile-option-nav" style={profileBox}  >
+            <div  className="profile-option-nav" style={profileBox} 
+            onClick={() => handleTabClick('properties')}>
                 <p style={optionHeading}>My Properties</p> 
                 <p style={subtext}> Manage your Rental Listings</p> 
             </div>
 
-            <div  className="profile-option-nav" style={profileBox}  >
+            <div  className="profile-option-nav" style={profileBox} 
+            onClick={() => handleTabClick('settings')}>
                 <p style={optionHeading}>Account Settings</p> 
                 <p style={subtext}> Manage your Account Settings</p> 
             </div>
         </div>
 
        <div className="profile-option-page">
-
+            {activeTab === 'wallet' && <ProfileWallet/>}
        </div>
     </div>
         
     )
 }
 
-export default Profile
+export default Profile;
