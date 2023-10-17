@@ -11,14 +11,20 @@ import {
 import "../Styles/HomePage.css";
 import LoginOverlay from "./LoginOverlay";
 import SearchBar from "./SearchBar";
+import axios from "axios";
 
 import { useState } from "react";
 
-const HomePage = () => {
+const HomePage = (props) => {
 	const [openLogin, setOpenLogin] = useState(false);
 
 	const handleLoginClick = () => {
 		setOpenLogin(true);
+	};
+
+	const handleLogoutClick = () => {
+		axios.get("http://localhost:8080/api/v1/users/signout");
+		props.setIsLoggedIn(false);
 	};
 
 	// Dummy data
@@ -80,18 +86,30 @@ const HomePage = () => {
 			></link>
 			<div className="top">
 				<p className="slogan">Your Space, Your Wallet, All in One.</p>
-				<div className="login-buttons">
-					<Button
-						variant="contained"
-						style={buttonStyle}
-						onClick={handleLoginClick}
-					>
-						Login
-					</Button>
-					<Button variant="contained" style={buttonStyle}>
-						Sign Up
-					</Button>
-				</div>
+				{!props.isLoggedIn ? (
+					<div className="login-buttons">
+						<Button
+							variant="contained"
+							style={buttonStyle}
+							onClick={handleLoginClick}
+						>
+							Login
+						</Button>
+						<Button variant="contained" style={buttonStyle}>
+							Sign Up
+						</Button>
+					</div>
+				) : (
+					<div className="login-buttons">
+						<Button
+							variant="contained"
+							style={buttonStyle}
+							onClick={handleLogoutClick}
+						>
+							Logout
+						</Button>
+					</div>
+				)}
 			</div>
 
 			<Container>
@@ -134,7 +152,11 @@ const HomePage = () => {
 					))}
 				</ImageList>
 			</Container>
-			<LoginOverlay open={[openLogin, setOpenLogin]} />
+			<LoginOverlay
+				open={[openLogin, setOpenLogin]}
+				isLoggedIn={props.isLoggedIn}
+				setIsLoggedIn={props.setIsLoggedIn}
+			/>
 		</div>
 	);
 };

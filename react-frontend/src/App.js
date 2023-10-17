@@ -5,14 +5,25 @@ import HomePage from "./Components/HomePage";
 import SignupPage from "./Components/SignupPage";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { useState } from "react";
 
 function App() {
+	const [isLoggedIn, setIsLoggedIn] = useState(false);
+
 	return (
 		<div className="App">
 			<LocalizationProvider dateAdapter={AdapterDayjs}>
-				<Navbar></Navbar>
+				<Navbar isLoggedIn={isLoggedIn} />
 				<Routes>
-					<Route path="/" element={<HomePage />}></Route>
+					<Route
+						path="/"
+						element={
+							<HomePage
+								isLoggedIn={isLoggedIn}
+								setIsLoggedIn={setIsLoggedIn}
+							/>
+						}
+					/>
 					<Route path="/signup" element={<SignupPage />} />
 				</Routes>
 			</LocalizationProvider>

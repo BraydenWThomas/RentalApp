@@ -11,8 +11,6 @@ const LoginOverlay = (props) => {
 	const [password, setPassword] = useState("");
 	const nav = useNavigate();
 
-	const api = "http://localhost:8080/api/v1/users";
-
 	const buttonStyle = {
 		backgroundColor: "#A59DB7",
 		color: "white",
@@ -44,6 +42,7 @@ const LoginOverlay = (props) => {
 				if (success) {
 					console.log(password);
 					setOpen(false);
+					props.setIsLoggedIn(true);
 					nav("/");
 
 					setEmail("");
