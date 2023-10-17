@@ -1,6 +1,7 @@
 package com.fdm.FlatBooking.Model;
 
 import java.util.Date;
+import java.util.List;
 import java.util.ArrayList;
 
 import org.bson.BsonDateTime;
@@ -23,14 +24,14 @@ public class Property {
 	private String propertyDescription;
 	private PropertyDetails details;
 
-	private ArrayList<Binary> images;
+	private List<Binary> images;
 	private ArrayList<Boolean> facilities;
 
 	private Date latestUpdate;
 	private boolean currentlyAvailable;
 
 	public Property(String propertyType, int rentalPrice, int bondFee, String landlordId, String leaseeId,
-			Address address, String propertyDescription, PropertyDetails details, ArrayList<Binary> images,
+			Address address, String propertyDescription, PropertyDetails details, List<Binary> images,
 			ArrayList<Boolean> facilities, Date latestUpdate, boolean currentlyAvailable) {
 		super();
 		this.propertyType = propertyType;
@@ -83,7 +84,7 @@ public class Property {
 		return details;
 	}
 
-	public ArrayList<Binary> getImages() {
+	public List<Binary> getImages() {
 		return images;
 	}
 
@@ -135,7 +136,7 @@ public class Property {
 		this.details = details;
 	}
 
-	public void setImages(ArrayList<Binary> images) {
+	public void setImages(List<Binary> images) {
 		this.images = images;
 	}
 

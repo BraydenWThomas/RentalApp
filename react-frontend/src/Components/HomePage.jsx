@@ -14,12 +14,18 @@ import SearchBar from "./SearchBar";
 import axios from "axios";
 
 import { useState } from "react";
+import RegisterOverlay from "./RegisterOverlay";
 
 const HomePage = (props) => {
 	const [openLogin, setOpenLogin] = useState(false);
+	const [openRegister, setOpenRegister] = useState(false);
 
 	const handleLoginClick = () => {
 		setOpenLogin(true);
+	};
+
+	const handleRegisterClick = () => {
+		setOpenRegister(true);
 	};
 
 	const handleLogoutClick = () => {
@@ -95,7 +101,11 @@ const HomePage = (props) => {
 						>
 							Login
 						</Button>
-						<Button variant="contained" style={buttonStyle}>
+						<Button
+							variant="contained"
+							style={buttonStyle}
+							onClick={handleRegisterClick}
+						>
 							Sign Up
 						</Button>
 					</div>
@@ -154,6 +164,11 @@ const HomePage = (props) => {
 			</Container>
 			<LoginOverlay
 				open={[openLogin, setOpenLogin]}
+				isLoggedIn={props.isLoggedIn}
+				setIsLoggedIn={props.setIsLoggedIn}
+			/>
+			<RegisterOverlay
+				open={[openRegister, setOpenRegister]}
 				isLoggedIn={props.isLoggedIn}
 				setIsLoggedIn={props.setIsLoggedIn}
 			/>

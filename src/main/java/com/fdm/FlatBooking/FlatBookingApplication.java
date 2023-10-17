@@ -1,11 +1,15 @@
 package com.fdm.FlatBooking;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import org.bson.BsonDateTime;
+import com.mongodb.client.gridfs.*;
+
+import org.bson.BsonBinarySubType;
 import org.bson.types.Binary;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -46,7 +50,7 @@ public class FlatBookingApplication implements CommandLineRunner {
 		SecurityContextHolder.setStrategyName(SecurityContextHolder.MODE_GLOBAL);
 	}
 
-	public void run(String... args) {
+	public void run(String... args) throws Exception {
 
 		// generates mock data
 		System.out.println("-----CREATE User ITEMS-----\n");
@@ -54,6 +58,17 @@ public class FlatBookingApplication implements CommandLineRunner {
 		System.out.println("\n-----USER CREATED-----\n");
 
 		queryTests();
+	}
+
+	public static byte[] LoadImage(String fileName) throws Exception {
+		String filePath = "src/main/resources/images/";
+		File file = new File(filePath + fileName);
+		int size = (int) file.length();
+		byte[] buffer = new byte[size];
+		FileInputStream in = new FileInputStream(file);
+		in.read(buffer);
+		in.close();
+		return buffer;
 	}
 
 	private void queryTests() {
@@ -122,7 +137,7 @@ public class FlatBookingApplication implements CommandLineRunner {
 		userRepository.save(user7);
 	}
 
-	private void createProperties() {
+	private void createProperties() throws Exception {
 		ArrayList<Address> addrs = new ArrayList<>();
 		addrs.add(new Address("1", "Boardwalk", "London", "England", "1234", new GeoLocation(123f, 123f)));
 		addrs.add(new Address("2", "Mayfair", "London", "England", "1234", new GeoLocation(123f, 123f)));
@@ -153,32 +168,50 @@ public class FlatBookingApplication implements CommandLineRunner {
 
 		List<User> users = userRepository.findAll();
 
+		ArrayList<Binary> images = new ArrayList<>();
+		images.add(new Binary(BsonBinarySubType.BINARY, LoadImage("cat1.jpg")));
+		images.add(new Binary(BsonBinarySubType.BINARY, LoadImage("cat2.jpg")));
+		images.add(new Binary(BsonBinarySubType.BINARY, LoadImage("cat3.jpg")));
+		images.add(new Binary(BsonBinarySubType.BINARY, LoadImage("cat4.jpg")));
+		images.add(new Binary(BsonBinarySubType.BINARY, LoadImage("cat5.jpg")));
+		images.add(new Binary(BsonBinarySubType.BINARY, LoadImage("cat6.jpg")));
+		images.add(new Binary(BsonBinarySubType.BINARY, LoadImage("cat7.jpeg")));
+
+		List<Binary> imageSet1 = new ArrayList<>();
+		imageSet1 = (images.subList(0, 2));
+
+		List<Binary> imageSet2 = new ArrayList<>();
+		imageSet2 = (images.subList(2, 4));
+
+		List<Binary> imageSet3 = new ArrayList<>();
+		imageSet3 = (images.subList(4, 7));
+
 		ArrayList<Boolean> features = new ArrayList<Boolean>();
 		ArrayList<Property> properties = new ArrayList<>();
 		properties.add(new Property("Apartment", 500, 2000, users.get(0).getId(), null, addrs.get(0), "1 Red Hotel",
-				pds.get(0), new ArrayList<Binary>(), features, new Date(20000000), true));
+				pds.get(0), imageSet1, features, new Date(20000000), true));
 		properties.add(new Property("Apartment", 500, 2000, users.get(0).getId(), null, addrs.get(1), "1 Green House",
-				pds.get(1), new ArrayList<Binary>(), features, new Date(20000000), true));
+				pds.get(1), imageSet2, features, new Date(20000000), true));
 		properties.add(new Property("Apartment", 500, 2000, users.get(1).getId(), null, addrs.get(2), "2 Green Houses",
-				pds.get(2), new ArrayList<Binary>(), features, new Date(20000000), true));
+				pds.get(2), imageSet3, features, new Date(20000000), true));
 		properties.add(new Property("Apartment", 500, 2000, users.get(2).getId(), null, addrs.get(3), "3 Green Houses",
-				pds.get(3), new ArrayList<Binary>(), features, new Date(20000000), true));
+				pds.get(3), imageSet1, features, new Date(20000000), true));
 		properties.add(new Property("Apartment", 500, 2000, users.get(3).getId(), null, addrs.get(4), "1 Red Hotel",
-				pds.get(4), new ArrayList<Binary>(), features, new Date(20000000), true));
+				pds.get(4), imageSet2, features, new Date(20000000), true));
 		properties.add(new Property("Apartment", 500, 2000, users.get(4).getId(), null, addrs.get(5), "4 Green Houses",
-				pds.get(5), new ArrayList<Binary>(), features, new Date(20000000), true));
+				pds.get(5), imageSet3, features, new Date(20000000), true));
 		properties.add(new Property("Apartment", 500, 2000, users.get(4).getId(), null, addrs.get(6), "3 Green Houses",
-				pds.get(6), new ArrayList<Binary>(), features, new Date(20000000), false));
+				pds.get(6), imageSet1, features, new Date(20000000), false));
 		properties.add(new Property("Apartment", 500, 2000, users.get(6).getId(), null, addrs.get(7), "1 Red Hotel",
-				pds.get(7), new ArrayList<Binary>(), features, new Date(20000000), true));
+				pds.get(7), imageSet2, features, new Date(20000000), true));
 		properties.add(new Property("Apartment", 500, 2000, users.get(5).getId(), null, addrs.get(8), "1 Red Hotel",
-				pds.get(8), new ArrayList<Binary>(), features, new Date(20000000), true));
+				pds.get(8), imageSet3, features, new Date(20000000), true));
 		properties.add(new Property("Apartment", 500, 2000, users.get(6).getId(), null, addrs.get(9), "1 Green House",
-				pds.get(9), new ArrayList<Binary>(), features, new Date(20000000), true));
+				pds.get(9), imageSet1, features, new Date(20000000), true));
 		properties.add(new Property("Apartment", 500, 2000, users.get(6).getId(), null, addrs.get(10), "2 Green Houses",
-				pds.get(10), new ArrayList<Binary>(), features, new Date(20000000), true));
+				pds.get(10), imageSet2, features, new Date(20000000), true));
 		properties.add(new Property("Apartment", 500, 2000, users.get(3).getId(), null, addrs.get(11), "4 Green Houses",
-				pds.get(11), new ArrayList<Binary>(), features, new Date(20000000), false));
+				pds.get(11), imageSet3, features, new Date(20000000), false));
 
 		propertyRepository.saveAll(properties);
 
@@ -208,7 +241,7 @@ public class FlatBookingApplication implements CommandLineRunner {
 		transactionRepository.saveAll(transactions);
 	}
 
-	private void generateMockData() {
+	private void generateMockData() throws Exception {
 		userRepository.deleteAll();
 		propertyRepository.deleteAll();
 		transactionRepository.deleteAll();
