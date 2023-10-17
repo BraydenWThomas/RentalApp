@@ -3,6 +3,7 @@ package com.fdm.FlatBooking.Service;
 import java.util.List;
 import java.util.Optional;
 
+import com.fdm.FlatBooking.Model.PropertySearch;
 import com.fdm.FlatBooking.Model.User;
 
 public interface IUserService {
@@ -58,4 +59,6 @@ public interface IUserService {
 	 * @return The corresponding user if they exist, empty if otherwise
 	 */
 	Optional<User> findUserByEmail(String email);
+
+	List<PropertySearch> getPropertySearchesForUser(String userId);
 }

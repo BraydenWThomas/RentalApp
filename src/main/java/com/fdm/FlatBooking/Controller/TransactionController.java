@@ -1,6 +1,7 @@
 package com.fdm.FlatBooking.Controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,53 +18,50 @@ import com.fdm.FlatBooking.Model.Transaction;
 import com.fdm.FlatBooking.Repository.PropertyRepository;
 import com.fdm.FlatBooking.Repository.TransactionRepository;
 import com.fdm.FlatBooking.Repository.UserRepository;
+import com.fdm.FlatBooking.Service.TransactionService;
 
 @RestController
-@RequestMapping("transaction")
+@RequestMapping("/api/v1/transactions")
 @CrossOrigin(origins = "*", maxAge = 3600)
 public class TransactionController {
 
     @Autowired
-    private PropertyRepository propertyRepository;
-
-    @Autowired
-    private TransactionRepository transactionRepository;
-
-    @Autowired
-    private UserRepository userRepository;
+    private TransactionService transactionService;
 
     // Get all transactions
     @GetMapping("")
     public List<Transaction> getAllTransactions() {
-        return transactionRepository.findAll();
+        return transactionService.getAllTransactions();
     }
 
     // Get specific transaction
     @GetMapping("{transactionId}")
     public Transaction getTransactionbyId(@PathVariable String transactionId) {
-        return transactionRepository.findById(transactionId)
-                // #TODO need proper or else throws -> i cant figure it out
-                .orElseThrow();
+        Optional<Transaction> trans = transactionService.getTransactionById(transactionId);
+
+        if (!trans.isPresent()) {
+            // error
+            return null;
+        }
+
+        return trans.get();
     }
 
-    // Create Transaction #TODO this will need to be replaced when security added
+    // Create Transaction
     @PostMapping("")
     @ResponseStatus(HttpStatus.CREATED)
     public Transaction createTransaction(@RequestBody Transaction transaction) {
-        return transactionRepository.save(transaction);
+        transactionService.addTransaction(transaction);
+        return transaction;
     }
 
-    // Verify login #TODO this will need to be replaced when security added
-    @GetMapping("signin")
-    public boolean verifyTransaction(@PathVariable String email, String password) {
-        // Verify if email false
-        // if (transactionRepository.findById(email).get().getCredentials().getEmail() != email) {
-        //     return false;
-        // }
-        // // Verify if password false
-        // if (transactionRepository.findById(email).get().getCredentials().getPassword() != password) {
-        //     return false;
-        // }
-        return true;
+    @GetMapping("/{userId}/recent")
+    public List<Transaction> getRecentTransactionsForUser(@PathVariable String userId) {
+        return transactionService.getRecentTransactionsForUser(userId);
+    }
+
+    @GetMapping("/{userId}/alltransactions")
+    public List<Transaction> getTransactionsForUser(@PathVariable String userId) {
+        return transactionService.getAllTransactionsForUser(userId);
     }
 }

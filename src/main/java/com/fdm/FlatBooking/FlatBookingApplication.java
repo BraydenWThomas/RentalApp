@@ -12,6 +12,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 import com.fdm.FlatBooking.Model.Address;
 import com.fdm.FlatBooking.Model.Credentials;
@@ -41,6 +42,8 @@ public class FlatBookingApplication implements CommandLineRunner {
 
 	public static void main(String[] args) {
 		SpringApplication.run(FlatBookingApplication.class, args);
+
+		SecurityContextHolder.setStrategyName(SecurityContextHolder.MODE_GLOBAL);
 	}
 
 	public void run(String... args) {
@@ -69,7 +72,7 @@ public class FlatBookingApplication implements CommandLineRunner {
 			System.out.println(property.getAddress().getStreet());
 		}
 
-		properties = propertyRepository.getPropertyWithFilters(0, 30, 0, 30, 0, 100000, 0, 30, 0, 10000000, "Apartment",
+		properties = propertyRepository.getPropertyWithFilters(0, 3, 0, 3, 0, 501, 0, 3, 0, 30000, "Apartment",
 				true);
 
 		System.out.println(" GET WITH FILTERS ");
@@ -178,6 +181,10 @@ public class FlatBookingApplication implements CommandLineRunner {
 				pds.get(11), new ArrayList<Binary>(), features, new Date(20000000), false));
 
 		propertyRepository.saveAll(properties);
+
+		// add saved property
+		users.get(0).getBookmarkedProperties().add(properties.get(5).getPropertyId());
+		userRepository.save(users.get(0));
 	}
 
 	private void createTransactions() {

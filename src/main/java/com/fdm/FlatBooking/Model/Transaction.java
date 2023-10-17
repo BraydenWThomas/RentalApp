@@ -1,8 +1,7 @@
 package com.fdm.FlatBooking.Model;
 
-import java.sql.Date;
+import java.util.Date;
 
-import org.bson.BsonDateTime;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 

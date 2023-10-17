@@ -5,10 +5,12 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.fdm.FlatBooking.Model.Transaction;
 import com.fdm.FlatBooking.Repository.TransactionRepository;
 
+@Service
 public class TransactionService implements ITransactionService {
 
     @Autowired
@@ -50,6 +52,21 @@ public class TransactionService implements ITransactionService {
     @Override
     public Optional<Transaction> getTransactionById(String id) {
         return transactionRepository.findById(id);
+    }
+
+    @Override
+    public void addTransaction(Transaction transaction) {
+        transactionRepository.save(transaction);
+    }
+
+    @Override
+    public List<Transaction> getRecentTransactionsForUser(String userId) {
+        List<Transaction> transactions = getAllTransactionsForUser(userId);
+        transactions.sort((Transaction t1, Transaction t2) -> -1 * t1.getDate().compareTo(t2.getDate()));
+
+        if (transactions.size() < 5)
+            return transactions;
+        return transactions.subList(0, 5);
     }
 
 }

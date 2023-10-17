@@ -8,6 +8,8 @@ import com.fdm.FlatBooking.Model.Transaction;
 
 public interface ITransactionService {
 
+    void addTransaction(Transaction transaction);
+
     /**
      * Get all transactions
      * 
@@ -22,6 +24,8 @@ public interface ITransactionService {
      * @return Transactions that involve the user
      */
     List<Transaction> getAllTransactionsForUser(String userId);
+
+    List<Transaction> getRecentTransactionsForUser(String userId);
 
     /**
      * Get all transactions where the user (identified by the given ID) is the

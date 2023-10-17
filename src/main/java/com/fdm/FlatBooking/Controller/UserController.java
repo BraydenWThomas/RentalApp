@@ -1,13 +1,10 @@
 package com.fdm.FlatBooking.Controller;
 
-import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.ui.Model;
-import org.springframework.security.authentication.TestingAuthenticationToken;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
@@ -23,10 +20,9 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fdm.FlatBooking.Model.Credentials;
+import com.fdm.FlatBooking.Model.PropertySearch;
 import com.fdm.FlatBooking.Model.User;
-import com.fdm.FlatBooking.Repository.PropertyRepository;
-import com.fdm.FlatBooking.Repository.TransactionRepository;
-import com.fdm.FlatBooking.Repository.UserRepository;
+import com.fdm.FlatBooking.Service.UserService;
 
 @RestController
 @RequestMapping("/api/v1/users")
@@ -34,39 +30,53 @@ import com.fdm.FlatBooking.Repository.UserRepository;
 public class UserController {
 
     @Autowired
-    private PropertyRepository propertyRepository;
+    private UserService userService;
 
-    @Autowired
-    private TransactionRepository transactionRepository;
-
-    @Autowired
-    private UserRepository userRepository;
-
-    // Get all users
     @GetMapping("")
     public List<User> getAllUsers() {
-        return userRepository.findAll();
+        return userService.findAllUsers();
     }
 
-    // Get specific user
-    @GetMapping("/user/{userId}")
-    public User getUserbyId(@PathVariable String userId) {
-        return userRepository.findById(userId)
-                // #TODO need proper or else throws -> i cant figure it out
-                .orElseThrow();
+    @GetMapping("/{userId}/recentSearches")
+    public List<PropertySearch> getRecentSearchesForUser(@PathVariable String userId) {
+        return userService.getPropertySearchesForUser(userId);
     }
 
-    // Create User #TODO this will need to be replaced when security added
+    @GetMapping("/userdetails")
+    public User getLoggedInUser() {
+        System.out.println("Get user");
+        SecurityContext context = SecurityContextHolder.getContext();
+        Authentication auth = context.getAuthentication();
+
+        if (auth == null) {
+            // return error
+            return null;
+        }
+
+        String email = auth.getName();
+
+        System.out.println(context.getAuthentication().isAuthenticated());
+        System.out.println(email);
+
+        Optional<User> user = userService.findUserByEmail(email);
+
+        if (user.isPresent())
+            return user.get();
+        else
+            return null;
+    }
+
     @PostMapping("")
     @ResponseStatus(HttpStatus.CREATED)
     public User createUser(@RequestBody User user) {
-        return userRepository.save(user);
+        userService.addUser(user);
+        return user;
     }
 
     // Basic login TODO: modify for security
     @GetMapping("/signin")
     public boolean verifyUser(@RequestParam String email, @RequestParam String password) {
-        Optional<User> user = userRepository.findUserByEmail(email);
+        Optional<User> user = userService.findUserByEmail(email);
 
         // Check if user is present
         if (!user.isPresent()) {
@@ -85,16 +95,12 @@ public class UserController {
 
         SecurityContextHolder.setContext(context);
 
-        // getting secuirty context:
+        return true;
+    }
 
-        // SecurityContext getContext = SecurityContextHolder.getContext();
-        // Authentication authentication = context.getAuthentication();
-        // String username = authentication.getName();
-        // Object principal = authentication.getPrincipal();
-        // Object pword = authentication.getCredentials();
-
-        // System.out.println(username);
-        // System.out.println(pword);
+    @GetMapping("/signout")
+    public boolean signoutUser() {
+        SecurityContextHolder.clearContext();
         return true;
     }
 }

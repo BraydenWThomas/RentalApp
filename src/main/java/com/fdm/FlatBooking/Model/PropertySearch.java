@@ -3,8 +3,6 @@ package com.fdm.FlatBooking.Model;
 import java.sql.Date;
 import java.util.List;
 
-import org.bson.BsonDateTime;
-
 public class PropertySearch {
 	private int budget;
 	private int numberOfBedrooms;
