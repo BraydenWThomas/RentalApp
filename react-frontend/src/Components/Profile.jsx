@@ -28,7 +28,7 @@ const Profile = () => {
 
     const profileBox = {
         backgroundColor: '#A59DB740',
-        margin: '10px',
+        // margin: '10px',
         width: '100%',
         
     }
@@ -42,63 +42,40 @@ const Profile = () => {
     
 
     return (
-    <Container >  
+    <div className="profile-container">  
         <link href='https://fonts.googleapis.com/css?family=Oswald' rel='stylesheet'></link>
-        
-        <Grid container spacing={2}>
-            <Grid  xs={6} justifyContent="flex-start">
-                    <h1 style={headingStyle} variant="contained">My Profile</h1>
-            </Grid>
 
-            <Grid  xs={6} justifyContent="flex-end">
-                <Button variant="contained"  style={buttonStyle} size="large"> Log Out </Button>
-            </Grid>
-        </Grid>
+        <div className="profile-header">
+            <h1 style={headingStyle} variant="contained">My Profile</h1>
+            <Button variant="contained"  style={buttonStyle} size="large"> Log Out </Button>
+        </div>
 
-        <Grid container spacing={2}  direction="row" xs={12}>
-            <Grid container spacing={2}  direction="column" xs={3}>
-                <Grid container justifyContent="flex-start" >
-                    <div  className="profileOption" style={profileBox}  >
-                        <p style={optionHeading}>Personal Details</p> 
-                        <p style={subtext}> Manage your Personal Details</p> 
-                    </div>
-                </Grid>
+        <div className="profile-navigation">
+            <div  className="profile-option-nav" style={profileBox}  >
+                <p style={optionHeading}>Personal Details</p> 
+                <p style={subtext}> Manage your Personal Details</p> 
+            </div>
 
-                <Grid container justifyContent="flex-start" >
-                    <div  className="profileOption" style={profileBox}  >
-                        <p style={optionHeading}>My Wallet</p> 
-                        <p style={subtext}> Manage your Wallet and Transactions</p> 
-                    </div>
-                </Grid>
+            <div  className="profile-option-nav" style={profileBox}  >
+                <p style={optionHeading}>My Wallet</p> 
+                <p style={subtext}> Manage your Wallet and Transactions</p> 
+            </div>
 
-                <Grid container justifyContent="flex-start" >
-                    <div  className="profileOption" style={profileBox}  >
-                        <p style={optionHeading}>My Properties</p> 
-                        <p style={subtext}> Manage your Rental Listings</p> 
-                    </div>
-                </Grid>
+            <div  className="profile-option-nav" style={profileBox}  >
+                <p style={optionHeading}>My Properties</p> 
+                <p style={subtext}> Manage your Rental Listings</p> 
+            </div>
 
-                <Grid container justifyContent="flex-start">
-                    <div  className="profileOption" style={profileBox}  >
-                        <p style={optionHeading}>Accoutn Settings</p> 
-                        <p style={subtext}> Manage your Account Settings</p> 
-                    </div>
-                </Grid>
-            </Grid>
-            <Grid container spacing={2}  direction="column" xs={9}>
-                <Grid container justifyContent="flex-start">
-                    <div  className="profileOption" style={profileBox}  >
-                        <p style={optionHeading}>PlaceHolder</p> 
-                    </div>
-                </Grid>
-            </Grid>
-        </Grid>
-        
-       
-       
-        
-            
-    </Container>
+            <div  className="profile-option-nav" style={profileBox}  >
+                <p style={optionHeading}>Account Settings</p> 
+                <p style={subtext}> Manage your Account Settings</p> 
+            </div>
+        </div>
+
+       <div className="profile-option-page">
+
+       </div>
+    </div>
         
     )
 }
