@@ -1,15 +1,10 @@
 import { Button, Grid, TextField, Container, Select, MenuItem } from "@mui/material";
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import "../Styles/Profile.css";
 import * as React from 'react';
 import { useState } from "react";
 import ProfileWallet from "./ProfileWallet";
 
 const Profile = () => {
-
-
     const buttonStyle = {
         backgroundColor: '#A59DB7',
         color: 'white',
