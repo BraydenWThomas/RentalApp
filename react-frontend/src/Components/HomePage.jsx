@@ -14,41 +14,42 @@ import SearchBar from "./SearchBar";
 import axios from "axios";
 import { useState, useEffect } from "react";
 import RegisterOverlay from "./RegisterOverlay";
+import imagePlaceholder from "../Assets/No-Image-Placeholder.png";
 
 const HomePage = (props) => {
 	const [openLogin, setOpenLogin] = useState(false);
 	const [openRegister, setOpenRegister] = useState(false);
-	const [recentListings, setRecentListings] = useState([])
-	const [recentSearches, setRecentSearches] = useState([])
-	const [refreshListings, setRefreshListings] = useState(false)
-	const api = "http://localhost:8080/api/v1"
+	const [recentListings, setRecentListings] = useState([]);
+	const [recentSearches, setRecentSearches] = useState([]);
+	const [refreshListings, setRefreshListings] = useState(false);
+	const api = "http://localhost:8080/api/v1";
 
 	useEffect(() => {
 		// Load recent listings
-		console.log("loading:")
-		axios.get(api + "/properties/recentListings")
-			.then(res => {
-				setRecentListings(res.data)
-				console.log("Listings:")
-				console.log(res.data)
+		console.log("loading:");
+		axios
+			.get(api + "/properties/recentListings")
+			.then((res) => {
+				setRecentListings(res.data);
+				console.log("Listings:");
+				console.log(res.data);
 			})
-			.catch(err => {
-				console.log(err)
-			})
-	}, [refreshListings])
+			.catch((err) => {
+				console.log(err);
+			});
+	}, [refreshListings]);
 
 	useEffect(() => {
 		// Load recent searches
-		console.log("Show recent searches")
+		console.log("Show recent searches");
 		if (props.isLoggedIn) {
-			axios.get(api + "/users/userdetails")
-				.then(res => {
-					setRecentSearches(res.data.propertySearchPreferences)
-				})
+			axios.get(api + "/users/userdetails").then((res) => {
+				setRecentSearches(res.data.propertySearchPreferences);
+			});
 		} else {
 			setRecentSearches([]);
 		}
-	}, [props.isLoggedIn])
+	}, [props.isLoggedIn]);
 
 	const handleLoginClick = () => {
 		setOpenLogin(true);
@@ -157,7 +158,12 @@ const HomePage = (props) => {
 					<Grid container>
 						{/* Search */}
 						<Grid xs={12}>
-							<SearchBar searchTxt={props.searchTxt} setSearchTxt={props.setSearchTxt} />
+							<SearchBar
+								searchTxt={props.searchTxt}
+								setSearchTxt={props.setSearchTxt}
+								searchResults={props.searchResults}
+								setSearchResults={props.setSearchResults}
+							/>
 						</Grid>
 						{/* Recent Searches */}
 						<Grid xs={12}>
@@ -189,7 +195,10 @@ const HomePage = (props) => {
 					gap={10}
 				>
 					{recentListings.map((listing) => (
-						<RecentListingCard listing={listing} />
+						<RecentListingCard
+							listing={listing}
+							key={listing.propertyId}
+						/>
 					))}
 				</ImageList>
 			</Container>
@@ -224,7 +233,14 @@ const RecentSearchCard = ({ search }) => {
 			<Grid xs={12}>
 				<b style={locationStyle}>{"$" + search.budget}</b>
 			</Grid>
-			<Grid xs={12}>{search.numberOfBedrooms + " Bed | " + search.numberOfBathrooms + " Bath | " + search.numberOfCarspaces + " Car"}</Grid>
+			<Grid xs={12}>
+				{search.numberOfBedrooms +
+					" Bed | " +
+					search.numberOfBathrooms +
+					" Bath | " +
+					search.numberOfCarspaces +
+					" Car"}
+			</Grid>
 		</Grid>
 	);
 };
@@ -255,14 +271,39 @@ const RecentListingCard = ({ listing }) => {
 					src="https://carlislehomes.com.au/static/images/hal/CARL607554_Matisse33_003_2.jpg"
 					alt="House"
 				/> */}
-				{listing.images.length > 0 && (
-					<img style={imageStyle} src={`data:image/jpg;base64,${listing.images[0].data}`} />
+				{listing.images.length > 0 ? (
+					<img
+						style={imageStyle}
+						src={`data:image/jpg;base64,${listing.images[0].data}`}
+						alt="Property"
+					/>
+				) : (
+					<img
+						style={imageStyle}
+						src={imagePlaceholder}
+						alt="Property"
+					/>
 				)}
 			</Grid>
 			<div style={textStyle}>
 				<Grid xs={12}>{"Price: $" + listing.rentalPrice}</Grid>
-				<Grid xs={12}>{"Address: " + listing.address.unit + " " + listing.address.street + ", " + listing.address.suburb}</Grid>
-				<Grid xs={12}>{"Features: " + listing.details.bedroom + " Bed | " + listing.details.bathroom + " Bath | " + listing.details.carPark + " Car"}</Grid>
+				<Grid xs={12}>
+					{"Address: " +
+						listing.address.unit +
+						" " +
+						listing.address.street +
+						", " +
+						listing.address.suburb}
+				</Grid>
+				<Grid xs={12}>
+					{"Features: " +
+						listing.details.bedroom +
+						" Bed | " +
+						listing.details.bathroom +
+						" Bath | " +
+						listing.details.carPark +
+						" Car"}
+				</Grid>
 			</div>
 		</Grid>
 	);

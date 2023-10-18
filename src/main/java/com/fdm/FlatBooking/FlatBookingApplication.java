@@ -53,9 +53,9 @@ public class FlatBookingApplication implements CommandLineRunner {
 	public void run(String... args) throws Exception {
 
 		// generates mock data
-		System.out.println("-----CREATE User ITEMS-----\n");
+		System.out.println("----- Generate Mock Data -----\n");
 		generateMockData();
-		System.out.println("\n-----USER CREATED-----\n");
+		System.out.println("\n----------- Done -----------\n");
 
 		// queryTests();
 	}
@@ -181,13 +181,13 @@ public class FlatBookingApplication implements CommandLineRunner {
 		images.add(new Binary(BsonBinarySubType.BINARY, LoadImage("cat7.jpeg")));
 
 		List<Binary> imageSet1 = new ArrayList<>();
-		imageSet1 = (images.subList(0, 1));
+		// imageSet1 = (images.subList(0, 1));
 
 		List<Binary> imageSet2 = new ArrayList<>();
-		imageSet2 = (images.subList(1, 2));
+		// imageSet2 = (images.subList(1, 2));
 
 		List<Binary> imageSet3 = new ArrayList<>();
-		imageSet3 = (images.subList(3, 4));
+		// imageSet3 = (images.subList(3, 4));
 
 		ArrayList<Boolean> features = new ArrayList<Boolean>();
 		ArrayList<Property> properties = new ArrayList<>();
@@ -249,9 +249,15 @@ public class FlatBookingApplication implements CommandLineRunner {
 		propertyRepository.deleteAll();
 		transactionRepository.deleteAll();
 
+		System.out.print("Generating users...");
 		createUsers();
+		System.out.println("Done!");
+		System.out.print("Generating Properties...");
 		createProperties();
+		System.out.println("Done!");
+		System.out.print("Generating transactions...");
 		createTransactions();
+		System.out.println("Done!");
 	}
 
 }

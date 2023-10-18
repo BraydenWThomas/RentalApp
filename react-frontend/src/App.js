@@ -10,6 +10,8 @@ import { useState } from "react";
 function App() {
 	const [isLoggedIn, setIsLoggedIn] = useState(false);
 	const [searchTxt, setSearchTxt] = useState("");
+	const [searchFilters, setSearchFilters] = useState({});
+	const [searchResults, setSearchResults] = useState([]);
 
 	return (
 		<div className="App">
@@ -24,13 +26,24 @@ function App() {
 								setIsLoggedIn={setIsLoggedIn}
 								searchTxt={searchTxt}
 								setSearchTxt={setSearchTxt}
+								searchFilters={searchFilters}
+								setSearchFilters={setSearchFilters}
+								searchResults={searchResults}
+								setSearchResults={setSearchResults}
 							/>
 						}
 					/>
 					<Route
 						path="/search"
 						element={
-							<PropertySearch searchTxt={searchTxt} setSearchTxt={setSearchTxt} />
+							<PropertySearch
+								searchTxt={searchTxt}
+								setSearchTxt={setSearchTxt}
+								searchFilters={searchFilters}
+								setSearchFilters={setSearchFilters}
+								searchResults={searchResults}
+								setSearchResults={setSearchResults}
+							/>
 						}
 					/>
 				</Routes>

@@ -46,6 +46,7 @@ public class PropertyController {
 
     @GetMapping("search")
     public List<Property> searchProperties(
+            @RequestParam String searchTxt,
             @RequestParam int minBed,
             @RequestParam int maxBed,
             @RequestParam int minBath,
@@ -58,7 +59,7 @@ public class PropertyController {
             @RequestParam int maxSize,
             @RequestParam String type,
             @RequestParam boolean isAvailable) {
-        return propertyService.getPropertyWithFilters(minBed, maxBed, minBath,
+        return propertyService.getPropertyWithFilters(searchTxt, minBed, maxBed, minBath,
                 maxBath, minBudget, maxBudget, minCar,
                 maxCar, minSize, maxSize, type, isAvailable);
     }
