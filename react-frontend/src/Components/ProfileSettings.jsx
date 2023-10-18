@@ -1,6 +1,8 @@
 import "../Styles/ProfileSettings.css"
 import visible from "../Assets/visible.png"
 import unvisible from "../Assets/visibility.png"
+// icons from here: https://www.flaticon.com/free-icons/visible
+
 import { Button, Grid, TextField, Container, Select, MenuItem } from "@mui/material";
 
 import { useState } from "react";
@@ -8,6 +10,8 @@ import { useState } from "react";
 const ProfileSettings = ()=> {
 
     const [canShow, setCanShow] = useState(false)
+    const [email, setEmail]  = useState('get users email');
+    const [password, setPassword]  = useState('get users password');
     
     const handleToggle = () => {
         setCanShow((canShow) => !canShow);
@@ -29,13 +33,13 @@ const ProfileSettings = ()=> {
 
             <div className="settings-contents">
                 <h3> Email</h3>
-                <p> Users email here </p>
+                <p value={email}> </p>
 
                 <h3> Password</h3>
 
                 {canShow ? 
                     <view>
-                        <text> User Password Here </text>
+                        <text value={password}> </text>
                         <img className="visibility-icon" onClick={handleToggle} src={visible}></img>
                     </view>
                 : 
