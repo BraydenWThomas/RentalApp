@@ -157,7 +157,7 @@ const HomePage = (props) => {
 					<Grid container>
 						{/* Search */}
 						<Grid xs={12}>
-							<SearchBar />
+							<SearchBar searchTxt={props.searchTxt} setSearchTxt={props.setSearchTxt} />
 						</Grid>
 						{/* Recent Searches */}
 						<Grid xs={12}>

@@ -2,12 +2,14 @@ import "./App.css";
 import { Route, Routes } from "react-router-dom";
 import Navbar from "./Components/Navbar";
 import HomePage from "./Components/HomePage";
+import PropertySearch from "./Components/PropertySearch";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { useState } from "react";
 
 function App() {
 	const [isLoggedIn, setIsLoggedIn] = useState(false);
+	const [searchTxt, setSearchTxt] = useState("");
 
 	return (
 		<div className="App">
@@ -20,7 +22,15 @@ function App() {
 							<HomePage
 								isLoggedIn={isLoggedIn}
 								setIsLoggedIn={setIsLoggedIn}
+								searchTxt={searchTxt}
+								setSearchTxt={setSearchTxt}
 							/>
+						}
+					/>
+					<Route
+						path="/search"
+						element={
+							<PropertySearch searchTxt={searchTxt} setSearchTxt={setSearchTxt} />
 						}
 					/>
 				</Routes>
