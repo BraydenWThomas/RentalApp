@@ -3,6 +3,7 @@ import "../Styles/Profile.css";
 import * as React from 'react';
 import { useState } from "react";
 import ProfileWallet from "./ProfileWallet";
+import ProfileSettings from "./ProfileSettings";
 
 const Profile = () => {
     const buttonStyle = {
@@ -81,6 +82,7 @@ const Profile = () => {
 
        <div className="profile-option-page">
             {activeTab === 'wallet' && <ProfileWallet/>}
+            {activeTab === 'settings' && <ProfileSettings/>}
        </div>
     </div>
         

@@ -1,0 +1,30 @@
+.profile-settings-container {
+    background-color: white;
+    font-family: 'Oswald';
+    padding: 1% 5% 5% 5%;
+    border-radius: 10px;
+    box-shadow: 0px 2px 5px #808080;
+}
+
+.profile-settings-header {
+    text-align: left;
+}
+
+.settings-contents {
+    text-align: left;
+}
+
+.profile-settings-delete{
+    background-color: #A59DB7;
+    color: white;
+    font-family: 'Oswald';
+    width: 100%;
+    border-radius: 10px;
+    box-shadow: 0px 2px 5px #808080;
+}
+
+
+.visibility-icon{
+    height: 20px;
+    width: 20px;
+}
