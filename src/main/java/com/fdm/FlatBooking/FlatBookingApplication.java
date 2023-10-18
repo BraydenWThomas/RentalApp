@@ -57,7 +57,7 @@ public class FlatBookingApplication implements CommandLineRunner {
 		generateMockData();
 		System.out.println("\n-----USER CREATED-----\n");
 
-		queryTests();
+		// queryTests();
 	}
 
 	public static byte[] LoadImage(String fileName) throws Exception {
@@ -105,10 +105,13 @@ public class FlatBookingApplication implements CommandLineRunner {
 	}
 
 	private void createUsers() {
+		ArrayList<PropertySearch> searches = new ArrayList<>();
+		searches.add(new PropertySearch(400, 1, 1, 1, new ArrayList<String>(), new Date(20000000)));
+
 		// userRepository.save(new User("sjer", "samantha jermyn", 20, "manager"));
 		User user1 = new User("Samantha", "Jermyn", 12345678, Gender.FEMALE, new Date(2000000000),
 				"Cat Cafe Enthusiast", "1 Smith Street", true, new ArrayList<String>(), new ArrayList<String>(),
-				1_000_000, new Credentials("samantha.jermyn", "sam@jermyn.com"), new ArrayList<PropertySearch>());
+				1_000_000, new Credentials("samantha.jermyn", "sam@jermyn.com"), searches);
 		User user2 = new User("Shuyun", "Huang", 12345678, Gender.FEMALE, new Date(2000000000), "COO", "2 Jess Street",
 				true, new ArrayList<String>(), new ArrayList<String>(), 1_000_00,
 				new Credentials("shuyun.huang", "shuyun@huang.com"), new ArrayList<PropertySearch>());
@@ -178,13 +181,13 @@ public class FlatBookingApplication implements CommandLineRunner {
 		images.add(new Binary(BsonBinarySubType.BINARY, LoadImage("cat7.jpeg")));
 
 		List<Binary> imageSet1 = new ArrayList<>();
-		imageSet1 = (images.subList(0, 2));
+		imageSet1 = (images.subList(0, 1));
 
 		List<Binary> imageSet2 = new ArrayList<>();
-		imageSet2 = (images.subList(2, 4));
+		imageSet2 = (images.subList(1, 2));
 
 		List<Binary> imageSet3 = new ArrayList<>();
-		imageSet3 = (images.subList(4, 7));
+		imageSet3 = (images.subList(3, 4));
 
 		ArrayList<Boolean> features = new ArrayList<Boolean>();
 		ArrayList<Property> properties = new ArrayList<>();

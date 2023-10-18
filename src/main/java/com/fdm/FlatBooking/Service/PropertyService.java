@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
 
 import com.fdm.FlatBooking.Model.Property;
@@ -35,6 +34,9 @@ public class PropertyService implements IPropertyService {
 	public List<Property> getRecentListings() {
 		List<Property> props = propertyRepository.findByCurrentlyAvailableIsTrue();
 		props.sort((Property p1, Property p2) -> p1.getLatestUpdate().compareTo(p2.getLatestUpdate()));
+
+		if (props.size() < 5)
+			return props;
 		return props.subList(0, 4);
 
 	}
