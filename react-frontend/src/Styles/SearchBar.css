@@ -1,0 +1,23 @@
+.searchBox {
+    padding-inline: 15px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    background-color: white;
+    border-radius: 10px;
+}
+
+.searchFieldStack {
+    align-items: center;
+}
+
+/* .filterBtn {
+    padding: 0.5rem;
+    background-color: #A59DB740;
+    border-radius: 10px;
+    margin-left: 1rem;
+} */
+
+.searchContainer {
+    align-items: center;
+    text-align: center;
+}

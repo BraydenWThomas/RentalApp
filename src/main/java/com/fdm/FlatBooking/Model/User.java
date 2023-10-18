@@ -1,12 +1,9 @@
 package com.fdm.FlatBooking.Model;
 
 import java.util.ArrayList;
-import java.util.List;
-
-import org.bson.BsonDateTime;
+import java.util.Date;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-import com.fdm.FlatBooking.Model.Transaction;
 
 @Document("User")
 public class User {
@@ -16,40 +13,39 @@ public class User {
 	
 	private String firstName;
 	private String lastName;
-	private String password;
-	private String gender;
-	private BsonDateTime dateOfBirth;
+	private int mobile;
+	private Gender gender;
+//	private BsonDateTime dateOfBirth;
+	private Date dateOfBirth;
 	private String occupation;
 	private String currentAddress;
 	private boolean isActive;
 	
-	// Could be an array of Property objects??
 	private ArrayList<String> bookmarkedProperties;
-	// Could be an array of Transaction objects??
 	private ArrayList<String> transactionHistory;
 	
 	private double balance;
-	private ContactInformation contactInformation;
+	private Credentials credentials;
 	private ArrayList<PropertySearch> propertySearchPreferences;
 	
 	
-	public User(String firstName, String lastName, String password, String gender, BsonDateTime dateOfBirth,
+	public User(String firstName, String lastName, int mobile, Gender gender, Date dateOfBirth,
 			String occupation, String currentAddress, boolean isActive, ArrayList<String> bookmarkedProperties,
-			ArrayList<String> arrayList, double balance, ContactInformation contactInformation,
+			ArrayList<String> transactionHistory, double balance, Credentials credentials,
 			ArrayList<PropertySearch> propertySearchPreferences) {
 		super();
 		this.firstName = firstName;
 		this.lastName = lastName;
-		this.password = password;
+		this.mobile = mobile;
 		this.gender = gender;
 		this.dateOfBirth = dateOfBirth;
 		this.occupation = occupation;
 		this.currentAddress = currentAddress;
 		this.isActive = isActive;
 		this.bookmarkedProperties = bookmarkedProperties;
-		this.transactionHistory = arrayList;
+		this.transactionHistory = transactionHistory;
 		this.balance = balance;
-		this.contactInformation = contactInformation;
+		this.credentials = credentials;
 		this.propertySearchPreferences = propertySearchPreferences;
 	}
 
@@ -87,32 +83,32 @@ public class User {
 	}
 
 
-	public String getPassword() {
-		return password;
+	public int getMobile() {
+		return mobile;
 	}
 
 
-	public void setPassword(String password) {
-		this.password = password;
+	public void setMobile(int mobile) {
+		this.mobile = mobile;
 	}
 
 
-	public String getGender() {
+	public Gender getGender() {
 		return gender;
 	}
 
 
-	public void setGender(String gender) {
+	public void setGender(Gender gender) {
 		this.gender = gender;
 	}
 
 
-	public BsonDateTime getDateOfBirth() {
+	public Date getDateOfBirth() {
 		return dateOfBirth;
 	}
 
 
-	public void setDateOfBirth(BsonDateTime dateOfBirth) {
+	public void setDateOfBirth(Date dateOfBirth) {
 		this.dateOfBirth = dateOfBirth;
 	}
 
@@ -147,7 +143,7 @@ public class User {
 	}
 
 
-	public List<String> getBookmarkedProperties() {
+	public ArrayList<String> getBookmarkedProperties() {
 		return bookmarkedProperties;
 	}
 
@@ -157,7 +153,7 @@ public class User {
 	}
 
 
-	public List<String> getTransactionHistory() {
+	public ArrayList<String> getTransactionHistory() {
 		return transactionHistory;
 	}
 
@@ -177,17 +173,17 @@ public class User {
 	}
 
 
-	public ContactInformation getContactInformation() {
-		return contactInformation;
+	public Credentials getCredentials() {
+		return credentials;
 	}
 
 
-	public void setContactInformation(ContactInformation contactInformation) {
-		this.contactInformation = contactInformation;
+	public void setCredentials(Credentials credentials) {
+		this.credentials = credentials;
 	}
 
 
-	public List<PropertySearch> getPropertySearchPreferences() {
+	public ArrayList<PropertySearch> getPropertySearchPreferences() {
 		return propertySearchPreferences;
 	}
 
