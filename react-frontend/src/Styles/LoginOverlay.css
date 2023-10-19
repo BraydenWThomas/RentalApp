@@ -1,0 +1,22 @@
+.login-container {
+    width: 400px;
+    height: 450px;
+    background-color: #e0dee7;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 20px;
+    font-family: 'Oswald';
+    padding: 2rem 3rem;
+}
+
+.login-content {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.submit-button {
+    margin-top: 20px;
+}
