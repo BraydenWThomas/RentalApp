@@ -78,6 +78,7 @@ const LoginOverlay = (props) => {
 						<TextField
 							fullWidth
 							style={textfieldStyle}
+							type="password"
 							onChange={(e) => {
 								setPassword(e.target.value);
 							}}

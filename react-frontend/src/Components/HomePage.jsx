@@ -170,7 +170,7 @@ const HomePage = (props) => {
 								}}
 								gap={10}
 							>
-								{recentSearches.map((search) => (
+								{recentSearches?.map((search) => (
 									<RecentSearchCard search={search} />
 								))}
 							</ImageList>
