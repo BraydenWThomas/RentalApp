@@ -30,7 +30,7 @@ function App() {
 						}
 					/>
 					{/* <Route path="/signup" element={<SignupPage />} /> */}
-					<Route path="/profile" element={<Profile />} />
+					<Route path="/profile" element={<Profile user={user}/>} />
 				</Routes>
 			</LocalizationProvider>
 		</div>
