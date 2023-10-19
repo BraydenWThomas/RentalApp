@@ -7,6 +7,8 @@ import java.util.Optional;
 
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.gridfs.GridFsTemplate;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -30,6 +32,7 @@ import com.fdm.FlatBooking.Model.User;
 import com.fdm.FlatBooking.Service.UserService;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
+import com.mongodb.client.gridfs.model.GridFSFile;
 
 @RestController
 @RequestMapping("/api/v1/users")
@@ -138,4 +141,11 @@ public class UserController {
         user.setProfilePhotoId(photoId.toHexString());
         userService.updateUser(user);
     }
+
+    // @GetMapping("/profilePhoto/{photoId}")
+    // public MultipartFile getProfilePhoto(@PathVariable String photoId) {
+    // GridFSFile gridFsfile = gridFsTemplate.findOne(new
+    // Query(Criteria.where("_id").is(photoId)));
+
+    // }
 }

@@ -1,13 +1,4 @@
-import {
-	Button,
-	Container,
-	Grid,
-	List,
-	ListItem,
-	ListItemButton,
-	Box,
-	ImageList,
-} from "@mui/material";
+import { Button, Container, Grid, ImageList } from "@mui/material";
 import "../Styles/HomePage.css";
 import LoginOverlay from "./LoginOverlay";
 import SearchBar from "./SearchBar";
