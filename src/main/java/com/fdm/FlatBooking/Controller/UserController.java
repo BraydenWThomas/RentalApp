@@ -147,14 +147,20 @@ public class UserController {
 
     @GetMapping("/profilePhoto/{photoId}")
     public String getProfilePhoto(@PathVariable String photoId) throws IllegalStateException, IOException {
+        System.out.println("Finding photo with ID: " + photoId);
         GridFSFile gridFsfile = gridFsTemplate.findOne(new Query(Criteria.where("_id").is(photoId)));
+
+        if (gridFsfile == null) {
+            System.out.println("File is null");
+            return "";
+        }
 
         InputStream in = gridFsTemplate.getResource(gridFsfile).getInputStream();
 
         int length = (int) gridFsfile.getLength();
         if (length != gridFsfile.getLength()) {
             System.out.println("Image too big");
-            return null;
+            return "";
         }
 
         byte[] data = new byte[length];

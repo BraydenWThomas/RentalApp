@@ -10,6 +10,7 @@ import {
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import * as React from "react";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import axios from "axios";
 
 const ProfileDetails = () => {
 	const [gender, setGender] = React.useState("");
@@ -25,6 +26,8 @@ const ProfileDetails = () => {
 	const [state, setState] = React.useState("get users state");
 	const [postcode, setPostcode] = React.useState("get users postcode");
 	const [country, setCountry] = React.useState("get users country");
+	const [profilePhoto, setProfilePhoto] = React.useState("");
+	const api = "http://localhost:8080/api/v1";
 
 	const changeGender = (event) => {
 		setGender(event.target.value);
@@ -33,6 +36,18 @@ const ProfileDetails = () => {
 	const updateInformation = () => {
 		console.log("update info clicked");
 	};
+
+	React.useEffect(() => {
+		axios.get(api + "/users/userdetails")
+			.then(res => {
+				const photoId = res.data.profilePhotoId
+
+				axios.get(api + `/users/profilePhoto/${photoId}`)
+					.then(res => {
+						setProfilePhoto(res.data)
+					})
+			})
+	}, [])
 
 	const buttonStyle = {
 		backgroundColor: "#A59DB7",
@@ -49,11 +64,25 @@ const ProfileDetails = () => {
 		justifyContent: "center",
 	};
 
+	const imageStyle = {
+		maxWidth: "100%",
+		height: "auto",
+		borderRadius: "10px 10px 0 0",
+		marginRight: "10px",
+	};
+
 	return (
 		<div className="profile-details-container">
 			<Grid container>
 				<Grid xs={1} style={profileImageContainerStyle}>
-					<AccountCircleIcon fontSize="large" />
+					{profilePhoto.length < 1 ? (
+						<AccountCircleIcon fontSize="large" />
+					) : (
+						<img
+							style={imageStyle}
+							src={`data:image/jpg;base64,${profilePhoto}`}
+						/>
+					)}
 				</Grid>
 				<Grid xs={8}>
 					<h1 className="profile-details-header">Personal Details</h1>
