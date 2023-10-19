@@ -23,6 +23,8 @@ function App() {
 						path="/"
 						element={
 							<HomePage
+								isLoggedIn={isLoggedIn}
+								setIsLoggedIn={setIsLoggedIn}
 								userData={userData}
 								setUserData={setUserData}
 							/>

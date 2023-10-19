@@ -51,9 +51,7 @@ const LoginOverlay = (props) => {
 
 					const url2 = "http://localhost:8080/api/v1/users/userdetails";
 					axios.get(url2).then((res) => {
-						const success = res.data;
-							console.log(success);
-							console.log(res.data);
+							const success = res.data;
 							
 							setUser(success);
 						})
