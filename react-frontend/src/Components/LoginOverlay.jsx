@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 
 const LoginOverlay = (props) => {
 	const [open, setOpen] = props.open;
+	const [user, setUser] = props.open;
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 	const nav = useNavigate();
@@ -47,9 +48,21 @@ const LoginOverlay = (props) => {
 
 					setEmail("");
 					setPassword("");
+
+					const url2 = "http://localhost:8080/api/v1/users/userdetails";
+					axios.get(url2).then((res) => {
+						const success = res.data;
+							console.log(success);
+							console.log(res.data);
+							
+							setUser(success);
+						})
+						.catch(console.log);
 				}
 			})
 			.catch(console.log);
+
+		
 	};
 
 	return (
