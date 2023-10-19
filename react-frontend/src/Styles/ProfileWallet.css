@@ -25,10 +25,12 @@
 }
 
 .balance-amount {
-    font-size: 50px;
+    font-size: 55px;
     color: #A59DB7;
     margin-block-start: 0;
     margin-block-end: 0;
+    padding-top: 10%;
+    padding-bottom: 2%;
 }
 
 .wallet-action {
@@ -44,4 +46,54 @@
 
 .wallet-action:hover{
     box-shadow: 1px 2px 9px #000000;
+}
+
+.payment-container {
+    background-color: #c0bdcf;
+    width: 400px;
+    height:500px;
+    font-family: 'Oswald';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 0% 2%;
+    border-radius: 10px;
+}
+
+.close-icon {
+    position: absolute;
+    top: 5%;
+    right: 5%;
+    cursor: pointer;
+}
+
+.payment-buttons {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.recharge-container {
+    background-color: #c0bdcf;
+    width: 400px;
+    height:300px;
+    font-family: 'Oswald';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 0% 2%;
+    border-radius: 10px;
+}
+
+.transaction-entry {
+    display: flex;
+    justify-content: space-between;
+    background-color: #F5F5F5;
+    padding: 2% 5%;
+    border-radius: 10px;
+}
+
+.transaction-log {
+    margin-top: 3%;
 }
