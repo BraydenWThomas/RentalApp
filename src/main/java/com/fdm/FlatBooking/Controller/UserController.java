@@ -1,9 +1,18 @@
 package com.fdm.FlatBooking.Controller;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Base64;
 import java.util.List;
 import java.util.Optional;
 
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.gridfs.GridFsTemplate;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -18,11 +27,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.fdm.FlatBooking.Model.Credentials;
 import com.fdm.FlatBooking.Model.PropertySearch;
 import com.fdm.FlatBooking.Model.User;
 import com.fdm.FlatBooking.Service.UserService;
+import com.mongodb.BasicDBObject;
+import com.mongodb.DBObject;
+import com.mongodb.client.gridfs.model.GridFSFile;
 
 @RestController
 @RequestMapping("/api/v1/users")
@@ -31,6 +44,9 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    GridFsTemplate gridFsTemplate;
 
     @GetMapping("")
     public List<User> getAllUsers() {
@@ -102,5 +118,55 @@ public class UserController {
     public boolean signoutUser() {
         SecurityContextHolder.clearContext();
         return true;
+    }
+
+    @PostMapping(value = "/{userId}/profilePhoto", consumes = "multipart/form-data")
+    public void addProfilePhoto(@RequestParam("profilePhoto") MultipartFile photo, @PathVariable String userId)
+            throws IOException {
+        Optional<User> userOpt = userService.findUserById(userId);
+
+        if (!userOpt.isPresent()) {
+            System.out.println("No user (" + userId + ") to upload photo to");
+            return;
+        }
+
+        User user = userOpt.get();
+
+        // Save photo
+        InputStream in = photo.getInputStream();
+        DBObject metaData = new BasicDBObject();
+        metaData.put("userId", userId);
+
+        // Upload photo
+        ObjectId photoId = gridFsTemplate.store(in, userId, photo.getContentType(), metaData);
+
+        // Set photo id on user
+        user.setProfilePhotoId(photoId.toHexString());
+        userService.updateUser(user);
+    }
+
+    @GetMapping("/profilePhoto/{photoId}")
+    public String getProfilePhoto(@PathVariable String photoId) throws IllegalStateException, IOException {
+        System.out.println("Finding photo with ID: " + photoId);
+        GridFSFile gridFsfile = gridFsTemplate.findOne(new Query(Criteria.where("_id").is(photoId)));
+
+        if (gridFsfile == null) {
+            System.out.println("File is null");
+            return "";
+        }
+
+        InputStream in = gridFsTemplate.getResource(gridFsfile).getInputStream();
+
+        int length = (int) gridFsfile.getLength();
+        if (length != gridFsfile.getLength()) {
+            System.out.println("Image too big");
+            return "";
+        }
+
+        byte[] data = new byte[length];
+
+        in.read(data);
+
+        return Base64.getEncoder().encodeToString(data);
     }
 }

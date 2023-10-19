@@ -7,7 +7,14 @@ import ProfileSettings from "./ProfileSettings";
 import ProfileDetails from "./ProfileDetails";
 import ProfileProperties from "./ProfileProperties";
 
-const Profile = () => {
+const Profile = (props) => {
+
+    const user = props.user
+
+    React.useEffect(() => {
+        console.log(user)
+    }, [])
+
     const buttonStyle = {
         backgroundColor: '#A59DB7',
         color: 'white',
@@ -83,7 +90,7 @@ const Profile = () => {
         </div>
 
        <div className="profile-option-page">
-            {activeTab === 'wallet' && <ProfileWallet/>}
+            {activeTab === 'wallet' && <ProfileWallet user={user}/>}
             {activeTab === 'settings' && <ProfileSettings/>}
             {activeTab === 'details' && <ProfileDetails/>}
             {activeTab === 'properties' && <ProfileProperties/>}

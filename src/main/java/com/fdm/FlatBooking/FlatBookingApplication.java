@@ -2,11 +2,15 @@ package com.fdm.FlatBooking;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.InputStream;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import com.mongodb.BasicDBList;
+import com.mongodb.BasicDBObject;
+import com.mongodb.DBObject;
 import com.mongodb.client.gridfs.*;
 
 import org.bson.BsonBinarySubType;
@@ -15,6 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.data.mongodb.gridfs.GridFsTemplate;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 import org.springframework.security.core.context.SecurityContextHolder;
 
@@ -29,6 +34,7 @@ import com.fdm.FlatBooking.Model.User;
 import com.fdm.FlatBooking.Repository.PropertyRepository;
 import com.fdm.FlatBooking.Repository.TransactionRepository;
 import com.fdm.FlatBooking.Repository.UserRepository;
+import com.fdm.FlatBooking.Service.UserService;
 import com.fdm.FlatBooking.Model.Transaction;
 
 @SpringBootApplication
@@ -58,6 +64,12 @@ public class FlatBookingApplication implements CommandLineRunner {
 		System.out.println("\n-----USER CREATED-----\n");
 
 		// queryTests();
+
+		// Image test
+		// InputStream in = new FileInputStream("src/main/resources/images/cat1.jpg");
+		// DBObject metaData = new BasicDBObject();
+		// metaData.put("userId", "1234");
+		// gridFsTemplate.store(in, "test_filename", "image/jpg", metaData);
 	}
 
 	public static byte[] LoadImage(String fileName) throws Exception {
@@ -181,13 +193,13 @@ public class FlatBookingApplication implements CommandLineRunner {
 		images.add(new Binary(BsonBinarySubType.BINARY, LoadImage("cat7.jpeg")));
 
 		List<Binary> imageSet1 = new ArrayList<>();
-		imageSet1 = (images.subList(0, 1));
+		// imageSet1 = (images.subList(0, 1));
 
 		List<Binary> imageSet2 = new ArrayList<>();
-		imageSet2 = (images.subList(1, 2));
+		// imageSet2 = (images.subList(1, 2));
 
 		List<Binary> imageSet3 = new ArrayList<>();
-		imageSet3 = (images.subList(3, 4));
+		// imageSet3 = (images.subList(3, 4));
 
 		ArrayList<Boolean> features = new ArrayList<Boolean>();
 		ArrayList<Property> properties = new ArrayList<>();

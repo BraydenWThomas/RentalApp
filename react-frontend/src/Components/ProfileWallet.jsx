@@ -2,11 +2,17 @@ import "../Styles/ProfileWallet.css"
 import paymentIcon from "../Assets/payment-icon.png"
 import rechargeIcon from "../Assets/recharge-icon.png"
 import { Box, Button, MenuItem, Modal, Select, TextField } from "@mui/material"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import CloseIcon from '@mui/icons-material/Close';
 import avatar from "../Assets/avatarSmall.svg"
 
-const ProfileWallet = ()=> {
+const ProfileWallet = (props)=> {
+
+    const user = props.user
+
+    useEffect(() => {
+        console.log(user)
+    }, [])
 
     const buttonStyle = {
         backgroundColor: '#A59DB7',
@@ -34,7 +40,7 @@ const ProfileWallet = ()=> {
             <div className="wallet-contents">
 
                 <div  className="balance-container">
-                    <p className="balance-amount">$2999</p> 
+                    <p className="balance-amount">{user.balance}</p> 
                     <p>Current Balance</p> 
                 </div>
 
