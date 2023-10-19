@@ -34,6 +34,7 @@ import com.fdm.FlatBooking.Model.User;
 import com.fdm.FlatBooking.Repository.PropertyRepository;
 import com.fdm.FlatBooking.Repository.TransactionRepository;
 import com.fdm.FlatBooking.Repository.UserRepository;
+import com.fdm.FlatBooking.Service.UserService;
 import com.fdm.FlatBooking.Model.Transaction;
 
 @SpringBootApplication

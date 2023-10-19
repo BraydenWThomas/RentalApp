@@ -1,7 +1,10 @@
 package com.fdm.FlatBooking.Controller;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Base64;
 import java.util.List;
 import java.util.Optional;
 
@@ -142,10 +145,22 @@ public class UserController {
         userService.updateUser(user);
     }
 
-    // @GetMapping("/profilePhoto/{photoId}")
-    // public MultipartFile getProfilePhoto(@PathVariable String photoId) {
-    // GridFSFile gridFsfile = gridFsTemplate.findOne(new
-    // Query(Criteria.where("_id").is(photoId)));
+    @GetMapping("/profilePhoto/{photoId}")
+    public String getProfilePhoto(@PathVariable String photoId) throws IllegalStateException, IOException {
+        GridFSFile gridFsfile = gridFsTemplate.findOne(new Query(Criteria.where("_id").is(photoId)));
 
-    // }
+        InputStream in = gridFsTemplate.getResource(gridFsfile).getInputStream();
+
+        int length = (int) gridFsfile.getLength();
+        if (length != gridFsfile.getLength()) {
+            System.out.println("Image too big");
+            return null;
+        }
+
+        byte[] data = new byte[length];
+
+        in.read(data);
+
+        return Base64.getEncoder().encodeToString(data);
+    }
 }
