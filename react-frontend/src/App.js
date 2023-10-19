@@ -11,8 +11,7 @@ import { useState } from "react";
 
 function App() {
 	const [isLoggedIn, setIsLoggedIn] = useState(false);
-	const [user, setUser] = useState([{username: "" , age: 1}]);
-	const [userData, setUserData] = useState([{isLoggedIn: isLoggedIn, user: user}]);
+	const [user, setUser] = useState({});
 
 	return (
 		<div className="App">
@@ -25,8 +24,8 @@ function App() {
 							<HomePage
 								isLoggedIn={isLoggedIn}
 								setIsLoggedIn={setIsLoggedIn}
-								userData={userData}
-								setUserData={setUserData}
+								user={user}
+								setUser={setUser}
 							/>
 						}
 					/>
