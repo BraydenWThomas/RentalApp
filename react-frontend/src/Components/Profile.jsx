@@ -91,7 +91,9 @@ const Profile = (props) => {
 
        <div className="profile-option-page">
             {activeTab === 'wallet' && <ProfileWallet user={user}/>}
-            {activeTab === 'settings' && <ProfileSettings/>}
+            {activeTab === 'settings' && <ProfileSettings 
+                user={props.user}
+				setUser={props.setUser} />}
             {activeTab === 'details' && <ProfileDetails/>}
             {activeTab === 'properties' && <ProfileProperties/>}
 

@@ -7,11 +7,12 @@ import { Button, Grid, TextField, Container, Select, MenuItem } from "@mui/mater
 
 import { useState } from "react";
 
-const ProfileSettings = ()=> {
+const ProfileSettings = (props)=> {
+    const user = props.user
 
-    const [canShow, setCanShow] = useState(false)
-    const [email, setEmail]  = useState('get users email');
-    const [password, setPassword]  = useState('get users password');
+    const [canShow, setCanShow] = useState(false);
+    const email = user.credentials.email;
+    const [password, setPassword]  = ("password");
     
     const handleToggle = () => {
         setCanShow((canShow) => !canShow);
