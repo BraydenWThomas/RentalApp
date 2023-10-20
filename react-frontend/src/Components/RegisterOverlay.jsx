@@ -6,6 +6,7 @@ import {
 	Select,
 	MenuItem,
 	Modal,
+	FormControl,
 } from "@mui/material";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
@@ -105,6 +106,20 @@ const RegisterOverlay = (props) => {
 	const register = (e) => {
 		e.preventDefault();
 
+		if (password !== password2) {
+			alert("Passwords do not match")
+			return
+		}
+
+		const passwordValidatnStr = "(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-\\\/.><,])"
+		const regex = new RegExp(passwordValidatnStr)
+		const res = regex.test(password)
+
+		if (!res) {
+			alert("Password failed validation")
+			return
+		}
+
 		// if (password !== password2) {
 		// not secure -- need to change
 		const url = "http://localhost:8080/api/v1/users";
@@ -130,10 +145,25 @@ const RegisterOverlay = (props) => {
 			.then((res) => {
 				console.log(res);
 
-				uploadPhoto(res.data.id);
+				// Upload photo if chosen
+				if (profilePhoto) {
+					uploadPhoto(res.data.id);
+				}
 
+				// Close modal
 				handleClose();
 				nav("/");
+
+				// Reset form
+				setFirstName("")
+				setLastName("")
+				setEmail("")
+				setDob(new Date())
+				setGender("Female")
+				setMobile("")
+				setPassword("")
+				setPassword2("")
+				setProfilePhoto(null)
 			})
 			.catch(console.log);
 		// }
@@ -148,7 +178,7 @@ const RegisterOverlay = (props) => {
 						rel="stylesheet"
 					></link>
 					<div className="formbox">
-						<form>
+						<FormControl>
 							<Grid container>
 								<Grid xs={12}>
 									<h1
@@ -330,7 +360,7 @@ const RegisterOverlay = (props) => {
 									</Button>
 								</Grid>
 							</Grid>
-						</form>
+						</FormControl>
 					</div>
 				</Container>
 			</ThemeProvider>
