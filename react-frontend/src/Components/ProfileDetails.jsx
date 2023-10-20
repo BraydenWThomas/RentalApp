@@ -42,10 +42,13 @@ const ProfileDetails = () => {
 			.then(res => {
 				const photoId = res.data.profilePhotoId
 
-				axios.get(api + `/users/profilePhoto/${photoId}`)
-					.then(res => {
-						setProfilePhoto(res.data)
-					})
+				if (res.data.profilePhotoId) {
+
+					axios.get(api + `/users/profilePhoto/${photoId}`)
+						.then(res => {
+							setProfilePhoto(res.data)
+						})
+				}
 			})
 	}, [])
 
