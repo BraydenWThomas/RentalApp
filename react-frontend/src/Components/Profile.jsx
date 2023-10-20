@@ -106,6 +106,7 @@ const Profile = (props) => {
             />}
             {activeTab === 'details' && <ProfileDetails
                 user={user}
+                setUser={setUser}
             />}
             {activeTab === 'properties' && <ProfileProperties/>}
 

@@ -186,5 +186,17 @@ public class UserController {
         return true;
     }
     
+    @PostMapping("/editUser")
+    public User editProfile(@RequestBody User user) throws IOException {
+        Optional<User> userOpt = userService.findUserById(user.getId());
+
+        if (!userOpt.isPresent()) {
+            System.out.println("No user (" + user.getId() + ") to edit");
+        }
+        
+        userService.updateUser(user);
+        return user;
+    }
+    
     
 }
