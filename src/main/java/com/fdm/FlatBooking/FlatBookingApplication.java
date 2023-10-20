@@ -237,6 +237,7 @@ public class FlatBookingApplication implements CommandLineRunner {
 
 	private void createTransactions() {
 		List<User> users = userRepository.findAll();
+		System.out.println(users); 
 		ArrayList<Transaction> transactions = new ArrayList<Transaction>();
 		transactions.add(
 				new Transaction(users.get(0).getId(), users.get(1).getId(), new Date(20000000), 1000, "ref1"));

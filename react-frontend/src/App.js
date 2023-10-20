@@ -27,7 +27,14 @@ function App() {
 							/>
 						}
 					/>
-					<Route path="/profile" element={<Profile user={user	}/>} />
+					<Route path="/profile" 
+					element={
+						<Profile 
+							user={user} 
+							isLoggedIn={isLoggedIn}
+							setIsLoggedIn={setIsLoggedIn}
+						/>} 
+					/>
 				</Routes>
 			</LocalizationProvider>
 		</div>

@@ -5,14 +5,27 @@ import { Box, Button, MenuItem, Modal, Select, TextField } from "@mui/material"
 import { useEffect, useState } from "react"
 import CloseIcon from '@mui/icons-material/Close';
 import avatar from "../Assets/avatarSmall.svg"
+import axios from "axios"
 
 const ProfileWallet = (props)=> {
 
     const user = props.user
+    const isLoggedIn = props.isLoggedIn
+    const [transactions, setTransactions] = useState([])
+
+    const url = "http://localhost:8080/api/v1/transactions/"
 
     useEffect(() => {
-        console.log(user)
-    }, [])
+        if (isLoggedIn) {
+            axios
+            .get(url + `${user.id}/alltransactions`)
+            .then((response) => {
+                console.log(response)
+                setTransactions(response.data)
+            })
+            .catch(console.log)
+        }
+    }, [isLoggedIn])
 
     const buttonStyle = {
         backgroundColor: '#A59DB7',
@@ -57,14 +70,28 @@ const ProfileWallet = (props)=> {
             </div>
 
             <div className="transaction-log">
-                <div className="transaction-entry">
-                
-                    <img src={avatar} alt="avatar"></img>
-                    <p>Sender Name</p>
-    
-                    <p>date</p>
-                    <p>+ $230</p>
-                </div>
+
+                {transactions?.map((transaction) => (
+                    <div>
+                        {transaction.sender === user.id ? 
+                            <div className="transaction-entry">
+                                <img src={avatar} alt="avatar"></img>
+                                <p>{transaction.sender}</p>
+                                <p>{transaction.date.substring(0,10)}</p>
+                                <p className="neg-transaction-amount"> - ${transaction.amount}</p>
+                            </div>
+                            :
+                            <div className="transaction-entry">
+                                <img src={avatar} alt="avatar"></img>
+                                <p>{transaction.receiver}</p>
+                                <p>{transaction.date.substring(0,10)}</p>
+                                <p className="pos-transaction-amount"> + ${transaction.amount}</p>
+                            </div>
+                        }
+                    </div>
+                        
+                ))}
+
             </div>
 
             <Modal open={openPayment}>

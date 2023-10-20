@@ -10,10 +10,8 @@ import ProfileProperties from "./ProfileProperties";
 const Profile = (props) => {
 
     const user = props.user
-
-    React.useEffect(() => {
-        console.log(user)
-    }, [])
+    const isLoggedIn = props.isLoggedIn
+    const setIsLoggedIn = props.setIsLoggedIn
 
     const buttonStyle = {
         backgroundColor: '#A59DB7',
@@ -90,7 +88,7 @@ const Profile = (props) => {
         </div>
 
        <div className="profile-option-page">
-            {activeTab === 'wallet' && <ProfileWallet user={user}/>}
+            {activeTab === 'wallet' && <ProfileWallet user={user} isLoggedIn={isLoggedIn}/>}
             {activeTab === 'settings' && <ProfileSettings/>}
             {activeTab === 'details' && <ProfileDetails/>}
             {activeTab === 'properties' && <ProfileProperties/>}
