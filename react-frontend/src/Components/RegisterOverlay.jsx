@@ -30,10 +30,24 @@ const RegisterOverlay = (props) => {
 	const [lastName, setLastName] = React.useState("");
 	const [email, setEmail] = React.useState("");
 	const [mobile, setMobile] = React.useState("");
-	const [dob, setDob] = React.useState(new Date());
+	const [dob, setDob] = React.useState(null);
 	const [password, setPassword] = React.useState("");
 	const [password2, setPassword2] = React.useState("");
 	const [profilePhoto, setProfilePhoto] = React.useState(null);
+	const [gender, setGender] = React.useState("FEMALE");
+
+	const [validation, setValidation] = React.useState({
+		firstNameError: "",
+		lastNameError: "",
+		emailError: "",
+		mobileError: "",
+		dobError: "",
+		passwordError: "",
+		confirmPasswordError: ""
+	})
+
+	const passwordValidatnStr = "(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-\\\/.><,])"
+	const regex = new RegExp(passwordValidatnStr)
 
 	const fileInputBtn = React.useRef(null);
 
@@ -70,9 +84,6 @@ const RegisterOverlay = (props) => {
 		},
 	});
 
-	// var gender = "FEMALE"const [age, setAge] = React.useState('');
-	const [gender, setGender] = React.useState("");
-
 	const changeGender = (event) => {
 		setGender(event.target.value);
 	};
@@ -105,20 +116,71 @@ const RegisterOverlay = (props) => {
 
 	const register = (e) => {
 		e.preventDefault();
-
-		if (password !== password2) {
-			alert("Passwords do not match")
-			return
+		let error = false;
+		let newValidation = {
+			firstNameError: "",
+			lastNameError: "",
+			emailError: "",
+			mobileError: "",
+			dobError: "",
+			passwordError: "",
+			confirmPasswordError: ""
 		}
 
-		const passwordValidatnStr = "(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-\\\/.><,])"
-		const regex = new RegExp(passwordValidatnStr)
 		const res = regex.test(password)
 
 		if (!res) {
-			alert("Password failed validation")
-			return
+			newValidation.passwordError = "Password is not valid"
+			error = true
+		} else {
+			newValidation.passwordError = ""
 		}
+
+		if (password !== password2) {
+			newValidation.confirmPasswordError = "Passwords do not match"
+			error = true
+		} else {
+			newValidation.confirmPasswordError = ""
+		}
+
+		if (firstName === "") {
+			newValidation.firstNameError = "Fill out this field"
+			error = true
+		} else {
+			newValidation.firstNameError = ""
+		}
+
+		if (lastName === "") {
+			newValidation.lastNameError = "Fill out this field"
+			error = true
+		} else {
+			newValidation.lastNameError = ""
+		}
+
+		if (email === "") {
+			newValidation.emailError = "Fill out this field"
+			error = true
+		} else {
+			newValidation.emailError = ""
+		}
+
+		if (mobile === "") {
+			newValidation.mobileError = "Fill out this field"
+			error = true
+		} else {
+			newValidation.mobileError = ""
+		}
+
+		if (dob > new Date()) {
+			newValidation.dobError = "Date of birth cannot be in the future"
+			error = true
+		} else {
+			newValidation.dobError = ""
+		}
+
+		setValidation(newValidation)
+
+		if (error) return;
 
 		// if (password !== password2) {
 		// not secure -- need to change
@@ -158,8 +220,8 @@ const RegisterOverlay = (props) => {
 				setFirstName("")
 				setLastName("")
 				setEmail("")
-				setDob(new Date())
-				setGender("Female")
+				setDob(null)
+				setGender("FEMALE")
 				setMobile("")
 				setPassword("")
 				setPassword2("")
@@ -196,12 +258,22 @@ const RegisterOverlay = (props) => {
 									<p className="fieldLabel">First Name*</p>
 									<TextField
 										fullWidth
+										value={firstName}
 										className="formfield"
 										style={textfieldStyle}
 										required
+										error={validation.firstNameError.length > 0}
+										helperText={validation.firstNameError}
 										id="outline-required"
 										onChange={(e) => {
 											setFirstName(e.target.value);
+											if (e.target.value == "") {
+												validation.firstNameError = "Fill out this field"
+												setValidation(validation)
+											} else {
+												validation.firstNameError = ""
+												setValidation(validation)
+											}
 										}}
 									/>
 								</Grid>
@@ -213,8 +285,19 @@ const RegisterOverlay = (props) => {
 										fullWidth
 										className="formfield"
 										style={textfieldStyle}
+										required
+										value={lastName}
+										error={validation.lastNameError.length > 0}
+										helperText={validation.lastNameError}
 										onChange={(e) => {
 											setLastName(e.target.value);
+											if (e.target.value == "") {
+												validation.lastNameError = "Fill out this field"
+												setValidation(validation)
+											} else {
+												validation.lastNameError = ""
+												setValidation(validation)
+											}
 										}}
 									/>
 								</Grid>
@@ -227,8 +310,19 @@ const RegisterOverlay = (props) => {
 										className="formfield"
 										style={textfieldStyle}
 										type="email"
+										required
+										value={email}
+										error={validation.emailError.length > 0}
+										helperText={validation.emailError}
 										onChange={(e) => {
 											setEmail(e.target.value);
+											if (e.target.value == "") {
+												validation.emailError = "Fill out this field"
+												setValidation(validation)
+											} else {
+												validation.emailError = ""
+												setValidation(validation)
+											}
 										}}
 									/>
 								</Grid>
@@ -237,11 +331,21 @@ const RegisterOverlay = (props) => {
 								<Grid xs={12} paddingInline={2}>
 									<p className="fieldLabel">Date of Birth*</p>
 									<DatePicker
-										dateFormat="dd/MM/yyyy"
 										className="formfield datePicker"
 										color="white"
+										required
+										value={dob}
+										error={validation.dobError.length > 0}
+										helperText={validation.dobError}
 										onChange={(date) => {
 											setDob(date);
+											if (date > new Date()) {
+												validation.dobError = "Date of birth cannot be in the future"
+												setValidation(validation)
+											} else {
+												validation.dobError = ""
+												setValidation(validation)
+											}
 										}}
 									/>
 								</Grid>
@@ -254,8 +358,19 @@ const RegisterOverlay = (props) => {
 										className="formfield"
 										style={textfieldStyle}
 										type="number"
+										required
+										value={mobile}
+										error={validation.mobileError.length > 0}
+										helperText={validation.mobileError}
 										onChange={(e) => {
 											setMobile(e.target.value);
+											if (e.target.value == "") {
+												validation.mobileError = "Fill out this field"
+												setValidation(validation)
+											} else {
+												validation.mobileError = ""
+												setValidation(validation)
+											}
 										}}
 									/>
 								</Grid>
@@ -288,9 +403,20 @@ const RegisterOverlay = (props) => {
 										fullWidth
 										className="formfield"
 										style={textfieldStyle}
+										required
+										value={password}
+										error={validation.passwordError.length > 0}
+										helperText={validation.passwordError}
 										type="password"
 										onChange={(e) => {
 											setPassword(e.target.value);
+											if (regex.test(e.target.value)) {
+												validation.passwordError = ""
+												setValidation(validation)
+											} else {
+												validation.passwordError = "Password is not valid"
+												setValidation(validation)
+											}
 										}}
 									/>
 								</Grid>
@@ -304,9 +430,19 @@ const RegisterOverlay = (props) => {
 										fullWidth
 										className="formfield"
 										style={textfieldStyle}
+										required
+										value={password2}
+										error={validation.confirmPasswordError.length > 0}
+										helperText={validation.confirmPasswordError}
 										type="password"
 										onChange={(e) => {
 											setPassword2(e.target.value);
+											if (e.target.value === password) {
+												validation.confirmPasswordError = ""
+											} else {
+												validation.confirmPasswordError = "Passwords do not match"
+											}
+											setValidation(validation)
 										}}
 									/>
 									<p className="fieldLabel">
@@ -335,6 +471,7 @@ const RegisterOverlay = (props) => {
 											type="file"
 											style={{ display: "none" }}
 											onChange={imageChanged}
+											value={profilePhoto}
 											ref={fileInputBtn}
 										/>
 									</Stack>
