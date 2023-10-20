@@ -6,10 +6,17 @@ import ProfileWallet from "./ProfileWallet";
 import ProfileSettings from "./ProfileSettings";
 import ProfileDetails from "./ProfileDetails";
 import ProfileProperties from "./ProfileProperties";
+import { useLocation } from 'react-router-dom'
 
 const Profile = (props) => {
-
+    const setIsLoggedIn = props.setIsLoggedIn;
     const user = props.user
+    const setUser = props.setUser
+
+    
+
+    // const location = useLocation();
+    // const { from } = location.state;
 
     React.useEffect(() => {
         console.log(user)
@@ -90,11 +97,16 @@ const Profile = (props) => {
         </div>
 
        <div className="profile-option-page">
-            {activeTab === 'wallet' && <ProfileWallet user={user}/>}
+            {activeTab === 'wallet' && <ProfileWallet 
+            user={user}
+            />}
             {activeTab === 'settings' && <ProfileSettings 
-                user={props.user}
-				setUser={props.setUser} />}
-            {activeTab === 'details' && <ProfileDetails/>}
+                user={user}
+                setIsLoggedIn={setIsLoggedIn}
+            />}
+            {activeTab === 'details' && <ProfileDetails
+                user={user}
+            />}
             {activeTab === 'properties' && <ProfileProperties/>}
 
        </div>

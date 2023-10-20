@@ -14,7 +14,7 @@ function App() {
 	return (
 		<div className="App">
 			<LocalizationProvider dateAdapter={AdapterDayjs}>
-				<Navbar isLoggedIn={isLoggedIn} />
+				<Navbar isLoggedIn={isLoggedIn} user={user} setUser={setUser} />
 				<Routes>
 					<Route
 						path="/"
@@ -33,7 +33,8 @@ function App() {
 						element=
 							{<Profile 
 								user={user}
-								setUser={setUser} 
+								setUser={setUser}
+								setIsLoggedIn={setIsLoggedIn} 
 							/>} 
 					/>
 				</Routes>
