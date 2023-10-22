@@ -3,6 +3,7 @@ import { Route, Routes } from "react-router-dom";
 import Navbar from "./Components/Navbar";
 import HomePage from "./Components/HomePage";
 import Profile from "./Components/Profile";
+import PropertySearch from "./Components/PropertySearch";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import 'dayjs/locale/en-au'
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
@@ -11,6 +12,7 @@ import { useState } from "react";
 function App() {
 	const [isLoggedIn, setIsLoggedIn] = useState(false);
 	const [user, setUser] = useState({});
+	const [searchTxt, setSearchTxt] = useState("");
 
 	return (
 		<div className="App">
@@ -25,6 +27,8 @@ function App() {
 								setIsLoggedIn={setIsLoggedIn}
 								user={user}
 								setUser={setUser}
+								searchTxt={searchTxt}
+								setSearchTxt={setSearchTxt}
 							/>
 						}
 					/>
@@ -37,6 +41,15 @@ function App() {
 								setUser={setUser}
 								setIsLoggedIn={setIsLoggedIn} 
 							/>} 
+							/>
+								
+					<Route
+						path="/search"
+						element={
+							<PropertySearch 
+								searchTxt={searchTxt} 
+								setSearchTxt={setSearchTxt} 
+							/>}
 					/>
 				</Routes>
 			</LocalizationProvider>
