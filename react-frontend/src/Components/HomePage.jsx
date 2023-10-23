@@ -6,6 +6,7 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import RegisterOverlay from "./RegisterOverlay";
 import FilterOverlay from "./FilterOverlay";
+import imagePlaceholder from "../Assets/No-Image-Placeholder.png";
 
 const HomePage = (props) => {
 	const [openLogin, setOpenLogin] = useState(false);
@@ -153,6 +154,10 @@ const HomePage = (props) => {
 						<Grid xs={12}>
 							<SearchBar
 								openFilter={[openFilter, setOpenFilter]}
+								searchTxt={props.searchTxt}
+								setSearchTxt={props.setSearchTxt}
+								searchResults={props.searchResults}
+								setSearchResults={props.setSearchResults}
 							/>
 						</Grid>
 						{/* Recent Searches */}
@@ -185,7 +190,10 @@ const HomePage = (props) => {
 					gap={10}
 				>
 					{recentListings.map((listing) => (
-						<RecentListingCard listing={listing} />
+						<RecentListingCard
+							listing={listing}
+							key={listing.propertyId}
+						/>
 					))}
 				</ImageList>
 			</Container>
@@ -261,10 +269,17 @@ const RecentListingCard = ({ listing }) => {
 					src="https://carlislehomes.com.au/static/images/hal/CARL607554_Matisse33_003_2.jpg"
 					alt="House"
 				/> */}
-				{listing.images.length > 0 && (
+				{listing.images.length > 0 ? (
 					<img
 						style={imageStyle}
 						src={`data:image/jpg;base64,${listing.images[0].data}`}
+						alt="Property"
+					/>
+				) : (
+					<img
+						style={imageStyle}
+						src={imagePlaceholder}
+						alt="Property"
 					/>
 				)}
 			</Grid>
