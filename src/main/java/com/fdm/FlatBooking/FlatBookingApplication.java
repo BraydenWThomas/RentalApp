@@ -59,9 +59,9 @@ public class FlatBookingApplication implements CommandLineRunner {
 	public void run(String... args) throws Exception {
 
 		// generates mock data
-		System.out.println("-----CREATE User ITEMS-----\n");
+		System.out.println("----- Generate Mock Data -----\n");
 		generateMockData();
-		System.out.println("\n-----USER CREATED-----\n");
+		System.out.println("\n----------- Done -----------\n");
 
 		// queryTests();
 
@@ -261,9 +261,15 @@ public class FlatBookingApplication implements CommandLineRunner {
 		propertyRepository.deleteAll();
 		transactionRepository.deleteAll();
 
+		System.out.print("Generating users...");
 		createUsers();
+		System.out.println("Done!");
+		System.out.print("Generating Properties...");
 		createProperties();
+		System.out.println("Done!");
+		System.out.print("Generating transactions...");
 		createTransactions();
+		System.out.println("Done!");
 	}
 
 }

@@ -3,17 +3,25 @@ import { Route, Routes } from "react-router-dom";
 import Navbar from "./Components/Navbar";
 import HomePage from "./Components/HomePage";
 import Profile from "./Components/Profile";
+import PropertySearch from "./Components/PropertySearch";
 import { LocalizationProvider } from "@mui/x-date-pickers";
+import "dayjs/locale/en-au";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { useState } from "react";
 
 function App() {
 	const [isLoggedIn, setIsLoggedIn] = useState(false);
 	const [user, setUser] = useState({});
+	const [searchTxt, setSearchTxt] = useState("");
+	const [searchFilters, setSearchFilters] = useState({});
+	const [searchResults, setSearchResults] = useState([]);
 
 	return (
 		<div className="App">
-			<LocalizationProvider dateAdapter={AdapterDayjs}>
+			<LocalizationProvider
+				dateAdapter={AdapterDayjs}
+				adapterLocale="en-au"
+			>
 				<Navbar isLoggedIn={isLoggedIn} user={user} setUser={setUser} />
 				<Routes>
 					<Route
@@ -24,18 +32,38 @@ function App() {
 								setIsLoggedIn={setIsLoggedIn}
 								user={user}
 								setUser={setUser}
+								searchTxt={searchTxt}
+								setSearchTxt={setSearchTxt}
+								searchFilters={searchFilters}
+								setSearchFilters={setSearchFilters}
+								searchResults={searchResults}
+								setSearchResults={setSearchResults}
 							/>
 						}
 					/>
 					{/* <Route path="/signup" element={<SignupPage />} /> */}
-					<Route 
-						path="/profile" 
-						element=
-							{<Profile 
+					<Route
+						path="/profile"
+						element={
+							<Profile
 								user={user}
 								setUser={setUser}
-								setIsLoggedIn={setIsLoggedIn} 
-							/>} 
+								setIsLoggedIn={setIsLoggedIn}
+							/>
+						}
+					/>
+					<Route
+						path="/search"
+						element={
+							<PropertySearch
+								searchTxt={searchTxt}
+								setSearchTxt={setSearchTxt}
+								searchFilters={searchFilters}
+								setSearchFilters={setSearchFilters}
+								searchResults={searchResults}
+								setSearchResults={setSearchResults}
+							/>
+						}
 					/>
 				</Routes>
 			</LocalizationProvider>

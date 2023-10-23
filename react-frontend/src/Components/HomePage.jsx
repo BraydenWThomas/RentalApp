@@ -5,10 +5,13 @@ import SearchBar from "./SearchBar";
 import axios from "axios";
 import { useState, useEffect } from "react";
 import RegisterOverlay from "./RegisterOverlay";
+import FilterOverlay from "./FilterOverlay";
+import imagePlaceholder from "../Assets/No-Image-Placeholder.png";
 
 const HomePage = (props) => {
 	const [openLogin, setOpenLogin] = useState(false);
 	const [openRegister, setOpenRegister] = useState(false);
+	const [openFilter, setOpenFilter] = useState(true);
 	const [recentListings, setRecentListings] = useState([]);
 	const [recentSearches, setRecentSearches] = useState([]);
 	const [refreshListings, setRefreshListings] = useState(false);
@@ -54,50 +57,6 @@ const HomePage = (props) => {
 		axios.get("http://localhost:8080/api/v1/users/signout");
 		props.setIsLoggedIn(false);
 	};
-
-	// Dummy data
-	// const recentSearches = [
-	// 	{
-	// 		location: "Melbourne",
-	// 		info: "1 Bed, 2 Bath",
-	// 	},
-	// 	{
-	// 		location: "Hawthorne",
-	// 		info: "1 Bed, 1 Car",
-	// 	},
-	// 	{
-	// 		location: "Bendigo",
-	// 		info: "3 Bed, 2 Bath, 2 Car",
-	// 	},
-	// 	{
-	// 		location: "Ringwood",
-	// 		info: "1 Bed, 1 Bath",
-	// 	},
-	// ];
-
-	// Dummy data
-	// const recentLisings = [
-	// 	{
-	// 		price: "$350 pw",
-	// 		address: "123 Smith Street",
-	// 		features: "Large Living area",
-	// 	},
-	// 	{
-	// 		price: "$450 pw",
-	// 		address: "123 Smith Street",
-	// 		features: "Large Living area",
-	// 	},
-	// 	{
-	// 		price: "$500 pw",
-	// 		address: "123 Smith Street",
-	// 		features: "Large Living area",
-	// 	},
-	// 	{
-	// 		price: "$320 pw",
-	// 		address: "123 Smith Street",
-	// 		features: "Large Living area",
-	// 	},
-	// ];
 
 	const buttonStyle = {
 		backgroundColor: "#A59DB7",
@@ -149,7 +108,14 @@ const HomePage = (props) => {
 					<Grid container>
 						{/* Search */}
 						<Grid xs={12}>
-							<SearchBar />
+							<SearchBar
+								openFilter={openFilter}
+								setOpenFilter={setOpenFilter}
+								searchTxt={props.searchTxt}
+								setSearchTxt={props.setSearchTxt}
+								searchResults={props.searchResults}
+								setSearchResults={props.setSearchResults}
+							/>
 						</Grid>
 						{/* Recent Searches */}
 						<Grid xs={12}>
@@ -181,7 +147,10 @@ const HomePage = (props) => {
 					gap={10}
 				>
 					{recentListings.map((listing) => (
-						<RecentListingCard listing={listing} />
+						<RecentListingCard
+							listing={listing}
+							key={listing.propertyId}
+						/>
 					))}
 				</ImageList>
 			</Container>
@@ -197,6 +166,7 @@ const HomePage = (props) => {
 				isLoggedIn={props.isLoggedIn}
 				setIsLoggedIn={props.setIsLoggedIn}
 			/>
+			<FilterOverlay open={[openFilter, setOpenFilter]} />
 		</div>
 	);
 };
@@ -257,10 +227,17 @@ const RecentListingCard = ({ listing }) => {
 					src="https://carlislehomes.com.au/static/images/hal/CARL607554_Matisse33_003_2.jpg"
 					alt="House"
 				/> */}
-				{listing.images.length > 0 && (
+				{listing.images.length > 0 ? (
 					<img
 						style={imageStyle}
 						src={`data:image/jpg;base64,${listing.images[0].data}`}
+						alt="Property"
+					/>
+				) : (
+					<img
+						style={imageStyle}
+						src={imagePlaceholder}
+						alt="Property"
 					/>
 				)}
 			</Grid>
