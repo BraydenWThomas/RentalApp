@@ -30,7 +30,7 @@ const FilterOverlay = (props) => {
 			<Container className="filter-container" maxWidth="sm">
 				{/* Header */}
 				<div className="header">
-					<h3 style={{ display: "inline" }}>Filter</h3>
+					<h2 style={{ display: "inline" }}>Filter</h2>
 
 					<button
 						variant="standard"
@@ -262,26 +262,42 @@ const PropertyTypeSelect = () => {
 const DetailFilters = () => {
 	const [minPrice, setMinPrice] = useState(100);
 	const [maxPrice, setMaxPrice] = useState(400);
+	const [minBed, setMinBed] = useState(0);
+	const [maxBed, setMaxBed] = useState(5);
+	const [minBath, setMinBath] = useState(0);
+	const [maxBath, setMaxBath] = useState(5);
+	const [minCar, setMinCar] = useState(0);
+	const [maxCar, setMaxCar] = useState(5);
 
-	const menuItems = [];
+	const priceItems = [];
+	const bedItems = [];
 
 	for (let i = 0; i <= 1000; i += 50) {
-		menuItems.push(<MenuItem value={i}>${i}</MenuItem>);
+		priceItems.push(<MenuItem value={i}>${i}</MenuItem>);
 	}
 	for (let i = 1100; i <= 5000; i += 100) {
-		menuItems.push(<MenuItem value={i}>${i}</MenuItem>);
+		priceItems.push(<MenuItem value={i}>${i}</MenuItem>);
+	}
+
+	for (let i = 0; i < 13; i++) {
+		bedItems.push(<MenuItem value={i}>{i}</MenuItem>);
 	}
 
 	const theme = createTheme({
 		palette: {
 			highlightColour: {
-				main: "#3D1670",
+				main: "#A59DB7",
 				light: "#A59DB7",
 				dark: "#A59DB7",
 				contrastText: "#A59DB7",
 			},
 		},
 	});
+
+	const selectStyle = {
+		borderRadius: "5px 5px 0px 0px",
+		backgroundColor: "white",
+	};
 
 	return (
 		<ThemeProvider theme={theme}>
@@ -292,36 +308,176 @@ const DetailFilters = () => {
 			>
 				{/* Price Filter */}
 				<Grid xs={12}>
-					<h3>Price</h3>
+					<div className="filterHeading">Price</div>
 				</Grid>
-				<Grid xs={5}>
-					<FormControl fullWidth color="highlightColour">
+				<Grid xs={5} style={selectStyle}>
+					<FormControl
+						fullWidth
+						color="highlightColour"
+						variant="filled"
+						size="small"
+					>
 						<InputLabel>Min</InputLabel>
 						<Select
 							color="highlightColour"
-							variant="standard"
 							value={minPrice}
 							label="Min"
 							onChange={(e) => {
 								setMinPrice(e.target.value);
 							}}
 						>
-							{menuItems}
+							{priceItems}
 						</Select>
 					</FormControl>
 				</Grid>
-				<Grid xs={5}>
-					<FormControl fullWidth>
+				<Grid xs={5} style={selectStyle}>
+					<FormControl
+						fullWidth
+						color="highlightColour"
+						variant="filled"
+						size="small"
+					>
 						<InputLabel>Max</InputLabel>
 						<Select
-							variant="standard"
 							value={maxPrice}
 							label="Max"
 							onChange={(e) => {
 								setMaxPrice(e.target.value);
 							}}
 						>
-							{menuItems}
+							{priceItems}
+						</Select>
+					</FormControl>
+				</Grid>
+
+				{/* Bedroom Filter */}
+				<Grid xs={12}>
+					<div className="filterHeading">Bedrooms</div>
+				</Grid>
+				<Grid xs={5} style={selectStyle}>
+					<FormControl
+						fullWidth
+						color="highlightColour"
+						variant="filled"
+						size="small"
+					>
+						<InputLabel>Min</InputLabel>
+						<Select
+							color="highlightColour"
+							value={minBed}
+							label="Min"
+							onChange={(e) => {
+								setMinBed(e.target.value);
+							}}
+						>
+							{bedItems}
+						</Select>
+					</FormControl>
+				</Grid>
+				<Grid xs={5} style={selectStyle}>
+					<FormControl
+						fullWidth
+						variant="filled"
+						color="highlightColour"
+						size="small"
+					>
+						<InputLabel>Max</InputLabel>
+						<Select
+							value={maxBed}
+							label="Max"
+							onChange={(e) => {
+								setMaxBed(e.target.value);
+							}}
+						>
+							{bedItems}
+						</Select>
+					</FormControl>
+				</Grid>
+
+				{/* Bathroom Filter */}
+				<Grid xs={12}>
+					<div className="filterHeading">Bathrooms</div>
+				</Grid>
+				<Grid xs={5} style={selectStyle}>
+					<FormControl
+						fullWidth
+						color="highlightColour"
+						variant="filled"
+						size="small"
+					>
+						<InputLabel>Min</InputLabel>
+						<Select
+							color="highlightColour"
+							value={minBath}
+							label="Min"
+							onChange={(e) => {
+								setMinBath(e.target.value);
+							}}
+						>
+							{/* {bedItems} */}
+						</Select>
+					</FormControl>
+				</Grid>
+				<Grid xs={5} style={selectStyle}>
+					<FormControl
+						fullWidth
+						variant="filled"
+						color="highlightColour"
+						size="small"
+					>
+						<InputLabel>Max</InputLabel>
+						<Select
+							value={maxBath}
+							label="Max"
+							onChange={(e) => {
+								setMaxBath(e.target.value);
+							}}
+						>
+							{/* {bedItems} */}
+						</Select>
+					</FormControl>
+				</Grid>
+
+				{/* Car space Filter */}
+				<Grid xs={12}>
+					<div className="filterHeading">Car spaces</div>
+				</Grid>
+				<Grid xs={5} style={selectStyle}>
+					<FormControl
+						fullWidth
+						color="highlightColour"
+						variant="filled"
+						size="small"
+					>
+						<InputLabel>Min</InputLabel>
+						<Select
+							color="highlightColour"
+							value={minCar}
+							label="Min"
+							onChange={(e) => {
+								setMinCar(e.target.value);
+							}}
+						>
+							{/* {bedItems} */}
+						</Select>
+					</FormControl>
+				</Grid>
+				<Grid xs={5} style={selectStyle}>
+					<FormControl
+						fullWidth
+						variant="filled"
+						color="highlightColour"
+						size="small"
+					>
+						<InputLabel>Max</InputLabel>
+						<Select
+							value={maxCar}
+							label="Max"
+							onChange={(e) => {
+								setMaxCar(e.target.value);
+							}}
+						>
+							{/* {bedItems} */}
 						</Select>
 					</FormControl>
 				</Grid>

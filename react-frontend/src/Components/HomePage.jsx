@@ -58,50 +58,6 @@ const HomePage = (props) => {
 		props.setIsLoggedIn(false);
 	};
 
-	// Dummy data
-	// const recentSearches = [
-	// 	{
-	// 		location: "Melbourne",
-	// 		info: "1 Bed, 2 Bath",
-	// 	},
-	// 	{
-	// 		location: "Hawthorne",
-	// 		info: "1 Bed, 1 Car",
-	// 	},
-	// 	{
-	// 		location: "Bendigo",
-	// 		info: "3 Bed, 2 Bath, 2 Car",
-	// 	},
-	// 	{
-	// 		location: "Ringwood",
-	// 		info: "1 Bed, 1 Bath",
-	// 	},
-	// ];
-
-	// Dummy data
-	// const recentLisings = [
-	// 	{
-	// 		price: "$350 pw",
-	// 		address: "123 Smith Street",
-	// 		features: "Large Living area",
-	// 	},
-	// 	{
-	// 		price: "$450 pw",
-	// 		address: "123 Smith Street",
-	// 		features: "Large Living area",
-	// 	},
-	// 	{
-	// 		price: "$500 pw",
-	// 		address: "123 Smith Street",
-	// 		features: "Large Living area",
-	// 	},
-	// 	{
-	// 		price: "$320 pw",
-	// 		address: "123 Smith Street",
-	// 		features: "Large Living area",
-	// 	},
-	// ];
-
 	const buttonStyle = {
 		backgroundColor: "#A59DB7",
 		color: "white",
