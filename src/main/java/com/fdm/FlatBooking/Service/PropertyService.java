@@ -80,4 +80,10 @@ public class PropertyService implements IPropertyService {
 
 		return propertyRepository.findAllById(user.getBookmarkedProperties());
 	}
+
+	@Override
+	public List<Property> getAllOwnProperties(String userId) {
+		return propertyRepository.findByLandlordId(userId);
+		
+	}
 }

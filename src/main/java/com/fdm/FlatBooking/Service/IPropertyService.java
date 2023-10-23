@@ -68,4 +68,6 @@ public interface IPropertyService {
 
     List<Property> getSavedPropertiesForUser(String userId);
 
+	List<Property> getAllOwnProperties(String userId);
+
 }

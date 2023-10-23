@@ -108,7 +108,10 @@ const Profile = (props) => {
                 user={user}
                 setUser={setUser}
             />}
-            {activeTab === 'properties' && <ProfileProperties/>}
+            {activeTab === 'properties' && <ProfileProperties
+                user={user}
+                setUser={setUser}
+            />}
 
        </div>
     </div>

@@ -1,5 +1,6 @@
 package com.fdm.FlatBooking.Controller;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -43,6 +44,13 @@ public class PropertyController {
     public List<Property> getPropertiesForUser(@RequestParam String userId) {
         return propertyService.getAllPropertiesForLeaser(userId);
     }
+    
+    @GetMapping("ownProperties")
+    public List<Property> getAllOwnProperties(@RequestParam String userId) throws IOException {
+        return propertyService.getAllOwnProperties(userId);
+    }
+    
+    
 
     @GetMapping("search")
     public List<Property> searchProperties(

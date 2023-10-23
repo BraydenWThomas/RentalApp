@@ -17,7 +17,7 @@ const ProfileSettings = (props)=> {
     
     const handleToggle = () => {
         setCanShow((canShow) => !canShow);
-      };
+    };
 
       const handleDelete = (e) => {
 		e.preventDefault();
@@ -34,11 +34,7 @@ const ProfileSettings = (props)=> {
 			.then((res) => {
 				const success = res.data;
 				console.log(success);
-				if (success) {
-					console.log("hello");
-					nav("/");
-					
-				}
+				
 			})
 			.catch(console.log);
 
