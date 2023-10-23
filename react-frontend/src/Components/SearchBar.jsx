@@ -2,7 +2,9 @@ import { Grid, Button, TextField, Stack } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import "../Styles/SearchBar.css";
 
-const SearchBar = () => {
+const SearchBar = (props) => {
+	const [openFilter, setOpenFilter] = props.openFilter;
+
 	const searchBtnStyle = {
 		backgroundColor: "#A59DB7",
 		padding: "1rem",
@@ -40,6 +42,9 @@ const SearchBar = () => {
 							variant="contained"
 							disableElevation
 							style={filterBtnStyle}
+							onClick={() => {
+								setOpenFilter(true);
+							}}
 						>
 							Filters
 						</Button>

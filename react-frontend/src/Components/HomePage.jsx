@@ -5,10 +5,12 @@ import SearchBar from "./SearchBar";
 import axios from "axios";
 import { useState, useEffect } from "react";
 import RegisterOverlay from "./RegisterOverlay";
+import FilterOverlay from "./FilterOverlay";
 
 const HomePage = (props) => {
 	const [openLogin, setOpenLogin] = useState(false);
 	const [openRegister, setOpenRegister] = useState(false);
+	const [openFilter, setOpenFilter] = useState(true);
 	const [recentListings, setRecentListings] = useState([]);
 	const [recentSearches, setRecentSearches] = useState([]);
 	const [refreshListings, setRefreshListings] = useState(false);
@@ -149,7 +151,9 @@ const HomePage = (props) => {
 					<Grid container>
 						{/* Search */}
 						<Grid xs={12}>
-							<SearchBar />
+							<SearchBar
+								openFilter={[openFilter, setOpenFilter]}
+							/>
 						</Grid>
 						{/* Recent Searches */}
 						<Grid xs={12}>
@@ -195,6 +199,7 @@ const HomePage = (props) => {
 				isLoggedIn={props.isLoggedIn}
 				setIsLoggedIn={props.setIsLoggedIn}
 			/>
+			<FilterOverlay open={[openFilter, setOpenFilter]} />
 		</div>
 	);
 };
