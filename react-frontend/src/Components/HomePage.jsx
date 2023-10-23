@@ -166,7 +166,7 @@ const HomePage = (props) => {
 								}}
 								gap={10}
 							>
-								{recentSearches.map((search) => (
+								{recentSearches?.map((search) => (
 									<RecentSearchCard search={search} />
 								))}
 							</ImageList>
@@ -193,6 +193,8 @@ const HomePage = (props) => {
 				open={[openLogin, setOpenLogin]}
 				isLoggedIn={props.isLoggedIn}
 				setIsLoggedIn={props.setIsLoggedIn}
+				user={props.user}
+				setUser={props.setUser}
 			/>
 			<RegisterOverlay
 				open={[openRegister, setOpenRegister]}

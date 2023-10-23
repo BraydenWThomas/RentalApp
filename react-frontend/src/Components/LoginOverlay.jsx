@@ -22,7 +22,7 @@ const LoginOverlay = (props) => {
 	};
 
 	const handleClose = () => {
-		setOpen(false);
+		// setOpen(false);
 	};
 
 	const login = (e) => {
@@ -47,9 +47,18 @@ const LoginOverlay = (props) => {
 
 					setEmail("");
 					setPassword("");
+
+					const url2 = "http://localhost:8080/api/v1/users/userdetails";
+					axios.get(url2).then((res) => {	
+							console.log(res)
+							props.setUser(res.data);
+						})
+						.catch(console.log);
 				}
 			})
 			.catch(console.log);
+
+		
 	};
 
 	return (
@@ -70,6 +79,7 @@ const LoginOverlay = (props) => {
 						<TextField
 							fullWidth
 							style={textfieldStyle}
+							type="password"
 							onChange={(e) => {
 								setPassword(e.target.value);
 							}}

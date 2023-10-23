@@ -6,8 +6,22 @@ import ProfileWallet from "./ProfileWallet";
 import ProfileSettings from "./ProfileSettings";
 import ProfileDetails from "./ProfileDetails";
 import ProfileProperties from "./ProfileProperties";
+import { useLocation } from 'react-router-dom'
 
-const Profile = () => {
+const Profile = (props) => {
+    const setIsLoggedIn = props.setIsLoggedIn;
+    const user = props.user
+    const setUser = props.setUser
+
+    
+
+    // const location = useLocation();
+    // const { from } = location.state;
+
+    React.useEffect(() => {
+        console.log(user)
+    }, [])
+
     const buttonStyle = {
         backgroundColor: '#A59DB7',
         color: 'white',
@@ -83,9 +97,17 @@ const Profile = () => {
         </div>
 
        <div className="profile-option-page">
-            {activeTab === 'wallet' && <ProfileWallet/>}
-            {activeTab === 'settings' && <ProfileSettings/>}
-            {activeTab === 'details' && <ProfileDetails/>}
+            {activeTab === 'wallet' && <ProfileWallet 
+            user={user}
+            />}
+            {activeTab === 'settings' && <ProfileSettings 
+                user={user}
+                setIsLoggedIn={setIsLoggedIn}
+            />}
+            {activeTab === 'details' && <ProfileDetails
+                user={user}
+                setUser={setUser}
+            />}
             {activeTab === 'properties' && <ProfileProperties/>}
 
        </div>
