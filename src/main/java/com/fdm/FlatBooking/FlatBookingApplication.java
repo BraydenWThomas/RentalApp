@@ -118,7 +118,7 @@ public class FlatBookingApplication implements CommandLineRunner {
 
 	private void createUsers() {
 		ArrayList<PropertySearch> searches = new ArrayList<>();
-		searches.add(new PropertySearch(400, 1, 1, 1, 0, 0, 0, 0, new ArrayList<String>(), new Date(20000000)));
+		searches.add(new PropertySearch(1, 2, 3, 4, 5, 6, 7, 8, new ArrayList<String>(), new Date(20000000), new Date(20000000), new ArrayList<String>()));
 
 		// userRepository.save(new User("sjer", "samantha jermyn", 20, "manager"));
 		User user1 = new User("Samantha", "Jermyn", 12345678, Gender.FEMALE, new Date(2000000000),

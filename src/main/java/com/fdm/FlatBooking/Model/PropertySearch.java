@@ -13,10 +13,13 @@ public class PropertySearch {
 	private int minCarSpaces;
 	private int maxCarSpaces;
 	private List<String> preferredFeatures;
-	private Date dateAvailable;
+	private Date startDateAvailable;
+	private Date endDateAvailable;
+	private List<String> propertyType;
 	
 	public PropertySearch(int minPrice, int maxPrice, int minBedrooms, int maxBedrooms, int minBathrooms,
-			int maxBathrooms, int minCarSpaces, int maxCarSpaces, List<String> preferredFeatures, Date dateAvailable) {
+			int maxBathrooms, int minCarSpaces, int maxCarSpaces, List<String> preferredFeatures,
+			Date startDateAvailable, Date endDateAvailable, List<String> propertyType) {
 		super();
 		this.minPrice = minPrice;
 		this.maxPrice = maxPrice;
@@ -27,7 +30,9 @@ public class PropertySearch {
 		this.minCarSpaces = minCarSpaces;
 		this.maxCarSpaces = maxCarSpaces;
 		this.preferredFeatures = preferredFeatures;
-		this.dateAvailable = dateAvailable;
+		this.startDateAvailable = startDateAvailable;
+		this.endDateAvailable = endDateAvailable;
+		this.propertyType = propertyType;
 	}
 	public int getMinPrice() {
 		return minPrice;
@@ -83,11 +88,25 @@ public class PropertySearch {
 	public void setPreferredFeatures(List<String> preferredFeatures) {
 		this.preferredFeatures = preferredFeatures;
 	}
-	public Date getDateAvailable() {
-		return dateAvailable;
+	public Date getStartDateAvailable() {
+		return startDateAvailable;
 	}
-	public void setDateAvailable(Date dateAvailable) {
-		this.dateAvailable = dateAvailable;
+	public void setStartDateAvailable(Date startDateAvailable) {
+		this.startDateAvailable = startDateAvailable;
 	}
+	public Date getEndDateAvailable() {
+		return endDateAvailable;
+	}
+	public void setEndDateAvailable(Date endDateAvailable) {
+		this.endDateAvailable = endDateAvailable;
+	}
+	public List<String> getPropertyType() {
+		return propertyType;
+	}
+	public void setPropertyType(List<String> propertyType) {
+		this.propertyType = propertyType;
+	}
+
+	
 
 }
