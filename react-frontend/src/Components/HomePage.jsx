@@ -153,7 +153,8 @@ const HomePage = (props) => {
 						{/* Search */}
 						<Grid xs={12}>
 							<SearchBar
-								openFilter={[openFilter, setOpenFilter]}
+								openFilter={openFilter}
+								setOpenFilter={setOpenFilter}
 								searchTxt={props.searchTxt}
 								setSearchTxt={props.setSearchTxt}
 								searchResults={props.searchResults}

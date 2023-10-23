@@ -15,5 +15,67 @@
 
 .close-btn {
     border: 0;
+    margin-top: 5px;
     background-color: #FFF0;
+}
+
+.close-btn:hover{
+    color: gray;
+}
+
+.search-bar {
+    padding: 10px;
+    background-color: white;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.location-filters {
+    display: flex;
+    flex-direction: row;
+    background-color: white;
+    border-radius: 10px;
+    margin-top: 10px;
+    overflow: scroll;
+}
+
+.location-label {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    text-align: center;
+    padding-right: 5;
+}
+
+.location-label-text {
+    margin-left: 10px;
+    margin-right: 5;
+}
+
+.divider {
+    border-right: 1px solid #CCC;
+    height:30px;
+}
+
+.location-filters::-webkit-scrollbar {
+    display: none;
+}
+
+.remove-btn {
+    border: 0;
+    margin-top: 5px;
+    background-color: #FFF0;
+    color: #999;
+}
+
+.remove-btn:hover {
+    color: #BBB;
 }
