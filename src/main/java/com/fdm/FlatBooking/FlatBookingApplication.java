@@ -19,6 +19,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.gridfs.GridFsTemplate;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -50,6 +52,9 @@ public class FlatBookingApplication implements CommandLineRunner {
 	@Autowired
 	TransactionRepository transactionRepository;
 
+	@Autowired
+	GridFsTemplate gridFsTemplate;
+
 	public static void main(String[] args) {
 		SpringApplication.run(FlatBookingApplication.class, args);
 
@@ -70,6 +75,14 @@ public class FlatBookingApplication implements CommandLineRunner {
 		// DBObject metaData = new BasicDBObject();
 		// metaData.put("userId", "1234");
 		// gridFsTemplate.store(in, "test_filename", "image/jpg", metaData);
+	}
+
+	public String uploadImage(String filename, String propertyId) throws Exception {
+		InputStream in = new FileInputStream("src/main/resources/images/" + filename);
+		DBObject metaData = new BasicDBObject();
+		metaData.put("propertyId", propertyId);
+		return gridFsTemplate.store(in, propertyId + filename, "image/jpg", metaData).toHexString();
+
 	}
 
 	public static byte[] LoadImage(String fileName) throws Exception {
@@ -183,56 +196,58 @@ public class FlatBookingApplication implements CommandLineRunner {
 
 		List<User> users = userRepository.findAll();
 
-		ArrayList<Binary> images = new ArrayList<>();
-		images.add(new Binary(BsonBinarySubType.BINARY, LoadImage("cat1.jpg")));
-		images.add(new Binary(BsonBinarySubType.BINARY, LoadImage("cat2.jpg")));
-		images.add(new Binary(BsonBinarySubType.BINARY, LoadImage("cat3.jpg")));
-		images.add(new Binary(BsonBinarySubType.BINARY, LoadImage("cat4.jpg")));
-		images.add(new Binary(BsonBinarySubType.BINARY, LoadImage("cat5.jpg")));
-		images.add(new Binary(BsonBinarySubType.BINARY, LoadImage("cat6.jpg")));
-		images.add(new Binary(BsonBinarySubType.BINARY, LoadImage("cat7.jpeg")));
-
-		List<Binary> imageSet1 = new ArrayList<>();
-		// imageSet1 = (images.subList(0, 1));
-
-		List<Binary> imageSet2 = new ArrayList<>();
-		// imageSet2 = (images.subList(1, 2));
-
-		List<Binary> imageSet3 = new ArrayList<>();
-		// imageSet3 = (images.subList(3, 4));
+		ArrayList<String> imageNames = new ArrayList<>();
+		imageNames.add("cat1.jpg");
+		imageNames.add("cat2.jpg");
+		imageNames.add("cat3.jpg");
+		imageNames.add("cat4.jpg");
+		imageNames.add("cat5.jpg");
+		imageNames.add("cat6.jpg");
 
 		ArrayList<Boolean> features = new ArrayList<Boolean>();
 		ArrayList<Property> properties = new ArrayList<>();
 		properties.add(new Property("Apartment", 500, 2000, users.get(0).getId(), null, addrs.get(0), "1 Red Hotel",
-				pds.get(0), imageSet1, features, new Date(20000000), true));
+				pds.get(0), features, new Date(20000000), true));
 		properties.add(new Property("Apartment", 500, 2000, users.get(0).getId(), null, addrs.get(1), "1 Green House",
-				pds.get(1), imageSet2, features, new Date(20000000), true));
+				pds.get(1), features, new Date(20000000), true));
 		properties.add(new Property("Apartment", 500, 2000, users.get(1).getId(), null, addrs.get(2), "2 Green Houses",
-				pds.get(2), imageSet3, features, new Date(20000000), true));
+				pds.get(2), features, new Date(20000000), true));
 		properties.add(new Property("Apartment", 500, 2000, users.get(2).getId(), null, addrs.get(3), "3 Green Houses",
-				pds.get(3), imageSet1, features, new Date(20000000), true));
+				pds.get(3), features, new Date(20000000), true));
 		properties.add(new Property("Apartment", 500, 2000, users.get(3).getId(), null, addrs.get(4), "1 Red Hotel",
-				pds.get(4), imageSet2, features, new Date(20000000), true));
+				pds.get(4), features, new Date(20000000), true));
 		properties.add(new Property("Apartment", 500, 2000, users.get(4).getId(), null, addrs.get(5), "4 Green Houses",
-				pds.get(5), imageSet3, features, new Date(20000000), true));
+				pds.get(5), features, new Date(20000000), true));
 		properties.add(new Property("Apartment", 500, 2000, users.get(4).getId(), null, addrs.get(6), "3 Green Houses",
-				pds.get(6), imageSet1, features, new Date(20000000), false));
+				pds.get(6), features, new Date(20000000), false));
 		properties.add(new Property("Apartment", 500, 2000, users.get(6).getId(), null, addrs.get(7), "1 Red Hotel",
-				pds.get(7), imageSet2, features, new Date(20000000), true));
+				pds.get(7), features, new Date(20000000), true));
 		properties.add(new Property("Apartment", 500, 2000, users.get(5).getId(), null, addrs.get(8), "1 Red Hotel",
-				pds.get(8), imageSet3, features, new Date(20000000), true));
+				pds.get(8), features, new Date(20000000), true));
 		properties.add(new Property("Apartment", 500, 2000, users.get(6).getId(), null, addrs.get(9), "1 Green House",
-				pds.get(9), imageSet1, features, new Date(20000000), true));
+				pds.get(9), features, new Date(20000000), true));
 		properties.add(new Property("Apartment", 500, 2000, users.get(6).getId(), null, addrs.get(10), "2 Green Houses",
-				pds.get(10), imageSet2, features, new Date(20000000), true));
+				pds.get(10), features, new Date(20000000), true));
 		properties.add(new Property("Apartment", 500, 2000, users.get(3).getId(), null, addrs.get(11), "4 Green Houses",
-				pds.get(11), imageSet3, features, new Date(20000000), false));
+				pds.get(11), features, new Date(20000000), false));
 
 		propertyRepository.saveAll(properties);
 
 		// add saved property
 		users.get(0).getBookmarkedProperties().add(properties.get(5).getPropertyId());
 		userRepository.save(users.get(0));
+
+		// add images to properties
+		for (Property property : properties) {
+			System.out.println("Adding images for property " + property.getAddress().getStreet());
+			for (String image : imageNames) {
+				System.out.println("\tAdding image " + image);
+				String id = uploadImage(image, property.getPropertyId());
+				property.addImageId(id);
+			}
+		}
+
+		propertyRepository.saveAll(properties);
 	}
 
 	private void createTransactions() {
@@ -260,6 +275,7 @@ public class FlatBookingApplication implements CommandLineRunner {
 		userRepository.deleteAll();
 		propertyRepository.deleteAll();
 		transactionRepository.deleteAll();
+		gridFsTemplate.delete(new Query(Criteria.where("_id").exists(true)));
 
 		createUsers();
 		createProperties();

@@ -1,7 +1,10 @@
 package com.fdm.FlatBooking.Service;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
+
+import org.springframework.web.multipart.MultipartFile;
 
 import com.fdm.FlatBooking.Model.Property;
 
@@ -67,5 +70,11 @@ public interface IPropertyService {
     void addProperty(Property property);
 
     List<Property> getSavedPropertiesForUser(String userId);
+
+    void addPropertyPhoto(String propertyId, MultipartFile photo) throws IOException;
+
+    List<String> getPropertyPhotos(String propertyId) throws IllegalStateException, IOException;
+
+    String getPropertyPhoto(String propertyId) throws IllegalStateException, IOException;
 
 }
