@@ -12,20 +12,20 @@ import * as React from "react";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import axios from "axios";
 
-const ProfileDetails = () => {
-	const [gender, setGender] = React.useState("");
-	const [firstName, setFirstName] = React.useState("get users first name");
-	const [lastName, setLlastName] = React.useState("get users last name");
-	const [email, setEmail] = React.useState("get users email");
-	const [mobile, setMobile] = React.useState("get users mobile");
-	const [dob, setDob] = React.useState("");
-	const [occupation, setOccupation] = React.useState("get users occupation");
+const ProfileDetails = (props) => {
+    
+    const user = props.user
+    const setUser = props.setUser
 
-	const [address, setAddress] = React.useState("get users adress");
-	const [suburb, setSuburb] = React.useState("get users suburb");
-	const [state, setState] = React.useState("get users state");
-	const [postcode, setPostcode] = React.useState("get users postcode");
-	const [country, setCountry] = React.useState("get users country");
+	const [gender, setGender] = React.useState(user.gender);
+	const [firstName, setFirstName] = React.useState(user.firstName);
+	const [lastName, setLlastName] = React.useState(user.lastName);
+	const [email, setEmail] = React.useState(user.credentials.email);
+	const [mobile, setMobile] = React.useState(user.mobile);
+	const [dob, setDob] = React.useState(user.dateOfBirth);
+	const [occupation, setOccupation] = React.useState(user.occupation);
+
+	const [address, setAddress] = React.useState(user.currentAddress);
 	const [profilePhoto, setProfilePhoto] = React.useState("");
 	const api = "http://localhost:8080/api/v1";
 
@@ -34,7 +34,19 @@ const ProfileDetails = () => {
 	};
 
 	const updateInformation = () => {
-		console.log("update info clicked");
+        user.firstName = firstName;
+        user.lastName = lastName;
+        user.email = email;
+        user.gender = gender;
+        user.mobile = mobile;
+        user.dateOfBirth = dob;
+        user.occupation = occupation;
+        user.address = address;
+
+		axios.post("http://localhost:8080/api/v1/users/editUser", user)
+			.then((res) => {
+                setUser(user);
+		})
 	};
 
 	React.useEffect(() => {
@@ -190,54 +202,6 @@ const ProfileDetails = () => {
 								value={address}
 								onChange={(event) =>
 									setAddress(event.target.value)
-								}
-							/>
-						</Grid>
-						<Grid xs={6} paddingInline={2}>
-							<p className="fieldLabel">Suburb</p>
-							<TextField
-								fullWidth
-								className="formfield"
-								color="secondary"
-								value={suburb}
-								onChange={(event) =>
-									setSuburb(event.target.value)
-								}
-							/>
-						</Grid>
-						<Grid xs={6} paddingInline={2}>
-							<p className="fieldLabel">State</p>
-							<TextField
-								fullWidth
-								className="formfield"
-								color="secondary"
-								value={state}
-								onChange={(event) =>
-									setState(event.target.value)
-								}
-							/>
-						</Grid>
-						<Grid xs={6} paddingInline={2}>
-							<p className="fieldLabel">Postcode</p>
-							<TextField
-								fullWidth
-								className="formfield"
-								color="secondary"
-								value={postcode}
-								onChange={(event) =>
-									setPostcode(event.target.value)
-								}
-							/>
-						</Grid>
-						<Grid xs={6} paddingInline={2}>
-							<p className="fieldLabel">Country</p>
-							<TextField
-								fullWidth
-								className="formfield"
-								color="secondary"
-								value={country}
-								onChange={(event) =>
-									setCountry(event.target.value)
 								}
 							/>
 						</Grid>

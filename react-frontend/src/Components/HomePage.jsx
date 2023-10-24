@@ -105,7 +105,7 @@ const HomePage = (props) => {
 					<Grid container>
 						{/* Search */}
 						<Grid xs={12}>
-							<SearchBar />
+							<SearchBar searchTxt={props.searchTxt} setSearchTxt={props.setSearchTxt} />
 						</Grid>
 						{/* Recent Searches */}
 						<Grid xs={12}>
@@ -118,7 +118,7 @@ const HomePage = (props) => {
 								}}
 								gap={10}
 							>
-								{recentSearches.map((search) => (
+								{recentSearches?.map((search) => (
 									<RecentSearchCard search={search} />
 								))}
 							</ImageList>
@@ -145,6 +145,8 @@ const HomePage = (props) => {
 				open={[openLogin, setOpenLogin]}
 				isLoggedIn={props.isLoggedIn}
 				setIsLoggedIn={props.setIsLoggedIn}
+				user={props.user}
+				setUser={props.setUser}
 			/>
 			<RegisterOverlay
 				open={[openRegister, setOpenRegister]}

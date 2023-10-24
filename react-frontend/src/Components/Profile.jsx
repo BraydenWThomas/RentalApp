@@ -6,8 +6,36 @@ import ProfileWallet from "./ProfileWallet";
 import ProfileSettings from "./ProfileSettings";
 import ProfileDetails from "./ProfileDetails";
 import ProfileProperties from "./ProfileProperties";
+import { useLocation } from 'react-router-dom';
+import axios from "axios";
 
-const Profile = () => {
+
+const Profile = (props) => {
+    const setIsLoggedIn = props.setIsLoggedIn;
+    const user = props.user
+    const setUser = props.setUser
+
+    
+
+    // const location = useLocation();
+    // const { from } = location.state;
+
+    React.useEffect(() => {
+        console.log(user)
+
+
+        const url = "http://localhost:8080/api/v1/properties/ownProperties?userId="+ user.id ;
+		axios
+			.get(url)
+			.then((res) => {
+				setAllProperties(res.data);
+                console.log('PRINT ALL PROPERTIES')
+                console.log(res.data);
+			})
+			.catch(console.log);
+
+    }, [])
+
     const buttonStyle = {
         backgroundColor: '#A59DB7',
         color: 'white',
@@ -45,6 +73,10 @@ const Profile = () => {
     const handleTabClick = (tab) => {
         setActiveTab(tab);
     }
+
+    const [allProperties, setAllProperties] = React.useState([]);
+
+    
     
 
     return (
@@ -83,10 +115,23 @@ const Profile = () => {
         </div>
 
        <div className="profile-option-page">
-            {activeTab === 'wallet' && <ProfileWallet/>}
-            {activeTab === 'settings' && <ProfileSettings/>}
-            {activeTab === 'details' && <ProfileDetails/>}
-            {activeTab === 'properties' && <ProfileProperties/>}
+            {activeTab === 'wallet' && <ProfileWallet 
+            user={user}
+            />}
+            {activeTab === 'settings' && <ProfileSettings 
+                user={user}
+                setIsLoggedIn={setIsLoggedIn}
+            />}
+            {activeTab === 'details' && <ProfileDetails
+                user={user}
+                setUser={setUser}
+            />}
+            {activeTab === 'properties' && <ProfileProperties
+                user={user}
+                setUser={setUser}
+                allProperties={allProperties}
+                setAllProperties={setAllProperties}
+            />}
 
        </div>
     </div>

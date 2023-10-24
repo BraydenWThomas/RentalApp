@@ -55,6 +55,11 @@ public class PropertyController {
         return propertyService.getAllPropertiesForLeaser(userId);
     }
 
+    @GetMapping("ownProperties")
+    public List<Property> getAllOwnProperties(@RequestParam String userId) throws IOException {
+        return propertyService.getAllOwnProperties(userId);
+    }
+
     @GetMapping("search")
     public List<Property> searchProperties(
             @RequestParam int minBed,
@@ -89,6 +94,13 @@ public class PropertyController {
     @GetMapping("/saved/{userId}")
     public List<Property> getSavedPropertiesForUser(@PathVariable String userId) {
         return propertyService.getSavedPropertiesForUser(userId);
+    }
+
+    // Update Property
+    @PostMapping("updateProperty")
+    public List<Property> updateProperty(@RequestBody Property property) {
+        propertyService.addProperty(property);
+        return propertyService.getAllOwnProperties(property.getLandlord());
     }
 
     @PostMapping(value = "/{propertyId}/photos", consumes = "multipart/form-data")

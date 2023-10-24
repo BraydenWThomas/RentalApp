@@ -14,3 +14,39 @@
     display: flex;
     text-align: left;
 }
+
+.heading {
+    background-color: #A59DB740;
+    box-shadow: 0px 2px 5px #808080;
+    border-radius: 10px;
+    padding: 2%;
+}
+
+.formfield{
+    width: 100%;
+}
+
+.horizontal {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.propertyType{
+    width: 100%;
+}
+
+.fieldLabel{
+    width: 100%;
+}
+
+.properties-paging-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.pager-btn {
+    background-color: transparent;
+    border: 0;
+}

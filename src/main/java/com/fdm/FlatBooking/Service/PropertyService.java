@@ -178,5 +178,9 @@ public class PropertyService implements IPropertyService {
 		in.read(data);
 
 		return Base64.getEncoder().encodeToString(data);
+
+	public List<Property> getAllOwnProperties(String userId) {
+		return propertyRepository.findByLandlordId(userId);
+
 	}
 }

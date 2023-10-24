@@ -77,4 +77,6 @@ public interface IPropertyService {
 
     String getPropertyPhoto(String propertyId) throws IllegalStateException, IOException;
 
+    List<Property> getAllOwnProperties(String userId);
+
 }
