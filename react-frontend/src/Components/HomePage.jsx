@@ -55,50 +55,6 @@ const HomePage = (props) => {
 		props.setIsLoggedIn(false);
 	};
 
-	// Dummy data
-	// const recentSearches = [
-	// 	{
-	// 		location: "Melbourne",
-	// 		info: "1 Bed, 2 Bath",
-	// 	},
-	// 	{
-	// 		location: "Hawthorne",
-	// 		info: "1 Bed, 1 Car",
-	// 	},
-	// 	{
-	// 		location: "Bendigo",
-	// 		info: "3 Bed, 2 Bath, 2 Car",
-	// 	},
-	// 	{
-	// 		location: "Ringwood",
-	// 		info: "1 Bed, 1 Bath",
-	// 	},
-	// ];
-
-	// Dummy data
-	// const recentLisings = [
-	// 	{
-	// 		price: "$350 pw",
-	// 		address: "123 Smith Street",
-	// 		features: "Large Living area",
-	// 	},
-	// 	{
-	// 		price: "$450 pw",
-	// 		address: "123 Smith Street",
-	// 		features: "Large Living area",
-	// 	},
-	// 	{
-	// 		price: "$500 pw",
-	// 		address: "123 Smith Street",
-	// 		features: "Large Living area",
-	// 	},
-	// 	{
-	// 		price: "$320 pw",
-	// 		address: "123 Smith Street",
-	// 		features: "Large Living area",
-	// 	},
-	// ];
-
 	const buttonStyle = {
 		backgroundColor: "#A59DB7",
 		color: "white",
@@ -246,6 +202,21 @@ const RecentListingCard = ({ listing }) => {
 		borderRadius: "10px 10px 0 0",
 	};
 
+	const api = "http://localhost:8080/api/v1";
+
+	const [imageData, setImageData] = useState("");
+
+	useEffect(() => {
+		axios
+			.get(api + `/properties/${listing.propertyId}/photo`)
+			.then((res) => {
+				setImageData(res.data);
+			})
+			.catch((e) => {
+				console.log(e);
+			});
+	}, []);
+
 	return (
 		<Grid container style={cardStyle}>
 			<Grid xs={12}>
@@ -254,10 +225,11 @@ const RecentListingCard = ({ listing }) => {
 					src="https://carlislehomes.com.au/static/images/hal/CARL607554_Matisse33_003_2.jpg"
 					alt="House"
 				/> */}
-				{listing.images.length > 0 && (
+				{imageData !== "" && (
 					<img
 						style={imageStyle}
-						src={`data:image/jpg;base64,${listing.images[0].data}`}
+						src={`data:image/jpg;base64,${imageData}`}
+						alt="Property"
 					/>
 				)}
 			</Grid>
