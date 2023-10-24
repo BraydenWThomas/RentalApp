@@ -166,7 +166,11 @@ const HomePage = (props) => {
 				isLoggedIn={props.isLoggedIn}
 				setIsLoggedIn={props.setIsLoggedIn}
 			/>
-			<FilterOverlay open={[openFilter, setOpenFilter]} />
+			<FilterOverlay 
+				open={[openFilter, setOpenFilter]} 
+				searchFilters={props.searchFilters}
+				setSearchFilters={props.setSearchFilters}
+				/>
 		</div>
 	);
 };

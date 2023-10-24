@@ -13,7 +13,7 @@ function App() {
 	const [isLoggedIn, setIsLoggedIn] = useState(false);
 	const [user, setUser] = useState({});
 	const [searchTxt, setSearchTxt] = useState("");
-	const [searchFilters, setSearchFilters] = useState({});
+	const [searchFilters, setSearchFilters] = useState({minPrice:'',maxPrice:''});
 	const [searchResults, setSearchResults] = useState([]);
 
 	return (

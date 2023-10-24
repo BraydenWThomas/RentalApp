@@ -26,7 +26,7 @@ const FilterOverlay = (props) => {
 	const [locationFilters, setLocationFilters] = useState([]);
 
 	return (
-		<Modal open={open} onClose={() => setOpen(false)}>
+		<Modal open={open} onClose={() => closeFunction(setOpen,props.searchFilters,props.setSearchFilters)}>
 			<Container className="filter-container" maxWidth="sm">
 				{/* Header */}
 				<div className="header">
@@ -36,7 +36,7 @@ const FilterOverlay = (props) => {
 						variant="standard"
 						className="close-btn"
 						onClick={() => {
-							setOpen(false);
+							closeFunction(setOpen,props.searchFilters,props.setSearchFilters);
 						}}
 					>
 						<CloseIcon />
@@ -57,11 +57,18 @@ const FilterOverlay = (props) => {
 
 				<Divider style={{ marginTop: "20px" }} />
 
-				<DetailFilters />
+				<DetailFilters setSearchFilters={props.setSearchFilters} />
 			</Container>
 		</Modal>
 	);
 };
+
+const closeFunction = (setOpen,searchFilters,setSearchFilters) => {
+	//#TODO put all the info into one use state
+	setSearchFilters({minPrice:'12',maxPrice:'123'})
+	console.log(searchFilters)
+	setOpen(false)
+}
 
 const LocationSearch = ({ locationFilters, setLocationFilters }) => {
 	const [txt, setTxt] = useState("");
