@@ -115,6 +115,8 @@ const HomePage = (props) => {
 								setSearchTxt={props.setSearchTxt}
 								searchResults={props.searchResults}
 								setSearchResults={props.setSearchResults}
+								searchFilters={props.searchFilters}
+								setSearchFilters={props.setSearchFilters}
 							/>
 						</Grid>
 						{/* Recent Searches */}
@@ -166,11 +168,11 @@ const HomePage = (props) => {
 				isLoggedIn={props.isLoggedIn}
 				setIsLoggedIn={props.setIsLoggedIn}
 			/>
-			<FilterOverlay 
-				open={[openFilter, setOpenFilter]} 
+			<FilterOverlay
+				open={[openFilter, setOpenFilter]}
 				searchFilters={props.searchFilters}
 				setSearchFilters={props.setSearchFilters}
-				/>
+			/>
 		</div>
 	);
 };
@@ -193,13 +195,31 @@ const RecentSearchCard = ({ search }) => {
 				<b style={locationStyle}>{"$" + search.maxPrice}</b>
 			</Grid>
 			<Grid xs={12}>
-				<div style={{display:"inline-block"}}>{"$" + search.minPrice + " to $" + search.maxPrice  }</div>
-				<div style={{display:"inline-block"}}>{"Bedrooms: " + search.minBedrooms + " to " + search.maxBedrooms  }</div>
-				<div style={{display:"inline-block"}}>{"Car Spots: " + search.minCarSpaces + " to " + search.maxCarSpaces }</div>
-				<div style={{display:"inline-block"}}>{"Available Date: " + search.startDateAvailable + " to " + search.endDateAvailable}</div>
-					{//#TODO Preferred Features
+				<div style={{ display: "inline-block" }}>
+					{"$" + search.minPrice + " to $" + search.maxPrice}
+				</div>
+				<div style={{ display: "inline-block" }}>
+					{"Bedrooms: " +
+						search.minBedrooms +
+						" to " +
+						search.maxBedrooms}
+				</div>
+				<div style={{ display: "inline-block" }}>
+					{"Car Spots: " +
+						search.minCarSpaces +
+						" to " +
+						search.maxCarSpaces}
+				</div>
+				<div style={{ display: "inline-block" }}>
+					{"Available Date: " +
+						search.startDateAvailable +
+						" to " +
+						search.endDateAvailable}
+				</div>
+				{
+					//#TODO Preferred Features
 					//#TODO Property Type
-					}
+				}
 			</Grid>
 		</Grid>
 	);

@@ -9,6 +9,8 @@ const PropertySearch = ({
 	setSearchTxt,
 	searchResults,
 	setSearchResults,
+	searchFilters,
+	setSearchFilters,
 }) => {
 	const searchStyle = {
 		padding: "10px",
@@ -23,6 +25,8 @@ const PropertySearch = ({
 						setSearchTxt={setSearchTxt}
 						searchResults={searchResults}
 						setSearchResults={setSearchResults}
+						searchFilters={searchFilters}
+						setSearchFilters={setSearchFilters}
 					/>
 				</Grid>
 				<Grid xs={12}>

@@ -13,27 +13,27 @@ function App() {
 	const [isLoggedIn, setIsLoggedIn] = useState(false);
 	const [user, setUser] = useState({});
 	const [searchTxt, setSearchTxt] = useState("");
-	const [searchFilters, setSearchFilters] = useState(
-		{
-			locationFilters:[],
-			propertyTypes:{
-				house:'false',
-				apartment:'false',
-				townhouse:'false',
-				grannyflat:'false',
-				room:'false',
-				unit:'false',
-			},
-			detailFilters:{
-				minPrice:'0',
-				maxPrice:'1000',
-				minBedrooms:'1',
-				maxBedrooms:'10',
-				minBathrooms:'1',
-				maxBathrooms:'10',
-				minCars:'0',
-				maxCars:'10',
-			}});
+	const [searchFilters, setSearchFilters] = useState({
+		locationFilters: [],
+		propertyTypes: {
+			house: "false",
+			apartment: "false",
+			townhouse: "false",
+			grannyflat: "false",
+			room: "false",
+			unit: "false",
+		},
+		detailFilters: {
+			minPrice: "0",
+			maxPrice: "1000",
+			minBedrooms: "1",
+			maxBedrooms: "10",
+			minBathrooms: "1",
+			maxBathrooms: "10",
+			minCars: "0",
+			maxCars: "10",
+		},
+	});
 	const [searchResults, setSearchResults] = useState([]);
 
 	return (

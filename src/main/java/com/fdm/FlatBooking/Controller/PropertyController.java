@@ -59,6 +59,19 @@ public class PropertyController {
             @RequestParam int maxSize,
             @RequestParam String type,
             @RequestParam boolean isAvailable) {
+        System.out.println("Search text: " + searchTxt);
+        System.out.println("minBed: " + minBed);
+        System.out.println("maxBed: " + maxBed);
+        System.out.println("minBath: " + minBath);
+        System.out.println("maxBath: " + maxBath);
+        System.out.println("minBudget: " + minBudget);
+        System.out.println("maxBudget: " + maxBudget);
+        System.out.println("minCar: " + minCar);
+        System.out.println("maxCar: " + maxCar);
+        System.out.println("minSize: " + minSize);
+        System.out.println("maxSize: " + maxSize);
+        System.out.println("type: " + type);
+        System.out.println("isAvailable: " + isAvailable);
         return propertyService.getPropertyWithFilters(searchTxt, minBed, maxBed, minBath,
                 maxBath, minBudget, maxBudget, minCar,
                 maxCar, minSize, maxSize, type, isAvailable);
