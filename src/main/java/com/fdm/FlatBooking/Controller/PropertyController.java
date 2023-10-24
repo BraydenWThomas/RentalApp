@@ -87,5 +87,12 @@ public class PropertyController {
     public List<Property> getSavedPropertiesForUser(@PathVariable String userId) {
         return propertyService.getSavedPropertiesForUser(userId);
     }
+    
+    // Update Property
+    @PostMapping("updateProperty")
+    public List<Property> updateProperty(@RequestBody Property property) {
+        propertyService.addProperty(property);
+        return propertyService.getAllOwnProperties(property.getLandlord());
+    }
 
 }

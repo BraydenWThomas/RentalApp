@@ -39,3 +39,14 @@
 .fieldLabel{
     width: 100%;
 }
+
+.properties-paging-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.pager-btn {
+    background-color: transparent;
+    border: 0;
+}
