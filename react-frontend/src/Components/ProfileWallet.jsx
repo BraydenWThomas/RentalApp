@@ -12,20 +12,20 @@ const ProfileWallet = (props)=> {
     const user = props.user
     const isLoggedIn = props.isLoggedIn
     const [transactions, setTransactions] = useState([])
+    const [rechargeAmount, setRechargeAmount] = useState(0)
 
-    const url = "http://localhost:8080/api/v1/transactions/"
+    const url = "http://localhost:8080/api/v1/"
 
     useEffect(() => {
         if (isLoggedIn) {
             axios
-            .get(url + `${user.id}/alltransactions`)
+            .get(url + `transactions/${user.id}/alltransactions`)
             .then((response) => {
-                console.log(response)
                 setTransactions(response.data)
             })
             .catch(console.log)
         }
-    }, [isLoggedIn])
+    }, [])
 
     const buttonStyle = {
         backgroundColor: '#A59DB7',
@@ -44,6 +44,22 @@ const ProfileWallet = (props)=> {
 
     const handleRechargeClose = () => {
         setOpenRecharge(false)
+    }
+
+    const handleRechargeAmountChange = (e) => {
+        setRechargeAmount(e.target.value)
+    }
+
+    const handleRechargeWallet = () => {
+        const updatedBalance = parseFloat(user.balance) + rechargeAmount*1;
+        axios.post(url + `users/${user.id}/balance?amount=${updatedBalance}`)
+        .then(response => {
+            props.setUser(response.data)
+            console.log(response.data)
+        })
+        .catch(error => console.log(error))
+        setRechargeAmount(0)
+        handleRechargeClose()
     }
 
     return(
@@ -142,10 +158,21 @@ const ProfileWallet = (props)=> {
                     <CloseIcon className="close-icon" onClick={handleRechargeClose}/>
                     <h1>Recharge</h1>
                     <p>Amount</p>
-                    <TextField variant="filled" fullWidth type="number"></TextField>
+                    <TextField 
+                        variant="filled" 
+                        fullWidth 
+                        type="number"
+                        onChange={handleRechargeAmountChange}
+                    ></TextField>
 
                     <div className="payment-buttons">
-                        <Button variant="contained" style={buttonStyle}>Recharge</Button>
+                        <Button 
+                            variant="contained" 
+                            style={buttonStyle}
+                            onClick={handleRechargeWallet}
+                        >
+                            Recharge
+                        </Button>
                         <Button 
                             variant="contained" 
                             style={buttonStyle}
