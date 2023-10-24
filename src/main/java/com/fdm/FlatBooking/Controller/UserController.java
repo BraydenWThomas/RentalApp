@@ -167,4 +167,30 @@ public class UserController {
 
         return Base64.getEncoder().encodeToString(data);
     }
+    
+    @PostMapping("/deactivate")
+    public boolean deactivateProfile(@RequestParam String userId) throws IOException {
+        Optional<User> userOpt = userService.findUserById(userId);
+
+        if (!userOpt.isPresent()) {
+            System.out.println("No user (" + userId + ") to deactivate");
+            return false;
+        }
+
+        User user = userOpt.get();
+        user.setActive(false);
+        userService.updateUser(user);
+        
+        return true;
+    }
+    
+    @PostMapping("/{id}/balance")
+    public User updateBalance(@PathVariable String id, @RequestParam double amount) {
+    	Optional<User> optUser = this.userService.findUserById(id);
+    	User user = optUser.get();
+    	user.setBalance(amount);
+    	this.userService.updateUser(user);
+    	System.out.println(user);
+    	return user;
+    }
 }

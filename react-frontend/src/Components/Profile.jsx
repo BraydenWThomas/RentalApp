@@ -6,13 +6,14 @@ import ProfileWallet from "./ProfileWallet";
 import ProfileSettings from "./ProfileSettings";
 import ProfileDetails from "./ProfileDetails";
 import ProfileProperties from "./ProfileProperties";
+import { useLocation, useNavigate } from 'react-router-dom'
+import axios from "axios";
 
 const Profile = (props) => {
-
+    const setIsLoggedIn = props.setIsLoggedIn;
     const user = props.user
     const isLoggedIn = props.isLoggedIn
-    const setIsLoggedIn = props.setIsLoggedIn
-
+    
     const buttonStyle = {
         backgroundColor: '#A59DB7',
         color: 'white',
@@ -50,6 +51,14 @@ const Profile = (props) => {
     const handleTabClick = (tab) => {
         setActiveTab(tab);
     }
+
+    const handleLogoutClick = () => {
+		axios.get("http://localhost:8080/api/v1/users/signout");
+		props.setIsLoggedIn(false);
+        navigate("/")
+	};
+
+    const navigate = useNavigate();
     
 
     return (
@@ -58,7 +67,14 @@ const Profile = (props) => {
 
         <div className="profile-header">
             <h1 style={headingStyle} variant="contained">My Profile</h1>
-            <Button variant="contained"  style={buttonStyle} size="large"> Log Out </Button>
+            <Button 
+                variant="contained"  
+                style={buttonStyle} 
+                size="large"
+                onClick={handleLogoutClick}
+            > 
+                Log Out 
+            </Button>
         </div>
 
         <div className="profile-navigation">
@@ -88,9 +104,18 @@ const Profile = (props) => {
         </div>
 
        <div className="profile-option-page">
-            {activeTab === 'wallet' && <ProfileWallet user={user} isLoggedIn={isLoggedIn}/>}
-            {activeTab === 'settings' && <ProfileSettings/>}
-            {activeTab === 'details' && <ProfileDetails/>}
+            {activeTab === 'wallet' && <ProfileWallet 
+            user={user}
+            isLoggedIn={isLoggedIn}
+            setUser={props.setUser}
+            />}
+            {activeTab === 'settings' && <ProfileSettings 
+                user={user}
+                setIsLoggedIn={setIsLoggedIn}
+            />}
+            {activeTab === 'details' && <ProfileDetails
+                user={user}
+            />}
             {activeTab === 'properties' && <ProfileProperties/>}
 
        </div>

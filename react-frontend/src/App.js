@@ -4,7 +4,7 @@ import Navbar from "./Components/Navbar";
 import HomePage from "./Components/HomePage";
 import Profile from "./Components/Profile";
 import { LocalizationProvider } from "@mui/x-date-pickers";
-import 'dayjs/locale/en-au'
+import 'dayjs/locale/en-au';
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { useState } from "react";
 
@@ -15,7 +15,7 @@ function App() {
 	return (
 		<div className="App">
 			<LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="en-au">
-				<Navbar isLoggedIn={isLoggedIn} />
+				<Navbar isLoggedIn={isLoggedIn} user={user} setUser={setUser} />
 				<Routes>
 					<Route
 						path="/"
@@ -32,6 +32,7 @@ function App() {
 					element={
 						<Profile 
 							user={user} 
+							setUser={setUser}
 							isLoggedIn={isLoggedIn}
 							setIsLoggedIn={setIsLoggedIn}
 						/>} 
