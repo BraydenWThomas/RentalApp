@@ -57,7 +57,10 @@ const FilterOverlay = (props) => {
 
 				<Divider style={{ marginTop: "20px" }} />
 
-				<DetailFilters setSearchFilters={props.setSearchFilters} />
+				<DetailFilters 
+					searchFilters={props.searchFilters} 
+					setSearchFilters={props.setSearchFilters}
+					/>
 			</Container>
 		</Modal>
 	);
@@ -65,7 +68,8 @@ const FilterOverlay = (props) => {
 
 const closeFunction = (setOpen,searchFilters,setSearchFilters) => {
 	//#TODO put all the info into one use state
-	setSearchFilters({minPrice:'12',maxPrice:'123'})
+	//setSearchFilters({minPrice:'12',maxPrice:'123'})
+	//setSearchFilters(searchFilters)
 	console.log(searchFilters)
 	setOpen(false)
 }
@@ -266,7 +270,7 @@ const PropertyTypeSelect = () => {
 	);
 };
 
-const DetailFilters = () => {
+const DetailFilters = ({ searchFilters, setSearchFilters }) => {
 	const [minPrice, setMinPrice] = useState(100);
 	const [maxPrice, setMaxPrice] = useState(400);
 	const [minBed, setMinBed] = useState(0);
@@ -278,6 +282,8 @@ const DetailFilters = () => {
 
 	const priceItems = [];
 	const bedItems = [];
+	const bathItems = [];
+	const carItems = [];
 
 	for (let i = 0; i <= 1000; i += 50) {
 		priceItems.push(<MenuItem value={i}>${i}</MenuItem>);
@@ -288,6 +294,14 @@ const DetailFilters = () => {
 
 	for (let i = 0; i < 13; i++) {
 		bedItems.push(<MenuItem value={i}>{i}</MenuItem>);
+	}
+
+	for (let i = 0; i < 13; i++) {
+		bathItems.push(<MenuItem value={i}>{i}</MenuItem>);
+	}
+
+	for (let i = 0; i < 13; i++) {
+		carItems.push(<MenuItem value={i}>{i}</MenuItem>);
 	}
 
 	const theme = createTheme({
@@ -327,10 +341,10 @@ const DetailFilters = () => {
 						<InputLabel>Min</InputLabel>
 						<Select
 							color="highlightColour"
-							value={minPrice}
+							value={searchFilters["detailFilters"]["minPrice"]}
 							label="Min"
 							onChange={(e) => {
-								setMinPrice(e.target.value);
+								setSearchFilters(searchFilters => ({...searchFilters, detailFilters:{...searchFilters.detailFilters, minPrice:(e.target.value) }}))
 							}}
 						>
 							{priceItems}
@@ -346,10 +360,10 @@ const DetailFilters = () => {
 					>
 						<InputLabel>Max</InputLabel>
 						<Select
-							value={maxPrice}
+							value={searchFilters["detailFilters"]["maxPrice"]}
 							label="Max"
 							onChange={(e) => {
-								setMaxPrice(e.target.value);
+								setSearchFilters(searchFilters => ({...searchFilters, detailFilters:{...searchFilters.detailFilters, maxPrice:(e.target.value) }}))
 							}}
 						>
 							{priceItems}
@@ -371,10 +385,10 @@ const DetailFilters = () => {
 						<InputLabel>Min</InputLabel>
 						<Select
 							color="highlightColour"
-							value={minBed}
+							value={searchFilters["detailFilters"]["minBedrooms"]}
 							label="Min"
 							onChange={(e) => {
-								setMinBed(e.target.value);
+								setSearchFilters(searchFilters => ({...searchFilters, detailFilters:{...searchFilters.detailFilters, minBedrooms:(e.target.value) }}))
 							}}
 						>
 							{bedItems}
@@ -390,10 +404,10 @@ const DetailFilters = () => {
 					>
 						<InputLabel>Max</InputLabel>
 						<Select
-							value={maxBed}
+							value={searchFilters["detailFilters"]["maxBedrooms"]}
 							label="Max"
 							onChange={(e) => {
-								setMaxBed(e.target.value);
+								setSearchFilters(searchFilters => ({...searchFilters, detailFilters:{...searchFilters.detailFilters, maxBedrooms:(e.target.value) }}))
 							}}
 						>
 							{bedItems}
@@ -415,13 +429,13 @@ const DetailFilters = () => {
 						<InputLabel>Min</InputLabel>
 						<Select
 							color="highlightColour"
-							value={minBath}
+							value={searchFilters["detailFilters"]["minBathrooms"]}
 							label="Min"
 							onChange={(e) => {
-								setMinBath(e.target.value);
+								setSearchFilters(searchFilters => ({...searchFilters, detailFilters:{...searchFilters.detailFilters, minBathrooms:(e.target.value) }}))
 							}}
 						>
-							{/* {bedItems} */}
+							{/* {bathItems} */}
 						</Select>
 					</FormControl>
 				</Grid>
@@ -434,10 +448,10 @@ const DetailFilters = () => {
 					>
 						<InputLabel>Max</InputLabel>
 						<Select
-							value={maxBath}
+							value={searchFilters["detailFilters"]["maxBathrooms"]}
 							label="Max"
 							onChange={(e) => {
-								setMaxBath(e.target.value);
+								setSearchFilters(searchFilters => ({...searchFilters, detailFilters:{...searchFilters.detailFilters, maxBathrooms:(e.target.value) }}))
 							}}
 						>
 							{/* {bedItems} */}
@@ -459,10 +473,10 @@ const DetailFilters = () => {
 						<InputLabel>Min</InputLabel>
 						<Select
 							color="highlightColour"
-							value={minCar}
+							value={searchFilters["detailFilters"]["minCars"]}
 							label="Min"
 							onChange={(e) => {
-								setMinCar(e.target.value);
+								setSearchFilters(searchFilters => ({...searchFilters, detailFilters:{...searchFilters.detailFilters, minCars:(e.target.value) }}))
 							}}
 						>
 							{/* {bedItems} */}
@@ -478,10 +492,10 @@ const DetailFilters = () => {
 					>
 						<InputLabel>Max</InputLabel>
 						<Select
-							value={maxCar}
+							value={searchFilters["detailFilters"]["maxCars"]}
 							label="Max"
 							onChange={(e) => {
-								setMaxCar(e.target.value);
+								setSearchFilters(searchFilters => ({...searchFilters, detailFilters:{...searchFilters.detailFilters, maxCars:(e.target.value) }}))
 							}}
 						>
 							{/* {bedItems} */}

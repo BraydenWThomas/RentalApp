@@ -15,6 +15,13 @@ const SearchBar = (props) => {
 	const searchResults = props.searchResults;
 	const setSearchResults = props.setSearchResults;
 
+	const setSearchFilters=props.setSearchFilters
+	const searchFilters=props.searchFilters
+
+	//
+	console.log("search "+props.searchFilters)
+	console.log("search "+searchFilters)
+
 	const searchBtnStyle = {
 		backgroundColor: "#A59DB7",
 		padding: "1rem",
@@ -34,8 +41,11 @@ const SearchBar = (props) => {
 		marginInline: "10px",
 	};
 
-	const applySearch = () => {
+	const applySearch = (searchFilters) => {
 		console.log("Searchtext = " + searchTxt);
+		//
+		//console.log(searchFilters)
+
 		// Search
 		const url =
 			api +
@@ -115,7 +125,7 @@ const SearchBar = (props) => {
 					style={searchBtnStyle}
 					variant="contained"
 					size="large"
-					onClick={applySearch}
+					onClick={() =>applySearch(props.searchFilters)}
 				>
 					Search
 				</Button>
