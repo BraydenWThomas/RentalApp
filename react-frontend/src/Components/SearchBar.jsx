@@ -18,10 +18,6 @@ const SearchBar = (props) => {
 	const setSearchFilters=props.setSearchFilters
 	const searchFilters=props.searchFilters
 
-	//
-	console.log("search "+props.searchFilters)
-	console.log("search "+searchFilters)
-
 	const searchBtnStyle = {
 		backgroundColor: "#A59DB7",
 		padding: "1rem",
@@ -43,27 +39,29 @@ const SearchBar = (props) => {
 
 	const applySearch = (searchFilters) => {
 		console.log("Searchtext = " + searchTxt);
-		//
+		
 		//console.log(searchFilters)
 
+		// start date/end date currently not implemented
 		// Search
 		const url =
 			api +
-			("/properties/search" +
+			("/properties/search" 
+/* 				+
 				"?searchTxt=" +
 				searchTxt +
 				"&minBed=" +
-				0 +
+				searchFilters["detailFilters"]["minBedrooms"] +
 				"&maxBed=" +
-				300 +
+				searchFilters["detailFilters"]["maxBedrooms"] +
 				"&minBath=" +
 				0 +
 				"&maxBath=" +
 				300 +
-				"&minBudget=" +
-				0 +
-				"&maxBudget=" +
-				5010 +
+				"&minPrice=" +
+				searchFilters["detailFilters"]["minPrice"] +
+				"&maxPrice=" +
+				searchFilters["detailFilters"]["maxPrice"] +
 				"&minCar=" +
 				0 +
 				"&maxCar=" +
@@ -75,15 +73,38 @@ const SearchBar = (props) => {
 				"&type=" +
 				"Apartment" +
 				"&isAvailable=" +
-				true);
+				true */
+				);
 
-		axios
-			.get(url)
+				const options = {
+					method:'POST',
+					url: api+'/properties/search',
+					params: { 'api-version': '3.0' },
+					headers: {
+						'content-type': 'application/json',
+					},
+					data: searchFilters
+				}
+				console.log(options.data)
+/* 		axios
+			.get(options)
 			.then((res) => {
 				setSearchResults(res.data);
 				console.log("Done");
 			})
 			.catch((err) => {
+				console.log(err);
+			}); */
+
+			axios
+			.request(options)
+			.then((res) => {
+				console.log("res data " + res.data);
+				setSearchResults(res.data);
+				console.log("Done");
+			})
+			.catch((err) => {
+				console.log("its an error");
 				console.log(err);
 			});
 

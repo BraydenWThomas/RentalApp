@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fdm.FlatBooking.Model.Property;
+import com.fdm.FlatBooking.Model.PropertySearch;
 import com.fdm.FlatBooking.Service.IPropertyService;
 
 @RestController
@@ -45,36 +46,30 @@ public class PropertyController {
     }
 
     @GetMapping("search")
-    public List<Property> searchProperties(
-            @RequestParam String searchTxt,
-            @RequestParam int minBed,
-            @RequestParam int maxBed,
-            @RequestParam int minBath,
-            @RequestParam int maxBath,
-            @RequestParam int minBudget,
-            @RequestParam int maxBudget,
-            @RequestParam int minCar,
-            @RequestParam int maxCar,
-            @RequestParam int minSize,
-            @RequestParam int maxSize,
-            @RequestParam String type,
-            @RequestParam boolean isAvailable) {
-        System.out.println("Search text: " + searchTxt);
-        System.out.println("minBed: " + minBed);
-        System.out.println("maxBed: " + maxBed);
-        System.out.println("minBath: " + minBath);
-        System.out.println("maxBath: " + maxBath);
-        System.out.println("minBudget: " + minBudget);
-        System.out.println("maxBudget: " + maxBudget);
-        System.out.println("minCar: " + minCar);
-        System.out.println("maxCar: " + maxCar);
-        System.out.println("minSize: " + minSize);
-        System.out.println("maxSize: " + maxSize);
-        System.out.println("type: " + type);
-        System.out.println("isAvailable: " + isAvailable);
-        return propertyService.getPropertyWithFilters(searchTxt, minBed, maxBed, minBath,
-                maxBath, minBudget, maxBudget, minCar,
-                maxCar, minSize, maxSize, type, isAvailable);
+    public List<Property> searchProperties(@RequestBody PropertySearch propertySearch){
+
+    	System.out.println("test");
+    
+    //#TODO needs to be fixed later in future (static right now)
+        return propertyService.getPropertyWithFilters(
+        		"",
+        		propertySearch.getDetailFilters().getMinBedrooms(),
+            	propertySearch.getDetailFilters().getMaxBedrooms(),
+            	propertySearch.getDetailFilters().getMinBathrooms(),
+            	propertySearch.getDetailFilters().getMaxBathrooms(),
+            	propertySearch.getDetailFilters().getMinPrice(),
+            	propertySearch.getDetailFilters().getMaxPrice(),
+            	propertySearch.getDetailFilters().getMinCars(),
+            	propertySearch.getDetailFilters().getMaxCars(),
+            	0,
+            	1000000,
+            	"house",
+            	true);
+    }
+    
+    @PostMapping("search")
+    public void testSearch(@RequestBody PropertySearch propertySearch) {
+    	System.out.println(propertySearch);
     }
 
     @GetMapping("/{propertyId}")

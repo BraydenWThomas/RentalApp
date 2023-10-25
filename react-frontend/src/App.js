@@ -14,7 +14,7 @@ function App() {
 	const [user, setUser] = useState({});
 	const [searchTxt, setSearchTxt] = useState("");
 	const [searchFilters, setSearchFilters] = useState({
-		locationFilters: [],
+		locationFilters: [""],
 		propertyTypes: {
 			house: "false",
 			apartment: "false",
@@ -32,6 +32,7 @@ function App() {
 			maxBathrooms: "10",
 			minCars: "0",
 			maxCars: "10",
+			//missing start/end date
 		},
 	});
 	const [searchResults, setSearchResults] = useState([]);
