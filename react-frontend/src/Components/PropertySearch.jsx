@@ -79,6 +79,8 @@ const PropertyCard = ({ property, user }) => {
 	const imageStyle = {
 		height: "auto",
 		width: "30rem",
+		aspectRatio: '16/9',
+		objectFit: 'cover'
 	};
 
 	const infoStyle = {

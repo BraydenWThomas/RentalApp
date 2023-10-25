@@ -229,6 +229,10 @@ const RecentListingCard = ({ listing }) => {
 	const cardStyle = {
 		borderRadius: "10px",
 		backgroundColor: "#A59DB740",
+		display: 'flex',
+		flexDirection: 'column',
+		justifyContent: 'space-between'
+
 	};
 
 	const textStyle = {
@@ -241,7 +245,8 @@ const RecentListingCard = ({ listing }) => {
 		maxWidth: "100%",
 		height: "auto",
 		borderRadius: "10px 10px 0 0",
-		backgroundColor: "blue",
+		aspectRatio: '16/9',
+		objectFit: 'cover'
 	};
 
 	const api = "http://localhost:8080/api/v1";
@@ -260,14 +265,9 @@ const RecentListingCard = ({ listing }) => {
 	}, []);
 
 	return (
-		<Grid container style={cardStyle}>
-			<Grid xs={12}>
-				{/* <img
-					style={imageStyle}
-					src="https://carlislehomes.com.au/static/images/hal/CARL607554_Matisse33_003_2.jpg"
-					alt="House"
-				/> */}
-				{listing.images.length > 0 ? (
+		<div style={cardStyle}>
+			<div>
+				{listing.images.length !== "" ? (
 					<img
 						style={imageStyle}
 						src={`data:image/jpg;base64,${imageData}`}
@@ -277,21 +277,21 @@ const RecentListingCard = ({ listing }) => {
 					<img
 						style={imageStyle}
 						src={imagePlaceholder}
-						alt="Property"
+						alt="Property placeholder"
 					/>
 				)}
-			</Grid>
+			</div>
 			<div style={textStyle}>
-				<Grid xs={12}>{"Price: $" + listing.rentalPrice}</Grid>
-				<Grid xs={12}>
+				<div>{"Price: $" + listing.rentalPrice}</div>
+				<div>
 					{"Address: " +
 						listing.address.unit +
 						" " +
 						listing.address.street +
 						", " +
 						listing.address.suburb}
-				</Grid>
-				<Grid xs={12}>
+				</div>
+				<div>
 					{"Features: " +
 						listing.details.bedroom +
 						" Bed | " +
@@ -299,9 +299,9 @@ const RecentListingCard = ({ listing }) => {
 						" Bath | " +
 						listing.details.carPark +
 						" Car"}
-				</Grid>
+				</div>
 			</div>
-		</Grid>
+		</div>
 	);
 };
 

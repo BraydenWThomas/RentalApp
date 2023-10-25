@@ -116,7 +116,7 @@ const FilterOverlay = (props) => {
 						style={buttonStyle}
 						size="large"
 						onClick={() => {
-							props.setOpenFilter(false);
+							setOpen(false);
 						}}
 					>
 						Done
