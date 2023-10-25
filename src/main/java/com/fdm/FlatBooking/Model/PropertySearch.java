@@ -1,5 +1,6 @@
 package com.fdm.FlatBooking.Model;
 
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -33,6 +34,11 @@ public class PropertySearch {
 	}
 	public void setLocationFilters(String[] locationFilters) {
 		this.locationFilters = locationFilters;
+	}
+	@Override
+	public String toString() {
+		return "PropertySearch [propertyTypes=" + propertyTypes + ", detailFilters=" + detailFilters
+				+ ", locationFilters=" + Arrays.toString(locationFilters) + "]";
 	}
 	
 	

@@ -46,8 +46,7 @@ const SearchBar = (props) => {
 		// Search
 		const url =
 			api +
-			("/properties/search" 
-/* 				+
+			("/properties/search"  				+
 				"?searchTxt=" +
 				searchTxt +
 				"&minBed=" +
@@ -55,17 +54,17 @@ const SearchBar = (props) => {
 				"&maxBed=" +
 				searchFilters["detailFilters"]["maxBedrooms"] +
 				"&minBath=" +
-				0 +
+				searchFilters["detailFilters"]["minBathrooms"] +
 				"&maxBath=" +
-				300 +
+				searchFilters["detailFilters"]["maxBathrooms"] +
 				"&minPrice=" +
 				searchFilters["detailFilters"]["minPrice"] +
 				"&maxPrice=" +
 				searchFilters["detailFilters"]["maxPrice"] +
 				"&minCar=" +
-				0 +
+				searchFilters["detailFilters"]["minCars"] +
 				"&maxCar=" +
-				300 +
+				searchFilters["detailFilters"]["maxCars"] +
 				"&minSize=" +
 				0 +
 				"&maxSize=" +
@@ -73,40 +72,19 @@ const SearchBar = (props) => {
 				"&type=" +
 				"Apartment" +
 				"&isAvailable=" +
-				true */
+				true
 				);
 
-				const options = {
-					method:'POST',
-					url: api+'/properties/search',
-					params: { 'api-version': '3.0' },
-					headers: {
-						'content-type': 'application/json',
-					},
-					data: searchFilters
-				}
-				console.log(options.data)
-/* 		axios
-			.get(options)
+		axios
+			.get(url)
 			.then((res) => {
 				setSearchResults(res.data);
 				console.log("Done");
 			})
 			.catch((err) => {
-				console.log(err);
-			}); */
-
-			axios
-			.request(options)
-			.then((res) => {
-				console.log("res data " + res.data);
-				setSearchResults(res.data);
-				console.log("Done");
-			})
-			.catch((err) => {
-				console.log("its an error");
 				console.log(err);
 			});
+
 
 		// Navigate to search results page
 		nav("/search");
