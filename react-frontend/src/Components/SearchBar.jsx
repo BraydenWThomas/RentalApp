@@ -47,8 +47,12 @@ const SearchBar = (props) => {
 		const url =
 			api +
 			("/properties/search" +
+
+				//locationFilters (#TODO needs to be fixed)
 				"?searchTxt=" +
 				searchTxt +
+
+				//detailFilters
 				"&minBed=" +
 				searchFilters["detailFilters"]["minBedrooms"] +
 				"&maxBed=" +
@@ -65,6 +69,8 @@ const SearchBar = (props) => {
 				searchFilters["detailFilters"]["minCars"] +
 				"&maxCar=" +
 				searchFilters["detailFilters"]["maxCars"] +
+
+				//Currently not needed
 				"&minSize=" +
 				0 +
 				"&maxSize=" +
@@ -72,7 +78,22 @@ const SearchBar = (props) => {
 				"&type=" +
 				"Apartment" +
 				"&isAvailable=" +
-				true);
+				true +
+
+				//propertyTypes
+				"&isHouse=" +
+				searchFilters["propertyTypes"]["house"] +
+				"&isApartment=" +
+				searchFilters["propertyTypes"]["apartment"] +
+				"&isTownhouse=" +
+				searchFilters["propertyTypes"]["townhouse"] +
+				"&isGrannyflat=" +
+				searchFilters["propertyTypes"]["grannyflat"] +
+				"&isRoom=" +
+				searchFilters["propertyTypes"]["room"] +
+				"&isUnit=" +
+				searchFilters["propertyTypes"]["unit"]
+			);
 
 		axios
 			.get(url)
