@@ -192,29 +192,31 @@ const RecentSearchCard = ({ search }) => {
 	return (
 		<Grid container style={cardStyle}>
 			<Grid xs={12}>
-				<b style={locationStyle}>{"$" + search.maxPrice}</b>
+				<b style={locationStyle}>{"This is a search"}</b>
 			</Grid>
 			<Grid xs={12}>
 				<div style={{ display: "inline-block" }}>
-					{"$" + search.minPrice + " to $" + search.maxPrice}
+					{"$" + search["detailFilters"]["minPrice"] + 
+					" to $" + 
+					search["detailFilters"]["maxPrice"]}
 				</div>
 				<div style={{ display: "inline-block" }}>
 					{"Bedrooms: " +
-						search.minBedrooms +
+						search["detailFilters"]["minBedrooms"] +
 						" to " +
-						search.maxBedrooms}
+						search["detailFilters"]["maxBedrooms"]}
 				</div>
 				<div style={{ display: "inline-block" }}>
 					{"Car Spots: " +
-						search.minCarSpaces +
+						search["detailFilters"]["minCars"] +
 						" to " +
-						search.maxCarSpaces}
+						search["detailFilters"]["maxCars"]}
 				</div>
 				<div style={{ display: "inline-block" }}>
 					{"Available Date: " +
-						search.startDateAvailable +
+						"N/A" +
 						" to " +
-						search.endDateAvailable}
+						"N/A"}
 				</div>
 				{
 					//#TODO Preferred Features
