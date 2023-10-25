@@ -91,6 +91,13 @@ public class DetailFilters {
 		this.maxCars = maxCars;
 	}
 
+	@Override
+	public String toString() {
+		return "DetailFilters [minPrice=" + minPrice + ", maxPrice=" + maxPrice + ", minBedrooms=" + minBedrooms
+				+ ", maxBedrooms=" + maxBedrooms + ", minBathrooms=" + minBathrooms + ", maxBathrooms=" + maxBathrooms
+				+ ", minCars=" + minCars + ", maxCars=" + maxCars + "]";
+	}
+
 	
 
 	
