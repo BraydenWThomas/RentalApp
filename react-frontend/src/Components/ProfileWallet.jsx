@@ -13,19 +13,44 @@ const ProfileWallet = (props)=> {
     const isLoggedIn = props.isLoggedIn
     const [transactions, setTransactions] = useState([])
     const [rechargeAmount, setRechargeAmount] = useState(0)
+    const [users, setUsers] = useState([])
+    const [transaction, setTransaction] = useState(
+        {
+            senderId: user.id,
+            receiverId: "",
+            date: "",
+            amount: "",
+            reference: ""
+        })
 
     const url = "http://localhost:8080/api/v1/"
 
     useEffect(() => {
         if (isLoggedIn) {
-            axios
+            
+            loadUsers()
+            loadTransactions()
+            
+        }
+    }, [])
+
+    const loadTransactions = () => {
+        axios
             .get(url + `transactions/${user.id}/alltransactions`)
             .then((response) => {
                 setTransactions(response.data)
             })
-            .catch(console.log)
-        }
-    }, [])
+            .catch(e => console.log(e))
+    }
+
+    const loadUsers = () => {
+        axios
+            .get(url + "users")
+            .then((response) => {
+                setUsers(response.data)
+            })
+            .catch(e => console.log(e))
+    }
 
     const buttonStyle = {
         backgroundColor: '#A59DB7',
@@ -39,11 +64,19 @@ const ProfileWallet = (props)=> {
     const [openRecharge, setOpenRecharge] = useState(false)
 
     const handlePaymentClose = () => {
+        setTransaction({
+            senderId: "",
+            receiverId: "",
+            date: "",
+            amount: "",
+            reference: ""
+        })
         setOpenPayment(false)
     }
 
     const handleRechargeClose = () => {
         setOpenRecharge(false)
+        setRechargeAmount(0)
     }
 
     const handleRechargeAmountChange = (e) => {
@@ -60,6 +93,24 @@ const ProfileWallet = (props)=> {
         .catch(error => console.log(error))
         setRechargeAmount(0)
         handleRechargeClose()
+    }
+
+    const handlePayment = () => {
+
+    }
+
+    const handleTransactionChange = (event) => {
+
+        console.log(event.target)
+
+        const { name, value } = event.target;
+        
+        setTransaction((prevState) => ({
+            ...prevState,
+            [name]: value
+        }))
+        console.log(transaction)
+        console.log(users)
     }
 
     return(
@@ -114,33 +165,61 @@ const ProfileWallet = (props)=> {
                 <Box className="payment-container">
                     <CloseIcon className="close-icon" onClick={handlePaymentClose}/>
                     <h1>Payment</h1>
-                    <p>Property ID</p>
+                    <p>Payee</p>
+
                     <Select
+                        name="receiverId"
+                        value={transaction.receiverId}
+                        onChange={handleTransactionChange}
                         fullWidth
-                        // value={age}
-                        // label="Age"
-                        // onChange={handleChange}
                     >
-                        {/* <MenuItem value={10}>Ten</MenuItem>
-                        <MenuItem value={20}>Twenty</MenuItem>
-                        <MenuItem value={30}>Thirty</MenuItem> */}
-                    </Select>
-                    <p>Amount</p>
-                    <TextField variant="filled" fullWidth></TextField>
-                    <p>How Often?</p>
-                    <Select
-                        fullWidth
-                        // value={age}
-                        // label="Age"
-                        // onChange={handleChange}
-                    >
-                        <MenuItem value={10}>Weekly</MenuItem>
-                        <MenuItem value={20}>Fortnightly</MenuItem>
-                        <MenuItem value={30}>Monthly</MenuItem>
+                        {
+                            users?.map((payee) => (
+                                <div>
+                                    {
+                                    user.id !== payee.id &&
+                                    <MenuItem 
+                                        value={payee.id}
+                                    >
+                                        {payee.firstName} {payee.lastName}
+                                    </MenuItem>
+                                    }
+                                </div>
+                            ))
+                        }
+
                     </Select>
 
+                    <p>Reference</p>
+                    <TextField 
+                        variant="filled" 
+                        type="text" 
+                        name="reference"
+                        value={transaction.reference} 
+                        onChange={handleTransactionChange}
+                        fullWidth
+                    >
+                    </TextField>
+
+                    <p>Amount</p>
+                    <TextField 
+                        variant="filled" 
+                        type="number" 
+                        name="amount"
+                        value={transaction.amount} 
+                        onChange={handleTransactionChange}
+                        fullWidth
+                    >
+                    </TextField>
+
                     <div className="payment-buttons">
-                        <Button variant="contained" style={buttonStyle}>Pay Now</Button>
+                        <Button 
+                            variant="contained" 
+                            style={buttonStyle}
+                            onClick={handlePayment}
+                        >
+                            Pay Now
+                        </Button>
                         <Button 
                             variant="contained" 
                             style={buttonStyle}
