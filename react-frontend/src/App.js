@@ -5,7 +5,7 @@ import HomePage from "./Components/HomePage";
 import Profile from "./Components/Profile";
 import PropertySearch from "./Components/PropertySearch";
 import { LocalizationProvider } from "@mui/x-date-pickers";
-import 'dayjs/locale/en-au'
+import "dayjs/locale/en-au";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { useState } from "react";
 
@@ -13,10 +13,36 @@ function App() {
 	const [isLoggedIn, setIsLoggedIn] = useState(false);
 	const [user, setUser] = useState({});
 	const [searchTxt, setSearchTxt] = useState("");
+	const [searchFilters, setSearchFilters] = useState({
+		locationFilters: [""],
+		propertyTypes: {
+			house: "false",
+			apartment: "false",
+			townhouse: "false",
+			grannyflat: "false",
+			room: "false",
+			unit: "false",
+		},
+		detailFilters: {
+			minPrice: "0",
+			maxPrice: "1000",
+			minBedrooms: "1",
+			maxBedrooms: "10",
+			minBathrooms: "1",
+			maxBathrooms: "10",
+			minCars: "0",
+			maxCars: "10",
+			//missing start/end date
+		},
+	});
+	const [searchResults, setSearchResults] = useState([]);
 
 	return (
 		<div className="App">
-			<LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="en-au">
+			<LocalizationProvider
+				dateAdapter={AdapterDayjs}
+				adapterLocale="en-au"
+			>
 				<Navbar isLoggedIn={isLoggedIn} user={user} setUser={setUser} />
 				<Routes>
 					<Route
@@ -29,27 +55,36 @@ function App() {
 								setUser={setUser}
 								searchTxt={searchTxt}
 								setSearchTxt={setSearchTxt}
+								searchFilters={searchFilters}
+								setSearchFilters={setSearchFilters}
+								searchResults={searchResults}
+								setSearchResults={setSearchResults}
 							/>
 						}
 					/>
 					{/* <Route path="/signup" element={<SignupPage />} /> */}
-					<Route 
-						path="/profile" 
-						element=
-							{<Profile 
+					<Route
+						path="/profile"
+						element={
+							<Profile
 								user={user}
 								setUser={setUser}
-								setIsLoggedIn={setIsLoggedIn} 
-							/>} 
+								setIsLoggedIn={setIsLoggedIn}
 							/>
-								
+						}
+					/>
 					<Route
 						path="/search"
 						element={
-							<PropertySearch 
-								searchTxt={searchTxt} 
-								setSearchTxt={setSearchTxt} 
-							/>}
+							<PropertySearch
+								searchTxt={searchTxt}
+								setSearchTxt={setSearchTxt}
+								searchFilters={searchFilters}
+								setSearchFilters={setSearchFilters}
+								searchResults={searchResults}
+								setSearchResults={setSearchResults}
+							/>
+						}
 					/>
 				</Routes>
 			</LocalizationProvider>
