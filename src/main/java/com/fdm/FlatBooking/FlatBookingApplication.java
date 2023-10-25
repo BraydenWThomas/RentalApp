@@ -238,9 +238,11 @@ public class FlatBookingApplication implements CommandLineRunner {
 		userRepository.save(users.get(0));
 
 		// add images to properties
-		for (Property property : properties) {
+		for (int i = 0; i < properties.size(); i++) {
+			Property property = properties.get(i);
 			System.out.println("Adding images for property " + property.getAddress().getStreet());
-			for (String image : imageNames) {
+			for (int j = 0; j < imageNames.size(); j++) {
+				String image = imageNames.get((i + j) % imageNames.size());
 				System.out.println("\tAdding image " + image);
 				String id = uploadImage(image, property.getPropertyId());
 				property.addImageId(id);

@@ -7,10 +7,12 @@ import java.util.Base64;
 import java.util.List;
 import java.util.Optional;
 
+import org.apache.commons.io.IOUtils;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.gridfs.GridFsOperations;
 import org.springframework.data.mongodb.gridfs.GridFsTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -34,6 +36,9 @@ public class PropertyService implements IPropertyService {
 
 	@Autowired
 	UserRepository userRepository;
+
+	@Autowired
+	GridFsOperations operations;
 
 	@Override
 	public List<Property> getAllProperties() {
@@ -136,17 +141,7 @@ public class PropertyService implements IPropertyService {
 				return null;
 			}
 
-			InputStream in = gridFsTemplate.getResource(gridFsFile).getInputStream();
-
-			int length = (int) gridFsFile.getLength();
-			if (length != gridFsFile.getLength()) {
-				System.out.println("Image too big");
-				return null;
-			}
-
-			byte[] data = new byte[length];
-
-			in.read(data);
+			byte[] data = IOUtils.toByteArray(operations.getResource(gridFsFile).getInputStream());
 
 			res.add(Base64.getEncoder().encodeToString(data));
 		}
@@ -164,23 +159,12 @@ public class PropertyService implements IPropertyService {
 			System.out.println("File is null");
 			return null;
 		}
-
-		InputStream in = gridFsTemplate.getResource(file).getInputStream();
-
-		int length = (int) file.getLength();
-		if (length != file.getLength()) {
-			System.out.println("Image too big");
-			return null;
-		}
-
-		byte[] data = new byte[length];
-
-		in.read(data);
+		byte[] data = IOUtils.toByteArray(operations.getResource(file).getInputStream());
 
 		return Base64.getEncoder().encodeToString(data);
+	}
 
 	public List<Property> getAllOwnProperties(String userId) {
 		return propertyRepository.findByLandlordId(userId);
-
 	}
 }

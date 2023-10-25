@@ -105,7 +105,10 @@ const HomePage = (props) => {
 					<Grid container>
 						{/* Search */}
 						<Grid xs={12}>
-							<SearchBar searchTxt={props.searchTxt} setSearchTxt={props.setSearchTxt} />
+							<SearchBar
+								searchTxt={props.searchTxt}
+								setSearchTxt={props.setSearchTxt}
+							/>
 						</Grid>
 						{/* Recent Searches */}
 						<Grid xs={12}>
@@ -202,6 +205,7 @@ const RecentListingCard = ({ listing }) => {
 		maxWidth: "100%",
 		height: "auto",
 		borderRadius: "10px 10px 0 0",
+		backgroundColor: "blue",
 	};
 
 	const api = "http://localhost:8080/api/v1";

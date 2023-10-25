@@ -121,53 +121,14 @@ public class UserController {
     @PostMapping(value = "/{userId}/profilePhoto", consumes = "multipart/form-data")
     public void addProfilePhoto(@RequestParam("profilePhoto") MultipartFile photo, @PathVariable String userId)
             throws IOException {
-        Optional<User> userOpt = userService.findUserById(userId);
-
-        if (!userOpt.isPresent()) {
-            System.out.println("No user (" + userId + ") to upload photo to");
-            return;
-        }
-
-        User user = userOpt.get();
-
-        // Save photo
-        InputStream in = photo.getInputStream();
-        DBObject metaData = new BasicDBObject();
-        metaData.put("userId", userId);
-
-        // Upload photo
-        ObjectId photoId = gridFsTemplate.store(in, userId, photo.getContentType(), metaData);
-
-        // Set photo id on user
-        user.setProfilePhotoId(photoId.toHexString());
-        userService.updateUser(user);
+        userService.setUserPhoto(photo, userId);
     }
 
     @GetMapping("/profilePhoto/{photoId}")
     public String getProfilePhoto(@PathVariable String photoId) throws IllegalStateException, IOException {
-        System.out.println("Finding photo with ID: " + photoId);
-        GridFSFile gridFsfile = gridFsTemplate.findOne(new Query(Criteria.where("_id").is(photoId)));
-
-        if (gridFsfile == null) {
-            System.out.println("File is null");
-            return "";
-        }
-
-        InputStream in = gridFsTemplate.getResource(gridFsfile).getInputStream();
-
-        int length = (int) gridFsfile.getLength();
-        if (length != gridFsfile.getLength()) {
-            System.out.println("Image too big");
-            return "";
-        }
-
-        byte[] data = new byte[length];
-
-        in.read(data);
-
-        return Base64.getEncoder().encodeToString(data);
+        return userService.getUserPhoto(photoId);
     }
-    
+
     @PostMapping("/deactivate")
     public boolean deactivateProfile(@RequestParam String userId) throws IOException {
         Optional<User> userOpt = userService.findUserById(userId);
@@ -180,10 +141,10 @@ public class UserController {
         User user = userOpt.get();
         user.setActive(false);
         userService.updateUser(user);
-        
+
         return true;
     }
-    
+
     @PostMapping("/editUser")
     public User editProfile(@RequestBody User user) throws IOException {
         Optional<User> userOpt = userService.findUserById(user.getId());
@@ -191,10 +152,9 @@ public class UserController {
         if (!userOpt.isPresent()) {
             System.out.println("No user (" + user.getId() + ") to edit");
         }
-        
+
         userService.updateUser(user);
         return user;
     }
-    
-    
+
 }

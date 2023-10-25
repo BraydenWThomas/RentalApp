@@ -1,15 +1,10 @@
 package com.fdm.FlatBooking.Controller;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.util.Base64;
 import java.util.List;
 import java.util.Optional;
 
-import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.mongodb.core.query.Criteria;
-import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,11 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.fdm.FlatBooking.Model.Property;
-import com.fdm.FlatBooking.Model.User;
 import com.fdm.FlatBooking.Service.IPropertyService;
-import com.mongodb.BasicDBObject;
-import com.mongodb.DBObject;
-import com.mongodb.client.gridfs.model.GridFSFile;
 
 @RestController
 @RequestMapping("/api/v1/properties")
@@ -116,7 +107,8 @@ public class PropertyController {
 
     @GetMapping("/{propertyId}/photo")
     public String getPropertyPhoto(@PathVariable String propertyId) throws IllegalStateException, IOException {
-        return propertyService.getPropertyPhoto(propertyId);
+        String res = propertyService.getPropertyPhoto(propertyId);
+        return res;
     }
 
 }

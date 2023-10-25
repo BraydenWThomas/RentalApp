@@ -13,9 +13,8 @@ import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import axios from "axios";
 
 const ProfileDetails = (props) => {
-    
-    const user = props.user
-    const setUser = props.setUser
+	const user = props.user;
+	const setUser = props.setUser;
 
 	const [gender, setGender] = React.useState(user.gender);
 	const [firstName, setFirstName] = React.useState(user.firstName);
@@ -34,35 +33,35 @@ const ProfileDetails = (props) => {
 	};
 
 	const updateInformation = () => {
-        user.firstName = firstName;
-        user.lastName = lastName;
-        user.email = email;
-        user.gender = gender;
-        user.mobile = mobile;
-        user.dateOfBirth = dob;
-        user.occupation = occupation;
-        user.address = address;
+		user.firstName = firstName;
+		user.lastName = lastName;
+		user.email = email;
+		user.gender = gender;
+		user.mobile = mobile;
+		user.dateOfBirth = dob;
+		user.occupation = occupation;
+		user.address = address;
 
-		axios.post("http://localhost:8080/api/v1/users/editUser", user)
+		axios
+			.post("http://localhost:8080/api/v1/users/editUser", user)
 			.then((res) => {
-                setUser(user);
-		})
+				setUser(user);
+			});
 	};
 
 	React.useEffect(() => {
-		axios.get(api + "/users/userdetails")
-			.then(res => {
-				const photoId = res.data.profilePhotoId
+		axios.get(api + "/users/userdetails").then((res) => {
+			const photoId = res.data.profilePhotoId;
 
-				if (res.data.profilePhotoId) {
-
-					axios.get(api + `/users/profilePhoto/${photoId}`)
-						.then(res => {
-							setProfilePhoto(res.data)
-						})
-				}
-			})
-	}, [])
+			if (res.data.profilePhotoId) {
+				axios
+					.get(api + `/users/profilePhoto/${photoId}`)
+					.then((res) => {
+						setProfilePhoto(res.data);
+					});
+			}
+		});
+	}, []);
 
 	const buttonStyle = {
 		backgroundColor: "#A59DB7",
@@ -80,10 +79,9 @@ const ProfileDetails = (props) => {
 	};
 
 	const imageStyle = {
-		maxWidth: "100%",
-		height: "auto",
-		borderRadius: "10px 10px 0 0",
-		marginRight: "10px",
+		maxWidth: "3rem",
+		height: "3rem",
+		borderRadius: "2rem 2rem 2rem 2rem",
 	};
 
 	return (
@@ -96,6 +94,7 @@ const ProfileDetails = (props) => {
 						<img
 							style={imageStyle}
 							src={`data:image/jpg;base64,${profilePhoto}`}
+							alt="Profile"
 						/>
 					)}
 				</Grid>
