@@ -2,6 +2,7 @@ import "./App.css";
 import { Route, Routes } from "react-router-dom";
 import Navbar from "./Components/Navbar";
 import HomePage from "./Components/HomePage";
+import SavedProperties from "./Components/SavedProperties";
 import Profile from "./Components/Profile";
 import PropertySearch from "./Components/PropertySearch";
 import { LocalizationProvider } from "@mui/x-date-pickers";
@@ -62,6 +63,24 @@ function App() {
 							/>
 						}
 					/>
+					<Route
+						path="/savedProperties"
+						element={
+							<SavedProperties
+								isLoggedIn={isLoggedIn}
+								setIsLoggedIn={setIsLoggedIn}
+								user={user}
+								setUser={setUser}
+								searchTxt={searchTxt}
+								setSearchTxt={setSearchTxt}
+								searchFilters={searchFilters}
+								setSearchFilters={setSearchFilters}
+								searchResults={searchResults}
+								setSearchResults={setSearchResults}
+							/>
+						}
+					/>
+
 					{/* <Route path="/signup" element={<SignupPage />} /> */}
 					<Route
 						path="/profile"
