@@ -62,8 +62,9 @@ public interface IPropertyService {
      * @param maxSize
      * @return
      */
-    List<Property> getPropertyWithFilters(int minBed, int maxBed, int minBath, int maxBath, int minBudget,
-            int maxBudget, int minCar, int maxCar, int minSize, int maxSize, String propertyType, boolean isAvailable);
+    List<Property> getPropertyWithFilters(String searchTxt, int minBed, int maxBed, int minBath, int maxBath,
+            int minBudget, int maxBudget, int minCar, int maxCar, int minSize, int maxSize, String propertyType,
+            boolean isAvailable);
 
     List<Property> getRecentListings();
 

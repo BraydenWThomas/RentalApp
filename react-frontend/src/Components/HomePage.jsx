@@ -5,10 +5,13 @@ import SearchBar from "./SearchBar";
 import axios from "axios";
 import { useState, useEffect } from "react";
 import RegisterOverlay from "./RegisterOverlay";
+import FilterOverlay from "./FilterOverlay";
+import imagePlaceholder from "../Assets/No-Image-Placeholder.png";
 
 const HomePage = (props) => {
 	const [openLogin, setOpenLogin] = useState(false);
 	const [openRegister, setOpenRegister] = useState(false);
+	const [openFilter, setOpenFilter] = useState(true);
 	const [recentListings, setRecentListings] = useState([]);
 	const [recentSearches, setRecentSearches] = useState([]);
 	const [refreshListings, setRefreshListings] = useState(false);
@@ -106,8 +109,14 @@ const HomePage = (props) => {
 						{/* Search */}
 						<Grid xs={12}>
 							<SearchBar
+								openFilter={openFilter}
+								setOpenFilter={setOpenFilter}
 								searchTxt={props.searchTxt}
 								setSearchTxt={props.setSearchTxt}
+								searchResults={props.searchResults}
+								setSearchResults={props.setSearchResults}
+								searchFilters={props.searchFilters}
+								setSearchFilters={props.setSearchFilters}
 							/>
 						</Grid>
 						{/* Recent Searches */}
@@ -140,7 +149,10 @@ const HomePage = (props) => {
 					gap={10}
 				>
 					{recentListings.map((listing) => (
-						<RecentListingCard listing={listing} />
+						<RecentListingCard
+							listing={listing}
+							key={listing.propertyId}
+						/>
 					))}
 				</ImageList>
 			</Container>
@@ -155,6 +167,11 @@ const HomePage = (props) => {
 				open={[openRegister, setOpenRegister]}
 				isLoggedIn={props.isLoggedIn}
 				setIsLoggedIn={props.setIsLoggedIn}
+			/>
+			<FilterOverlay
+				open={[openFilter, setOpenFilter]}
+				searchFilters={props.searchFilters}
+				setSearchFilters={props.setSearchFilters}
 			/>
 		</div>
 	);
@@ -175,15 +192,34 @@ const RecentSearchCard = ({ search }) => {
 	return (
 		<Grid container style={cardStyle}>
 			<Grid xs={12}>
-				<b style={locationStyle}>{"$" + search.budget}</b>
+				<b style={locationStyle}>{"$" + search.maxPrice}</b>
 			</Grid>
 			<Grid xs={12}>
-				{search.numberOfBedrooms +
-					" Bed | " +
-					search.numberOfBathrooms +
-					" Bath | " +
-					search.numberOfCarspaces +
-					" Car"}
+				<div style={{ display: "inline-block" }}>
+					{"$" + search.minPrice + " to $" + search.maxPrice}
+				</div>
+				<div style={{ display: "inline-block" }}>
+					{"Bedrooms: " +
+						search.minBedrooms +
+						" to " +
+						search.maxBedrooms}
+				</div>
+				<div style={{ display: "inline-block" }}>
+					{"Car Spots: " +
+						search.minCarSpaces +
+						" to " +
+						search.maxCarSpaces}
+				</div>
+				<div style={{ display: "inline-block" }}>
+					{"Available Date: " +
+						search.startDateAvailable +
+						" to " +
+						search.endDateAvailable}
+				</div>
+				{
+					//#TODO Preferred Features
+					//#TODO Property Type
+				}
 			</Grid>
 		</Grid>
 	);
@@ -231,10 +267,16 @@ const RecentListingCard = ({ listing }) => {
 					src="https://carlislehomes.com.au/static/images/hal/CARL607554_Matisse33_003_2.jpg"
 					alt="House"
 				/> */}
-				{imageData !== "" && (
+				{listing.images.length > 0 ? (
 					<img
 						style={imageStyle}
 						src={`data:image/jpg;base64,${imageData}`}
+						alt="Property"
+					/>
+				) : (
+					<img
+						style={imageStyle}
+						src={imagePlaceholder}
 						alt="Property"
 					/>
 				)}

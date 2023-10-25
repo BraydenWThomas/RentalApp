@@ -78,11 +78,22 @@ public class PropertyService implements IPropertyService {
 	}
 
 	@Override
-	public List<Property> getPropertyWithFilters(int minBed, int maxBed, int minBath, int maxBath, int minBudget,
-			int maxBudget, int minCar, int maxCar, int minSize, int maxSize, String propertyType, boolean isAvailable) {
-		return propertyRepository.getPropertyWithFilters(minBed, maxBed, minBath,
+	public List<Property> getPropertyWithFilters(String searchTxt, int minBed, int maxBed, int minBath, int maxBath,
+			int minBudget, int maxBudget, int minCar, int maxCar, int minSize, int maxSize, String propertyType,
+			boolean isAvailable) {
+
+		List<Property> filteredResult = propertyRepository.getPropertyWithFilters(minBed, maxBed, minBath,
 				maxBath, minBudget, maxBudget, minCar,
 				maxCar, minSize, maxSize, propertyType, isAvailable);
+
+		List<Property> result = new ArrayList<>();
+
+		for (Property p : filteredResult) {
+			if (p.getPropertyDescription().toLowerCase().contains(searchTxt.toLowerCase()))
+				result.add(p);
+		}
+
+		return result;
 	}
 
 	@Override

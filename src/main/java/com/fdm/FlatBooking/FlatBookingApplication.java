@@ -27,11 +27,13 @@ import org.springframework.security.core.context.SecurityContextHolder;
 
 import com.fdm.FlatBooking.Model.Address;
 import com.fdm.FlatBooking.Model.Credentials;
+import com.fdm.FlatBooking.Model.DetailFilters;
 import com.fdm.FlatBooking.Model.Gender;
 import com.fdm.FlatBooking.Model.GeoLocation;
 import com.fdm.FlatBooking.Model.Property;
 import com.fdm.FlatBooking.Model.PropertyDetails;
 import com.fdm.FlatBooking.Model.PropertySearch;
+import com.fdm.FlatBooking.Model.PropertyTypes;
 import com.fdm.FlatBooking.Model.User;
 import com.fdm.FlatBooking.Repository.PropertyRepository;
 import com.fdm.FlatBooking.Repository.TransactionRepository;
@@ -64,9 +66,9 @@ public class FlatBookingApplication implements CommandLineRunner {
 	public void run(String... args) throws Exception {
 
 		// generates mock data
-		System.out.println("-----CREATE User ITEMS-----\n");
+		System.out.println("----- Generate Mock Data -----\n");
 		generateMockData();
-		System.out.println("\n-----USER CREATED-----\n");
+		System.out.println("\n----------- Done -----------\n");
 
 		// queryTests();
 
@@ -131,8 +133,13 @@ public class FlatBookingApplication implements CommandLineRunner {
 
 	private void createUsers() {
 		ArrayList<PropertySearch> searches = new ArrayList<>();
-		searches.add(new PropertySearch(400, 1, 1, 1, new ArrayList<String>(), new Date(20000000)));
-
+		searches.add(new PropertySearch(
+				new PropertyTypes(false, false, false, false, false, false), 
+				new DetailFilters(1, 2, 3, 4, 5, 6, 7, 8
+						//, new Date(20000000), new Date(20000000)
+						), 
+				new String[5]));
+		
 		// userRepository.save(new User("sjer", "samantha jermyn", 20, "manager"));
 		User user1 = new User("Samantha", "Jermyn", 12345678, Gender.FEMALE, new Date(2000000000),
 				"Cat Cafe Enthusiast", "1 Smith Street", true, new ArrayList<String>(), new ArrayList<String>(),
@@ -279,9 +286,15 @@ public class FlatBookingApplication implements CommandLineRunner {
 		transactionRepository.deleteAll();
 		gridFsTemplate.delete(new Query(Criteria.where("_id").exists(true)));
 
+		System.out.print("Generating users...");
 		createUsers();
+		System.out.println("Done!");
+		System.out.print("Generating Properties...");
 		createProperties();
+		System.out.println("Done!");
+		System.out.print("Generating transactions...");
 		createTransactions();
+		System.out.println("Done!");
 	}
 
 }
