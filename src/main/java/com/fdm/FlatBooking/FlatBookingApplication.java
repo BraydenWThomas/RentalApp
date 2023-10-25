@@ -8,13 +8,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import com.mongodb.BasicDBList;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
-import com.mongodb.client.gridfs.*;
-
-import org.bson.BsonBinarySubType;
-import org.bson.types.Binary;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -38,7 +33,6 @@ import com.fdm.FlatBooking.Model.User;
 import com.fdm.FlatBooking.Repository.PropertyRepository;
 import com.fdm.FlatBooking.Repository.TransactionRepository;
 import com.fdm.FlatBooking.Repository.UserRepository;
-import com.fdm.FlatBooking.Service.UserService;
 import com.fdm.FlatBooking.Model.Transaction;
 
 @SpringBootApplication
@@ -134,12 +128,12 @@ public class FlatBookingApplication implements CommandLineRunner {
 	private void createUsers() {
 		ArrayList<PropertySearch> searches = new ArrayList<>();
 		searches.add(new PropertySearch(
-				new PropertyTypes(false, false, false, false, false, false), 
+				new PropertyTypes(false, false, false, false, false, false),
 				new DetailFilters(1, 2, 3, 4, 5, 6, 7, 8
-						//, new Date(20000000), new Date(20000000)
-						), 
+				// , new Date(20000000), new Date(20000000)
+				),
 				new String[5]));
-		
+
 		// userRepository.save(new User("sjer", "samantha jermyn", 20, "manager"));
 		User user1 = new User("Samantha", "Jermyn", 12345678, Gender.FEMALE, new Date(2000000000),
 				"Cat Cafe Enthusiast", "1 Smith Street", true, new ArrayList<String>(), new ArrayList<String>(),
@@ -226,7 +220,7 @@ public class FlatBookingApplication implements CommandLineRunner {
 		properties.add(new Property("Apartment", 500, 2000, users.get(4).getId(), null, addrs.get(5), "4 Green Houses",
 				pds.get(5), features, new Date(20000000), true));
 		properties.add(new Property("Apartment", 500, 2000, users.get(4).getId(), null, addrs.get(6), "3 Green Houses",
-				pds.get(6), features, new Date(20000000), false));
+				pds.get(6), features, new Date(20000000), true));
 		properties.add(new Property("Apartment", 500, 2000, users.get(6).getId(), null, addrs.get(7), "1 Red Hotel",
 				pds.get(7), features, new Date(20000000), true));
 		properties.add(new Property("Apartment", 500, 2000, users.get(5).getId(), null, addrs.get(8), "1 Red Hotel",
@@ -236,7 +230,7 @@ public class FlatBookingApplication implements CommandLineRunner {
 		properties.add(new Property("Apartment", 500, 2000, users.get(6).getId(), null, addrs.get(10), "2 Green Houses",
 				pds.get(10), features, new Date(20000000), true));
 		properties.add(new Property("Apartment", 500, 2000, users.get(3).getId(), null, addrs.get(11), "4 Green Houses",
-				pds.get(11), features, new Date(20000000), false));
+				pds.get(11), features, new Date(20000000), true));
 
 		propertyRepository.saveAll(properties);
 

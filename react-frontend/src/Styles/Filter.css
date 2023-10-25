@@ -87,3 +87,9 @@
 .filterHeading {
     font-weight: 600;
 }
+
+.bottom-btns {
+    padding: 1rem;
+    display: flex;
+    justify-content: center;
+}

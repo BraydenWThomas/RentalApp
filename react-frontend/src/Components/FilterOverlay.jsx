@@ -25,6 +25,38 @@ const FilterOverlay = (props) => {
 
 	const [locationFilters, setLocationFilters] = useState([]);
 
+	const buttonStyle = {
+		backgroundColor: "#A59DB7",
+		color: "white",
+		margin: "10px",
+		fontFamily: "Oswald",
+	};
+
+	const resetFilter = () => {
+		props.setSearchFilters({
+			locationFilters: [""],
+			propertyTypes: {
+				house: false,
+				apartment: false,
+				townhouse: false,
+				grannyflat: false,
+				room: false,
+				unit: false,
+			},
+			detailFilters: {
+				minPrice: 0,
+				maxPrice: 1000,
+				minBedrooms: 0,
+				maxBedrooms: 12,
+				minBathrooms: 0,
+				maxBathrooms: 6,
+				minCars: 0,
+				maxCars: 6,
+				//missing start/end date
+			},
+		});
+	};
+
 	return (
 		<Modal
 			open={open}
@@ -37,6 +69,10 @@ const FilterOverlay = (props) => {
 			}
 		>
 			<Container className="filter-container" maxWidth="sm">
+				<link
+					href="https://fonts.googleapis.com/css?family=Oswald"
+					rel="stylesheet"
+				></link>
 				{/* Header */}
 				<div className="header">
 					<h2 style={{ display: "inline" }}>Filter</h2>
@@ -74,6 +110,27 @@ const FilterOverlay = (props) => {
 					searchFilters={props.searchFilters}
 					setSearchFilters={props.setSearchFilters}
 				/>
+
+				<div className="bottom-btns">
+					<Button
+						variant="contained"
+						style={buttonStyle}
+						size="large"
+						onClick={() => {
+							props.setOpenFilter(false);
+						}}
+					>
+						Done
+					</Button>
+					<Button
+						variant="contained"
+						style={buttonStyle}
+						size="large"
+						onClick={resetFilter}
+					>
+						Reset
+					</Button>
+				</div>
 			</Container>
 		</Modal>
 	);

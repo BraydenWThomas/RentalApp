@@ -28,11 +28,11 @@ function App() {
 			minPrice: 0,
 			maxPrice: 1000,
 			minBedrooms: 1,
-			maxBedrooms: 3,
+			maxBedrooms: 12,
 			minBathrooms: 1,
-			maxBathrooms: 3,
+			maxBathrooms: 6,
 			minCars: 0,
-			maxCars: 3,
+			maxCars: 6,
 			//missing start/end date
 		},
 	});
