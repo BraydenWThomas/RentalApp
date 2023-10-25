@@ -193,4 +193,20 @@ public class UserController {
     	System.out.println(user);
     	return user;
     }
+    
+ // Basic login TODO: modify for security
+    @GetMapping("/getname")
+    public String getUserName(@RequestParam String id) {
+        Optional<User> user = userService.findUserById(id);
+
+        // Check if user is present
+        if (!user.isPresent()) {
+            return "";
+        } 
+        
+        return user.get().getFirstName() + " " +  user.get().getLastName();
+    }
+    
+    
+    
 }
