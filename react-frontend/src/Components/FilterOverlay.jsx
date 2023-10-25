@@ -12,7 +12,6 @@ import {
 	FormControl,
 	InputLabel,
 	MenuItem,
-	FormHelperText,
 } from "@mui/material";
 import { createTheme } from "@mui/material/styles";
 import CloseIcon from "@mui/icons-material/Close";

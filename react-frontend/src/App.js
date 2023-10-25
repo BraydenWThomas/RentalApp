@@ -27,9 +27,9 @@ function App() {
 		detailFilters: {
 			minPrice: 0,
 			maxPrice: 1000,
-			minBedrooms: 1,
+			minBedrooms: 0,
 			maxBedrooms: 12,
-			minBathrooms: 1,
+			minBathrooms: 0,
 			maxBathrooms: 6,
 			minCars: 0,
 			maxCars: 6,
@@ -85,6 +85,7 @@ function App() {
 								setSearchFilters={setSearchFilters}
 								searchResults={searchResults}
 								setSearchResults={setSearchResults}
+								user={user}
 							/>
 						}
 					/>

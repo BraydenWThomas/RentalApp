@@ -13,6 +13,7 @@ const PropertySearch = ({
 	setSearchResults,
 	searchFilters,
 	setSearchFilters,
+	user,
 }) => {
 	const searchStyle = {
 		padding: "10px",
@@ -45,6 +46,7 @@ const PropertySearch = ({
 					{searchResults.map((result) => (
 						<PropertyCard
 							property={result}
+							user={user}
 							key={result.propertyId}
 						/>
 					))}
@@ -61,7 +63,7 @@ const PropertySearch = ({
 	);
 };
 
-const PropertyCard = ({ property }) => {
+const PropertyCard = ({ property, user }) => {
 	const containerStyle = {
 		display: "flex",
 		justifyContent: "center",
@@ -133,8 +135,8 @@ const PropertyCard = ({ property }) => {
 
 				<Grid container>
 					<Grid xs={10} style={infoStyle}>
-						<p>{"$" + property.rentalPrice + " per week"}</p>
-						<p>
+						<div>{"$" + property.rentalPrice + " per week"}</div>
+						<div>
 							{property.address.unit +
 								" " +
 								property.address.street +
@@ -145,18 +147,20 @@ const PropertyCard = ({ property }) => {
 								" (" +
 								property.address.postcode +
 								")"}
-						</p>
-						<p>
+						</div>
+						<div>
 							{property.details.bedroom +
 								" Bed | " +
 								property.details.bathroom +
 								" Bath | " +
 								property.details.carPark +
 								" Car"}
-						</p>
+						</div>
 					</Grid>
 					<Grid xs={1} style={iconContainerStyle}>
-						<StarIcon fontSize="large" />
+						{user?.bookmarkedProperties?.includes(
+							property.propertyId
+						) && <StarIcon fontSize="large" />}
 					</Grid>
 				</Grid>
 			</div>

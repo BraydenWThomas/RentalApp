@@ -11,7 +11,7 @@ import imagePlaceholder from "../Assets/No-Image-Placeholder.png";
 const HomePage = (props) => {
 	const [openLogin, setOpenLogin] = useState(false);
 	const [openRegister, setOpenRegister] = useState(false);
-	const [openFilter, setOpenFilter] = useState(true);
+	const [openFilter, setOpenFilter] = useState(false);
 	const [recentListings, setRecentListings] = useState([]);
 	const [recentSearches, setRecentSearches] = useState([]);
 	const [refreshListings, setRefreshListings] = useState(false);
@@ -196,9 +196,10 @@ const RecentSearchCard = ({ search }) => {
 			</Grid>
 			<Grid xs={12}>
 				<div style={{ display: "inline-block" }}>
-					{"$" + search["detailFilters"]["minPrice"] + 
-					" to $" + 
-					search["detailFilters"]["maxPrice"]}
+					{"$" +
+						search["detailFilters"]["minPrice"] +
+						" to $" +
+						search["detailFilters"]["maxPrice"]}
 				</div>
 				<div style={{ display: "inline-block" }}>
 					{"Bedrooms: " +
@@ -213,10 +214,7 @@ const RecentSearchCard = ({ search }) => {
 						search["detailFilters"]["maxCars"]}
 				</div>
 				<div style={{ display: "inline-block" }}>
-					{"Available Date: " +
-						"N/A" +
-						" to " +
-						"N/A"}
+					{"Available Date: " + "N/A" + " to " + "N/A"}
 				</div>
 				{
 					//#TODO Preferred Features
