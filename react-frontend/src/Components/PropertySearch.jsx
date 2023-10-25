@@ -83,6 +83,11 @@ const PropertyCard = ({ property, user }) => {
 		objectFit: 'cover'
 	};
 
+	const imagePlaceholderStyle = {
+		height: "auto",
+		width: "30rem",
+	};
+
 	const infoStyle = {
 		textAlign: "left",
 		margin: "10px",
@@ -129,7 +134,7 @@ const PropertyCard = ({ property, user }) => {
 					/>
 				) : (
 					<img
-						style={imageStyle}
+						style={imagePlaceholderStyle}
 						src={imagePlaceholder}
 						alt={"Property with " + property.propertyDescription}
 					/>
