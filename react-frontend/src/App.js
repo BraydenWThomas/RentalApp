@@ -14,25 +14,26 @@ function App() {
 	const [isLoggedIn, setIsLoggedIn] = useState(false);
 	const [user, setUser] = useState({});
 	const [searchTxt, setSearchTxt] = useState("");
+
 	const [searchFilters, setSearchFilters] = useState({
 		locationFilters: [""],
 		propertyTypes: {
-			house: "false",
-			apartment: "false",
-			townhouse: "false",
-			grannyflat: "false",
-			room: "false",
-			unit: "false",
+			house: false,
+			apartment: false,
+			townhouse: false,
+			grannyflat: false,
+			room: false,
+			unit: false,
 		},
 		detailFilters: {
-			minPrice: "0",
-			maxPrice: "1000",
-			minBedrooms: "1",
-			maxBedrooms: "10",
-			minBathrooms: "1",
-			maxBathrooms: "10",
-			minCars: "0",
-			maxCars: "10",
+			minPrice: 0,
+			maxPrice: 1000,
+			minBedrooms: 1,
+			maxBedrooms: 12,
+			minBathrooms: 1,
+			maxBathrooms: 6,
+			minCars: 0,
+			maxCars: 6,
 			//missing start/end date
 		},
 	});
@@ -98,6 +99,7 @@ function App() {
 							<PropertySearch
 								searchTxt={searchTxt}
 								setSearchTxt={setSearchTxt}
+								setIsLoggedIn={setIsLoggedIn}
 								searchFilters={searchFilters}
 								setSearchFilters={setSearchFilters}
 								searchResults={searchResults}

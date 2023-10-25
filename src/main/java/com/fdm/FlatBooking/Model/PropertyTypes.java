@@ -58,6 +58,11 @@ public class PropertyTypes {
 	public void setUnit(boolean unit) {
 		this.unit = unit;
 	}
+	@Override
+	public String toString() {
+		return "PropertyTypes [house=" + house + ", apartment=" + apartment + ", townhouse=" + townhouse
+				+ ", grannyflat=" + grannyflat + ", room=" + room + ", unit=" + unit + "]";
+	}
 	
 	
 	

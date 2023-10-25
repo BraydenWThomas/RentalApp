@@ -1,16 +1,30 @@
 package com.fdm.FlatBooking.Service;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
 import java.util.Optional;
 
+import org.apache.commons.io.IOUtils;
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.gridfs.GridFsOperations;
+import org.springframework.data.mongodb.gridfs.GridFsTemplate;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.fdm.FlatBooking.Model.Property;
 import com.fdm.FlatBooking.Model.User;
 import com.fdm.FlatBooking.Repository.PropertyRepository;
 import com.fdm.FlatBooking.Repository.UserRepository;
+import com.mongodb.BasicDBObject;
+import com.mongodb.DBObject;
+import com.mongodb.client.gridfs.GridFSFindIterable;
+import com.mongodb.client.gridfs.model.GridFSFile;
 
 @Service
 public class PropertyService implements IPropertyService {
@@ -18,7 +32,13 @@ public class PropertyService implements IPropertyService {
 	PropertyRepository propertyRepository;
 
 	@Autowired
+	GridFsTemplate gridFsTemplate;
+
+	@Autowired
 	UserRepository userRepository;
+
+	@Autowired
+	GridFsOperations operations;
 
 	@Override
 	public List<Property> getAllProperties() {
@@ -93,8 +113,69 @@ public class PropertyService implements IPropertyService {
 	}
 
 	@Override
+	public void addPropertyPhoto(String propertyId, MultipartFile photo) throws IOException {
+		Optional<Property> propertyOpt = propertyRepository.findById(propertyId);
+
+		if (!propertyOpt.isPresent()) {
+			System.out.println("No user (" + propertyId + ") to upload photo to");
+			return;
+		}
+
+		Property property = propertyOpt.get();
+
+		// Save photo
+		InputStream in = photo.getInputStream();
+		DBObject metaData = new BasicDBObject();
+		metaData.put("propertyId", propertyId);
+
+		// Upload photo
+		ObjectId photoId = gridFsTemplate.store(in, propertyId + "photo=" + photo.getOriginalFilename(),
+				photo.getContentType(), metaData);
+
+		// Add photo id to property
+		property.addImageId(photoId.toHexString());
+		propertyRepository.save(property);
+	}
+
+	@Override
+	public List<String> getPropertyPhotos(String propertyId) throws IllegalStateException, IOException {
+		// Get associated photos
+		List<GridFSFile> fileList = new ArrayList<>();
+		gridFsTemplate.find(new Query(Criteria.where("metadata.propertyId").is(propertyId))).into(fileList);
+
+		// Load data from photos
+		List<String> res = new ArrayList<>();
+
+		for (GridFSFile gridFsFile : fileList) {
+			if (gridFsFile == null) {
+				System.out.println("File is null");
+				return null;
+			}
+
+			byte[] data = IOUtils.toByteArray(operations.getResource(gridFsFile).getInputStream());
+
+			res.add(Base64.getEncoder().encodeToString(data));
+		}
+
+		return res;
+	}
+
+	@Override
+	public String getPropertyPhoto(String propertyId) throws IllegalStateException, IOException {
+		// Get first photo
+		GridFSFile file = gridFsTemplate.findOne(new Query(Criteria.where("metadata.propertyId").is(propertyId)));
+
+		// Load data from photo
+		if (file == null) {
+			System.out.println("File is null");
+			return null;
+		}
+		byte[] data = IOUtils.toByteArray(operations.getResource(file).getInputStream());
+
+		return Base64.getEncoder().encodeToString(data);
+	}
+
 	public List<Property> getAllOwnProperties(String userId) {
 		return propertyRepository.findByLandlordId(userId);
-		
 	}
 }

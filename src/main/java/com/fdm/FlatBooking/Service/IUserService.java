@@ -1,7 +1,10 @@
 package com.fdm.FlatBooking.Service;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
+
+import org.springframework.web.multipart.MultipartFile;
 
 import com.fdm.FlatBooking.Model.PropertySearch;
 import com.fdm.FlatBooking.Model.User;
@@ -61,4 +64,8 @@ public interface IUserService {
 	Optional<User> findUserByEmail(String email);
 
 	List<PropertySearch> getPropertySearchesForUser(String userId);
+
+	String getUserPhoto(String photoId) throws IllegalStateException, IOException;
+
+	void setUserPhoto(MultipartFile photo, String userId) throws IOException;
 }

@@ -25,9 +25,54 @@ const FilterOverlay = (props) => {
 
 	const [locationFilters, setLocationFilters] = useState([]);
 
+	const buttonStyle = {
+		backgroundColor: "#A59DB7",
+		color: "white",
+		margin: "10px",
+		fontFamily: "Oswald",
+	};
+
+	const resetFilter = () => {
+		props.setSearchFilters({
+			locationFilters: [""],
+			propertyTypes: {
+				house: false,
+				apartment: false,
+				townhouse: false,
+				grannyflat: false,
+				room: false,
+				unit: false,
+			},
+			detailFilters: {
+				minPrice: 0,
+				maxPrice: 1000,
+				minBedrooms: 0,
+				maxBedrooms: 12,
+				minBathrooms: 0,
+				maxBathrooms: 6,
+				minCars: 0,
+				maxCars: 6,
+				//missing start/end date
+			},
+		});
+	};
+
 	return (
-		<Modal open={open} onClose={() => closeFunction(setOpen,props.searchFilters,props.setSearchFilters)}>
+		<Modal
+			open={open}
+			onClose={() =>
+				closeFunction(
+					setOpen,
+					props.searchFilters,
+					props.setSearchFilters
+				)
+			}
+		>
 			<Container className="filter-container" maxWidth="sm">
+				<link
+					href="https://fonts.googleapis.com/css?family=Oswald"
+					rel="stylesheet"
+				></link>
 				{/* Header */}
 				<div className="header">
 					<h2 style={{ display: "inline" }}>Filter</h2>
@@ -36,7 +81,11 @@ const FilterOverlay = (props) => {
 						variant="standard"
 						className="close-btn"
 						onClick={() => {
-							closeFunction(setOpen,props.searchFilters,props.setSearchFilters);
+							closeFunction(
+								setOpen,
+								props.searchFilters,
+								props.setSearchFilters
+							);
 						}}
 					>
 						<CloseIcon />
@@ -57,22 +106,43 @@ const FilterOverlay = (props) => {
 
 				<Divider style={{ marginTop: "20px" }} />
 
-				<DetailFilters 
-					searchFilters={props.searchFilters} 
+				<DetailFilters
+					searchFilters={props.searchFilters}
 					setSearchFilters={props.setSearchFilters}
-					/>
+				/>
+
+				<div className="bottom-btns">
+					<Button
+						variant="contained"
+						style={buttonStyle}
+						size="large"
+						onClick={() => {
+							props.setOpenFilter(false);
+						}}
+					>
+						Done
+					</Button>
+					<Button
+						variant="contained"
+						style={buttonStyle}
+						size="large"
+						onClick={resetFilter}
+					>
+						Reset
+					</Button>
+				</div>
 			</Container>
 		</Modal>
 	);
 };
 
-const closeFunction = (setOpen,searchFilters,setSearchFilters) => {
+const closeFunction = (setOpen, searchFilters, setSearchFilters) => {
 	//#TODO put all the info into one use state
 	//setSearchFilters({minPrice:'12',maxPrice:'123'})
 	//setSearchFilters(searchFilters)
-	console.log(searchFilters)
-	setOpen(false)
-}
+	console.log(searchFilters);
+	setOpen(false);
+};
 
 const LocationSearch = ({ locationFilters, setLocationFilters }) => {
 	const [txt, setTxt] = useState("");
@@ -271,15 +341,6 @@ const PropertyTypeSelect = () => {
 };
 
 const DetailFilters = ({ searchFilters, setSearchFilters }) => {
-	const [minPrice, setMinPrice] = useState(100);
-	const [maxPrice, setMaxPrice] = useState(400);
-	const [minBed, setMinBed] = useState(0);
-	const [maxBed, setMaxBed] = useState(5);
-	const [minBath, setMinBath] = useState(0);
-	const [maxBath, setMaxBath] = useState(5);
-	const [minCar, setMinCar] = useState(0);
-	const [maxCar, setMaxCar] = useState(5);
-
 	const priceItems = [];
 	const bedItems = [];
 	const bathItems = [];
@@ -296,11 +357,11 @@ const DetailFilters = ({ searchFilters, setSearchFilters }) => {
 		bedItems.push(<MenuItem value={i}>{i}</MenuItem>);
 	}
 
-	for (let i = 0; i < 13; i++) {
+	for (let i = 0; i < 7; i++) {
 		bathItems.push(<MenuItem value={i}>{i}</MenuItem>);
 	}
 
-	for (let i = 0; i < 13; i++) {
+	for (let i = 0; i < 7; i++) {
 		carItems.push(<MenuItem value={i}>{i}</MenuItem>);
 	}
 
@@ -344,7 +405,13 @@ const DetailFilters = ({ searchFilters, setSearchFilters }) => {
 							value={searchFilters["detailFilters"]["minPrice"]}
 							label="Min"
 							onChange={(e) => {
-								setSearchFilters(searchFilters => ({...searchFilters, detailFilters:{...searchFilters.detailFilters, minPrice:(e.target.value) }}))
+								setSearchFilters((searchFilters) => ({
+									...searchFilters,
+									detailFilters: {
+										...searchFilters.detailFilters,
+										minPrice: e.target.value,
+									},
+								}));
 							}}
 						>
 							{priceItems}
@@ -363,7 +430,13 @@ const DetailFilters = ({ searchFilters, setSearchFilters }) => {
 							value={searchFilters["detailFilters"]["maxPrice"]}
 							label="Max"
 							onChange={(e) => {
-								setSearchFilters(searchFilters => ({...searchFilters, detailFilters:{...searchFilters.detailFilters, maxPrice:(e.target.value) }}))
+								setSearchFilters((searchFilters) => ({
+									...searchFilters,
+									detailFilters: {
+										...searchFilters.detailFilters,
+										maxPrice: e.target.value,
+									},
+								}));
 							}}
 						>
 							{priceItems}
@@ -385,10 +458,18 @@ const DetailFilters = ({ searchFilters, setSearchFilters }) => {
 						<InputLabel>Min</InputLabel>
 						<Select
 							color="highlightColour"
-							value={searchFilters["detailFilters"]["minBedrooms"]}
+							value={
+								searchFilters["detailFilters"]["minBedrooms"]
+							}
 							label="Min"
 							onChange={(e) => {
-								setSearchFilters(searchFilters => ({...searchFilters, detailFilters:{...searchFilters.detailFilters, minBedrooms:(e.target.value) }}))
+								setSearchFilters((searchFilters) => ({
+									...searchFilters,
+									detailFilters: {
+										...searchFilters.detailFilters,
+										minBedrooms: e.target.value,
+									},
+								}));
 							}}
 						>
 							{bedItems}
@@ -404,10 +485,18 @@ const DetailFilters = ({ searchFilters, setSearchFilters }) => {
 					>
 						<InputLabel>Max</InputLabel>
 						<Select
-							value={searchFilters["detailFilters"]["maxBedrooms"]}
+							value={
+								searchFilters["detailFilters"]["maxBedrooms"]
+							}
 							label="Max"
 							onChange={(e) => {
-								setSearchFilters(searchFilters => ({...searchFilters, detailFilters:{...searchFilters.detailFilters, maxBedrooms:(e.target.value) }}))
+								setSearchFilters((searchFilters) => ({
+									...searchFilters,
+									detailFilters: {
+										...searchFilters.detailFilters,
+										maxBedrooms: e.target.value,
+									},
+								}));
 							}}
 						>
 							{bedItems}
@@ -429,13 +518,21 @@ const DetailFilters = ({ searchFilters, setSearchFilters }) => {
 						<InputLabel>Min</InputLabel>
 						<Select
 							color="highlightColour"
-							value={searchFilters["detailFilters"]["minBathrooms"]}
+							value={
+								searchFilters["detailFilters"]["minBathrooms"]
+							}
 							label="Min"
 							onChange={(e) => {
-								setSearchFilters(searchFilters => ({...searchFilters, detailFilters:{...searchFilters.detailFilters, minBathrooms:(e.target.value) }}))
+								setSearchFilters((searchFilters) => ({
+									...searchFilters,
+									detailFilters: {
+										...searchFilters.detailFilters,
+										minBathrooms: e.target.value,
+									},
+								}));
 							}}
 						>
-							{/* {bathItems} */}
+							{bathItems}
 						</Select>
 					</FormControl>
 				</Grid>
@@ -448,13 +545,21 @@ const DetailFilters = ({ searchFilters, setSearchFilters }) => {
 					>
 						<InputLabel>Max</InputLabel>
 						<Select
-							value={searchFilters["detailFilters"]["maxBathrooms"]}
+							value={
+								searchFilters["detailFilters"]["maxBathrooms"]
+							}
 							label="Max"
 							onChange={(e) => {
-								setSearchFilters(searchFilters => ({...searchFilters, detailFilters:{...searchFilters.detailFilters, maxBathrooms:(e.target.value) }}))
+								setSearchFilters((searchFilters) => ({
+									...searchFilters,
+									detailFilters: {
+										...searchFilters.detailFilters,
+										maxBathrooms: e.target.value,
+									},
+								}));
 							}}
 						>
-							{/* {bedItems} */}
+							{bedItems}
 						</Select>
 					</FormControl>
 				</Grid>
@@ -476,10 +581,16 @@ const DetailFilters = ({ searchFilters, setSearchFilters }) => {
 							value={searchFilters["detailFilters"]["minCars"]}
 							label="Min"
 							onChange={(e) => {
-								setSearchFilters(searchFilters => ({...searchFilters, detailFilters:{...searchFilters.detailFilters, minCars:(e.target.value) }}))
+								setSearchFilters((searchFilters) => ({
+									...searchFilters,
+									detailFilters: {
+										...searchFilters.detailFilters,
+										minCars: e.target.value,
+									},
+								}));
 							}}
 						>
-							{/* {bedItems} */}
+							{carItems}
 						</Select>
 					</FormControl>
 				</Grid>
@@ -495,10 +606,16 @@ const DetailFilters = ({ searchFilters, setSearchFilters }) => {
 							value={searchFilters["detailFilters"]["maxCars"]}
 							label="Max"
 							onChange={(e) => {
-								setSearchFilters(searchFilters => ({...searchFilters, detailFilters:{...searchFilters.detailFilters, maxCars:(e.target.value) }}))
+								setSearchFilters((searchFilters) => ({
+									...searchFilters,
+									detailFilters: {
+										...searchFilters.detailFilters,
+										maxCars: e.target.value,
+									},
+								}));
 							}}
 						>
-							{/* {bedItems} */}
+							{carItems}
 						</Select>
 					</FormControl>
 				</Grid>

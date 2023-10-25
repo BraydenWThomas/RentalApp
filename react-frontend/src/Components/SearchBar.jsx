@@ -15,8 +15,8 @@ const SearchBar = (props) => {
 	const searchResults = props.searchResults;
 	const setSearchResults = props.setSearchResults;
 
-	const setSearchFilters=props.setSearchFilters
-	const searchFilters=props.searchFilters
+	const setSearchFilters = props.setSearchFilters;
+	const searchFilters = props.searchFilters;
 
 	const searchBtnStyle = {
 		backgroundColor: "#A59DB7",
@@ -39,15 +39,14 @@ const SearchBar = (props) => {
 
 	const applySearch = (searchFilters) => {
 		console.log("Searchtext = " + searchTxt);
-		
+
 		//console.log(searchFilters)
 
 		// start date/end date currently not implemented
 		// Search
 		const url =
 			api +
-			("/properties/search" 
-/* 				+
+			("/properties/search" +
 				"?searchTxt=" +
 				searchTxt +
 				"&minBed=" +
@@ -55,17 +54,17 @@ const SearchBar = (props) => {
 				"&maxBed=" +
 				searchFilters["detailFilters"]["maxBedrooms"] +
 				"&minBath=" +
-				0 +
+				searchFilters["detailFilters"]["minBathrooms"] +
 				"&maxBath=" +
-				300 +
+				searchFilters["detailFilters"]["maxBathrooms"] +
 				"&minPrice=" +
 				searchFilters["detailFilters"]["minPrice"] +
 				"&maxPrice=" +
 				searchFilters["detailFilters"]["maxPrice"] +
 				"&minCar=" +
-				0 +
+				searchFilters["detailFilters"]["minCars"] +
 				"&maxCar=" +
-				300 +
+				searchFilters["detailFilters"]["maxCars"] +
 				"&minSize=" +
 				0 +
 				"&maxSize=" +
@@ -73,38 +72,15 @@ const SearchBar = (props) => {
 				"&type=" +
 				"Apartment" +
 				"&isAvailable=" +
-				true */
-				);
+				true);
 
-				const options = {
-					method:'POST',
-					url: api+'/properties/search',
-					params: { 'api-version': '3.0' },
-					headers: {
-						'content-type': 'application/json',
-					},
-					data: searchFilters
-				}
-				console.log(options.data)
-/* 		axios
-			.get(options)
+		axios
+			.get(url)
 			.then((res) => {
 				setSearchResults(res.data);
 				console.log("Done");
 			})
 			.catch((err) => {
-				console.log(err);
-			}); */
-
-			axios
-			.request(options)
-			.then((res) => {
-				console.log("res data " + res.data);
-				setSearchResults(res.data);
-				console.log("Done");
-			})
-			.catch((err) => {
-				console.log("its an error");
 				console.log(err);
 			});
 
@@ -133,6 +109,10 @@ const SearchBar = (props) => {
 							disableElevation
 							style={filterBtnStyle}
 							onClick={() => {
+								if (!setOpenFilter) {
+									console.log("Set open not defined");
+									return;
+								}
 								setOpenFilter(true);
 							}}
 						>
@@ -146,7 +126,7 @@ const SearchBar = (props) => {
 					style={searchBtnStyle}
 					variant="contained"
 					size="large"
-					onClick={() =>applySearch(props.searchFilters)}
+					onClick={() => applySearch(props.searchFilters)}
 				>
 					Search
 				</Button>

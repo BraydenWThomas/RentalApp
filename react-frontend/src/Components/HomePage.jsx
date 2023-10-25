@@ -192,29 +192,31 @@ const RecentSearchCard = ({ search }) => {
 	return (
 		<Grid container style={cardStyle}>
 			<Grid xs={12}>
-				<b style={locationStyle}>{"$" + search.maxPrice}</b>
+				<b style={locationStyle}>{"This is a search"}</b>
 			</Grid>
 			<Grid xs={12}>
 				<div style={{ display: "inline-block" }}>
-					{"$" + search.minPrice + " to $" + search.maxPrice}
+					{"$" + search["detailFilters"]["minPrice"] + 
+					" to $" + 
+					search["detailFilters"]["maxPrice"]}
 				</div>
 				<div style={{ display: "inline-block" }}>
 					{"Bedrooms: " +
-						search.minBedrooms +
+						search["detailFilters"]["minBedrooms"] +
 						" to " +
-						search.maxBedrooms}
+						search["detailFilters"]["maxBedrooms"]}
 				</div>
 				<div style={{ display: "inline-block" }}>
 					{"Car Spots: " +
-						search.minCarSpaces +
+						search["detailFilters"]["minCars"] +
 						" to " +
-						search.maxCarSpaces}
+						search["detailFilters"]["maxCars"]}
 				</div>
 				<div style={{ display: "inline-block" }}>
 					{"Available Date: " +
-						search.startDateAvailable +
+						"N/A" +
 						" to " +
-						search.endDateAvailable}
+						"N/A"}
 				</div>
 				{
 					//#TODO Preferred Features
@@ -241,7 +243,23 @@ const RecentListingCard = ({ listing }) => {
 		maxWidth: "100%",
 		height: "auto",
 		borderRadius: "10px 10px 0 0",
+		backgroundColor: "blue",
 	};
+
+	const api = "http://localhost:8080/api/v1";
+
+	const [imageData, setImageData] = useState("");
+
+	useEffect(() => {
+		axios
+			.get(api + `/properties/${listing.propertyId}/photo`)
+			.then((res) => {
+				setImageData(res.data);
+			})
+			.catch((e) => {
+				console.log(e);
+			});
+	}, []);
 
 	return (
 		<Grid container style={cardStyle}>
@@ -254,7 +272,7 @@ const RecentListingCard = ({ listing }) => {
 				{listing.images.length > 0 ? (
 					<img
 						style={imageStyle}
-						src={`data:image/jpg;base64,${listing.images[0].data}`}
+						src={`data:image/jpg;base64,${imageData}`}
 						alt="Property"
 					/>
 				) : (

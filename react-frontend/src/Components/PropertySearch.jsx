@@ -3,6 +3,8 @@ import { Container, Grid, Stack } from "@mui/material";
 import { useState, useEffect } from "react";
 import imagePlaceholder from "../Assets/No-Image-Placeholder.png";
 import StarIcon from "@mui/icons-material/Star";
+import axios from "axios";
+import FilterOverlay from "./FilterOverlay";
 
 const PropertySearch = ({
 	searchTxt,
@@ -16,6 +18,8 @@ const PropertySearch = ({
 		padding: "10px",
 	};
 
+	const [openFilter, setOpenFilter] = useState(false);
+
 	return (
 		<Container>
 			<Grid container>
@@ -27,6 +31,8 @@ const PropertySearch = ({
 						setSearchResults={setSearchResults}
 						searchFilters={searchFilters}
 						setSearchFilters={setSearchFilters}
+						openFilter={openFilter}
+						setOpenFilter={setOpenFilter}
 					/>
 				</Grid>
 				<Grid xs={12}>
@@ -44,6 +50,13 @@ const PropertySearch = ({
 					))}
 				</Grid>
 			</Grid>
+			<FilterOverlay
+				open={[openFilter, setOpenFilter]}
+				searchFilters={searchFilters}
+				setSearchFilters={setSearchFilters}
+				openFilter={openFilter}
+				setOpenFilter={setOpenFilter}
+			/>
 		</Container>
 	);
 };
@@ -80,6 +93,18 @@ const PropertyCard = ({ property }) => {
 		color: "#3D1670",
 	};
 
+	const [imageData, setImageData] = useState("");
+	const url = `http://localhost:8080/api/v1/properties/${property.propertyId}/photo`;
+
+	axios
+		.get(url)
+		.then((res) => {
+			setImageData(res.data);
+		})
+		.catch((err) => {
+			console.log(err);
+		});
+
 	return (
 		<div style={containerStyle}>
 			<div style={boxStyle}>
@@ -92,10 +117,10 @@ const PropertyCard = ({ property }) => {
 					<h3>{"Leaser Name"}</h3>
 				</div>
 
-				{property.images.length > 0 ? (
+				{imageData.length > 0 ? (
 					<img
 						style={imageStyle}
-						src={`data:image/jpg;base64,${property.images[0].data}`}
+						src={`data:image/jpg;base64,${imageData}`}
 						alt={"Property with " + property.propertyDescription}
 					/>
 				) : (
