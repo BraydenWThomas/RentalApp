@@ -1,5 +1,6 @@
 package com.fdm.FlatBooking.Repository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
@@ -19,7 +20,16 @@ public interface PropertyRepository extends MongoRepository<Property, String> {
     @Query("{'leaseeId': {$regex: ?0 }})")
     List<Property> findByLeaseeId(String userId);
 
-    @Query("{\"details.bedroom\": {\"$gt\": ?0, \"$lt\": ?1}, \"details.bathroom\": {\"$gt\": ?2, \"$lt\": ?3}, \"rentalPrice\": {\"$gt\": ?4, \"$lt\": ?5}, \"details.carPark\": {\"$gt\": ?6, \"$lt\": ?7}, \"details.propertySize\": {\"$gt\": ?8, \"$lt\": ?9}, \"propertyType\": ?10, \"currentlyAvailable\": ?11}")
+    @Query("{"
+    		+ "\"details.bedroom\": {\"$gt\": ?0, \"$lt\": ?1}, "
+    		+ "\"details.bathroom\": {\"$gt\": ?2, \"$lt\": ?3}, "
+    		+ "\"rentalPrice\": {\"$gt\": ?4, \"$lt\": ?5}, "
+    		+ "\"details.carPark\": {\"$gt\": ?6, \"$lt\": ?7}, "
+    		+ "\"details.propertySize\": {\"$gt\": ?8, \"$lt\": ?9}, "
+    		//+ "\"propertyType\": ?10, "
+    		+ "\"currentlyAvailable\": ?11, "
+    		+ "\"propertyType\": { \"$in\": ?12 }}"
+    		)
     List<Property> getPropertyWithFilters(
     		int minBed, int maxBed, 
     		int minBath, int maxBath, 
@@ -27,7 +37,8 @@ public interface PropertyRepository extends MongoRepository<Property, String> {
     		int minCar, int maxCar, 
     		int minSize, int maxSize, 
     		String propertyType,
-    		boolean isAvailable);
+    		boolean isAvailable, 
+    		List<String> propType);
 
     // {"details.bathroom": {"$gt": 1, "$lt": 4}, "details.bedroom": {"$gt": 1,
     // "$lt": 4}}

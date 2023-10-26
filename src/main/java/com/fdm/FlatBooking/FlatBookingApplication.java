@@ -107,9 +107,17 @@ public class FlatBookingApplication implements CommandLineRunner {
 		for (Property property : properties) {
 			System.out.println(property.getAddress().getStreet());
 		}
-
+		
+		ArrayList propType = new ArrayList();
+		propType.add("House");
+		propType.add("Apartment");
+		propType.add("Townhouse");
+		propType.add("Grannyflat");
+		propType.add("Room");
+		propType.add("Unit");
+		
 		properties = propertyRepository.getPropertyWithFilters(0, 3, 0, 3, 0, 501, 0, 3, 0, 30000, "Apartment",
-				true);
+				true, propType);
 
 		System.out.println(" GET WITH FILTERS ");
 		for (Property property : properties) {
@@ -207,29 +215,29 @@ public class FlatBookingApplication implements CommandLineRunner {
 
 		ArrayList<Boolean> features = new ArrayList<Boolean>();
 		ArrayList<Property> properties = new ArrayList<>();
-		properties.add(new Property("Apartment", 500, 2000, users.get(0).getId(), null, addrs.get(0), "1 Red Hotel",
+		properties.add(new Property("House", 500, 2000, users.get(0).getId(), null, addrs.get(0), "1 Red Hotel",
 				pds.get(0), features, new Date(20000000), true));
 		properties.add(new Property("Apartment", 500, 2000, users.get(0).getId(), null, addrs.get(1), "1 Green House",
 				pds.get(1), features, new Date(20000000), true));
-		properties.add(new Property("Apartment", 500, 2000, users.get(1).getId(), null, addrs.get(2), "2 Green Houses",
+		properties.add(new Property("Townhouse", 500, 2000, users.get(1).getId(), null, addrs.get(2), "2 Green Houses",
 				pds.get(2), features, new Date(20000000), true));
-		properties.add(new Property("Apartment", 500, 2000, users.get(2).getId(), null, addrs.get(3), "3 Green Houses",
+		properties.add(new Property("Grannyflat", 500, 2000, users.get(2).getId(), null, addrs.get(3), "3 Green Houses",
 				pds.get(3), features, new Date(20000000), true));
-		properties.add(new Property("Apartment", 500, 2000, users.get(3).getId(), null, addrs.get(4), "1 Red Hotel",
+		properties.add(new Property("Room", 500, 2000, users.get(3).getId(), null, addrs.get(4), "1 Red Hotel",
 				pds.get(4), features, new Date(20000000), true));
-		properties.add(new Property("Apartment", 500, 2000, users.get(4).getId(), null, addrs.get(5), "4 Green Houses",
+		properties.add(new Property("Unit", 500, 2000, users.get(4).getId(), null, addrs.get(5), "4 Green Houses",
 				pds.get(5), features, new Date(20000000), true));
-		properties.add(new Property("Apartment", 500, 2000, users.get(4).getId(), null, addrs.get(6), "3 Green Houses",
+		properties.add(new Property("House", 500, 2000, users.get(4).getId(), null, addrs.get(6), "3 Green Houses",
 				pds.get(6), features, new Date(20000000), true));
 		properties.add(new Property("Apartment", 500, 2000, users.get(6).getId(), null, addrs.get(7), "1 Red Hotel",
 				pds.get(7), features, new Date(20000000), true));
-		properties.add(new Property("Apartment", 500, 2000, users.get(5).getId(), null, addrs.get(8), "1 Red Hotel",
+		properties.add(new Property("Townhouse", 500, 2000, users.get(5).getId(), null, addrs.get(8), "1 Red Hotel",
 				pds.get(8), features, new Date(20000000), true));
-		properties.add(new Property("Apartment", 500, 2000, users.get(6).getId(), null, addrs.get(9), "1 Green House",
+		properties.add(new Property("Grannyflat", 500, 2000, users.get(6).getId(), null, addrs.get(9), "1 Green House",
 				pds.get(9), features, new Date(20000000), true));
-		properties.add(new Property("Apartment", 500, 2000, users.get(6).getId(), null, addrs.get(10), "2 Green Houses",
+		properties.add(new Property("Room", 500, 2000, users.get(6).getId(), null, addrs.get(10), "2 Green Houses",
 				pds.get(10), features, new Date(20000000), true));
-		properties.add(new Property("Apartment", 500, 2000, users.get(3).getId(), null, addrs.get(11), "4 Green Houses",
+		properties.add(new Property("Unit", 500, 2000, users.get(3).getId(), null, addrs.get(11), "4 Green Houses",
 				pds.get(11), features, new Date(20000000), true));
 
 		propertyRepository.saveAll(properties);

@@ -1,6 +1,7 @@
 package com.fdm.FlatBooking.Service;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -60,11 +61,9 @@ public interface IPropertyService {
      * @param maxCar
      * @param minSize
      * @param maxSize
+     * @param propType 
      * @return
      */
-    List<Property> getPropertyWithFilters(String searchTxt, int minBed, int maxBed, int minBath, int maxBath,
-            int minBudget, int maxBudget, int minCar, int maxCar, int minSize, int maxSize, String propertyType,
-            boolean isAvailable);
 
     List<Property> getRecentListings();
 
@@ -79,5 +78,9 @@ public interface IPropertyService {
     String getPropertyPhoto(String propertyId) throws IllegalStateException, IOException;
 
     List<Property> getAllOwnProperties(String userId);
+
+	List<Property> getPropertyWithFilters(String searchTxt, int minBed, int maxBed, int minBath, int maxBath,
+			int minPrice, int maxPrice, int minCar, int maxCar, int minSize, int maxSize, String type,
+			boolean isAvailable, List<String> propType);
 
 }

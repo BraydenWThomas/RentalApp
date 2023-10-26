@@ -99,7 +99,7 @@ public class PropertyController {
 //    		System.out.println("isRoom: " + isRoom);
 //    		System.out.println("isUnit: " + isUnit);
     		
-    		ArrayList propType = new ArrayList();
+    		List<String> propType = new ArrayList<String>();
     		
     		if (isHouse == true) {propType.add("House");}
     		if (isApartment == true) {propType.add("Apartment");}
@@ -108,7 +108,18 @@ public class PropertyController {
     		if (isRoom == true) {propType.add("Room");}
     		if (isUnit == true) {propType.add("Unit");}
     		
+    		//Maybe redundant?
+    		if (propType.size()== 0) {
+    			propType.add("House");
+    			propType.add("Apartment");
+    			propType.add("Townhouse");
+    			propType.add("Grannyflat");
+    			propType.add("Room");
+    			propType.add("Unit");
+    		}
+    		
     		System.out.println("array: " + propType);
+    		System.out.println("array: " + propType.size());
     		
     		
     	
@@ -116,7 +127,7 @@ public class PropertyController {
     	
         return propertyService.getPropertyWithFilters(searchTxt, minBed, maxBed, minBath,
                 maxBath, minPrice, maxPrice, minCar,
-                maxCar, minSize, maxSize, type, isAvailable);
+                maxCar, minSize, maxSize, type, isAvailable, propType);
     }
 
     @GetMapping("/{propertyId}")
