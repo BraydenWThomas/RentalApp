@@ -80,11 +80,11 @@ public class PropertyService implements IPropertyService {
 	@Override
 	public List<Property> getPropertyWithFilters(String searchTxt, int minBed, int maxBed, int minBath, int maxBath,
 			int minBudget, int maxBudget, int minCar, int maxCar, int minSize, int maxSize, String propertyType,
-			boolean isAvailable) {
+			boolean isAvailable, List propType) {
 
 		List<Property> filteredResult = propertyRepository.getPropertyWithFilters(minBed, maxBed, minBath,
 				maxBath, minBudget, maxBudget, minCar,
-				maxCar, minSize, maxSize, propertyType, isAvailable);
+				maxCar, minSize, maxSize, propertyType, isAvailable, propType);
 
 		List<Property> result = new ArrayList<>();
 

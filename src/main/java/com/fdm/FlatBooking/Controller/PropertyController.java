@@ -1,6 +1,7 @@
 package com.fdm.FlatBooking.Controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -68,23 +69,65 @@ public class PropertyController {
             @RequestParam int minSize,
             @RequestParam int maxSize,
             @RequestParam String type,
-            @RequestParam boolean isAvailable) {
-        System.out.println("Search text: " + searchTxt);
-        System.out.println("minBed: " + minBed);
-        System.out.println("maxBed: " + maxBed);
-        System.out.println("minBath: " + minBath);
-        System.out.println("maxBath: " + maxBath);
-        System.out.println("minPrice: " + minPrice);
-        System.out.println("maxPrice: " + maxPrice);
-        System.out.println("minCar: " + minCar);
-        System.out.println("maxCar: " + maxCar);
-        System.out.println("minSize: " + minSize);
-        System.out.println("maxSize: " + maxSize);
-        System.out.println("type: " + type);
-        System.out.println("isAvailable: " + isAvailable);
+            @RequestParam boolean isAvailable,
+            
+            @RequestParam boolean isHouse,
+            @RequestParam boolean isApartment,
+            @RequestParam boolean isTownhouse,
+            @RequestParam boolean isGrannyflat,
+            @RequestParam boolean isRoom,
+            @RequestParam boolean isUnit
+            
+    		) {
+//        System.out.println("Search text: " + searchTxt);
+//        System.out.println("minBed: " + minBed);
+//        System.out.println("maxBed: " + maxBed);
+//        System.out.println("minBath: " + minBath);
+//        System.out.println("maxBath: " + maxBath);
+//        System.out.println("minPrice: " + minPrice);
+//        System.out.println("maxPrice: " + maxPrice);
+//        System.out.println("minCar: " + minCar);
+//        System.out.println("maxCar: " + maxCar);
+//        System.out.println("minSize: " + minSize);
+//        System.out.println("maxSize: " + maxSize);
+//        System.out.println("type: " + type);
+//        System.out.println("isAvailable: " + isAvailable);
+//    		System.out.println("isHouse: " + isHouse);
+//    		System.out.println("isApartment: " + isApartment);
+//    		System.out.println("isTownhouse: " + isTownhouse);
+//    		System.out.println("isGrannyflat: " + isGrannyflat);
+//    		System.out.println("isRoom: " + isRoom);
+//    		System.out.println("isUnit: " + isUnit);
+    		
+    		List<String> propType = new ArrayList<String>();
+    		
+    		if (isHouse == true) {propType.add("House");}
+    		if (isApartment == true) {propType.add("Apartment");}
+    		if (isTownhouse == true) {propType.add("Townhouse");}
+    		if (isGrannyflat == true) {propType.add("Grannyflat");}
+    		if (isRoom == true) {propType.add("Room");}
+    		if (isUnit == true) {propType.add("Unit");}
+    		
+    		//Maybe redundant?
+    		if (propType.size()== 0) {
+    			propType.add("House");
+    			propType.add("Apartment");
+    			propType.add("Townhouse");
+    			propType.add("Grannyflat");
+    			propType.add("Room");
+    			propType.add("Unit");
+    		}
+    		
+    		System.out.println("array: " + propType);
+    		System.out.println("array: " + propType.size());
+    		
+    		
+    	
+    	
+    	
         return propertyService.getPropertyWithFilters(searchTxt, minBed, maxBed, minBath,
                 maxBath, minPrice, maxPrice, minCar,
-                maxCar, minSize, maxSize, type, isAvailable);
+                maxCar, minSize, maxSize, type, isAvailable, propType);
     }
 
     @GetMapping("/{propertyId}")
