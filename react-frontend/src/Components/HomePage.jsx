@@ -189,7 +189,7 @@ const RecentSearchCard = ({ search }) => {
 		color: "#857E97",
 	};
 
-	return (
+	return ( 
 		<Grid container style={cardStyle}>
 			<Grid xs={12}>
 				<b style={locationStyle}>{"This is a search"}</b>

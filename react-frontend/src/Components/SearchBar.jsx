@@ -47,8 +47,6 @@ const SearchBar = (props) => {
 		const url =
 			api +
 			("/properties/search" +
-
-				//locationFilters (#TODO needs to be fixed)
 				"?searchTxt=" +
 				searchTxt +
 
