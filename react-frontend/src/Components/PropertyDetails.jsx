@@ -29,6 +29,7 @@ const PropertyDetails = (props) => {
     const [imageData, setImageData] = useState([])
     const [owner, setOwner] = useState('')
     const [imageIndex, setImageIndex] = useState(0)
+    const [savedProps, setSavedProps] = useState([])
 
     console.log(property)
 
@@ -56,8 +57,9 @@ const PropertyDetails = (props) => {
         }).catch(err => {
             console.log(err)
         })
-        const url = `http://localhost:8080/api/v1/properties/${property.propertyId}/photos`;
+
         // Get images
+        const url = `http://localhost:8080/api/v1/properties/${property.propertyId}/photos`;
         axios.get(url).then(res => {
             setImageData(res.data)
         }).catch(err => {
@@ -254,7 +256,10 @@ const PropertyDetails = (props) => {
                     <Grid xs={6}>
                         <div className="applybookmark">
                             <Button variant="contained" style={buttonStyle}>Apply</Button>
-                            <BookmarkIcon style={{ color: '#8D4DDF' }} fontSize="large" />
+
+                            {props.user?.bookmarkedProperties?.includes(property.propertyId) && (
+                                <BookmarkIcon style={{ color: '#8D4DDF' }} fontSize="large" />
+                            )}
                         </div>
                     </Grid>
 
