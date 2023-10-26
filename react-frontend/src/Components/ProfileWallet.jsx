@@ -7,7 +7,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import avatar from "../Assets/avatarSmall.svg"
 import axios from "axios"
 
-const ProfileWallet = (props)=> {
+const ProfileWallet = (props) => {
 
     const user = props.user
     const isLoggedIn = props.isLoggedIn
@@ -27,10 +27,10 @@ const ProfileWallet = (props)=> {
 
     useEffect(() => {
         if (isLoggedIn) {
-            
+
             loadUsers()
             loadTransactions()
-            
+
         }
     }, [])
 
@@ -57,7 +57,7 @@ const ProfileWallet = (props)=> {
         color: 'white',
         fontFamily: 'Oswald',
         marginTop: 30,
-        marginBottom:30,
+        marginBottom: 30,
     }
 
     const [openPayment, setOpenPayment] = useState(false)
@@ -84,13 +84,13 @@ const ProfileWallet = (props)=> {
     }
 
     const handleRechargeWallet = () => {
-        const updatedBalance = parseFloat(user.balance) + rechargeAmount*1;
+        const updatedBalance = parseFloat(user.balance) + rechargeAmount * 1;
         axios.post(url + `users/${user.id}/balance?amount=${updatedBalance}`)
-        .then(response => {
-            props.setUser(response.data)
-            console.log(response.data)
-        })
-        .catch(error => console.log(error))
+            .then(response => {
+                props.setUser(response.data)
+                console.log(response.data)
+            })
+            .catch(error => console.log(error))
         setRechargeAmount(0)
         handleRechargeClose()
     }
@@ -104,24 +104,22 @@ const ProfileWallet = (props)=> {
         console.log(event.target)
 
         const { name, value } = event.target;
-        
-        setTransaction((prevState) => ({
-            ...prevState,
-            [name]: value
-        }))
+
+        transaction.receiverId = value
+        setTransaction({ ...transaction })
         console.log(transaction)
         console.log(users)
     }
 
-    return(
+    return (
         <div className="profile-wallet-container">
             <h1 className="profile-wallet-header">My Wallet</h1>
 
             <div className="wallet-contents">
 
-                <div  className="balance-container">
-                    <p className="balance-amount">{user.balance}</p> 
-                    <p>Current Balance</p> 
+                <div className="balance-container">
+                    <p className="balance-amount">{user.balance}</p>
+                    <p>Current Balance</p>
                 </div>
 
                 <div className="wallet-action" onClick={() => setOpenPayment(true)}>
@@ -140,30 +138,30 @@ const ProfileWallet = (props)=> {
 
                 {transactions?.map((transaction) => (
                     <div>
-                        {transaction.sender === user.id ? 
+                        {transaction.sender === user.id ?
                             <div className="transaction-entry">
                                 <img src={avatar} alt="avatar"></img>
                                 <p>{transaction.sender}</p>
-                                <p>{transaction.date.substring(0,10)}</p>
+                                <p>{transaction.date.substring(0, 10)}</p>
                                 <p className="neg-transaction-amount"> - ${transaction.amount}</p>
                             </div>
                             :
                             <div className="transaction-entry">
                                 <img src={avatar} alt="avatar"></img>
                                 <p>{transaction.receiver}</p>
-                                <p>{transaction.date.substring(0,10)}</p>
+                                <p>{transaction.date.substring(0, 10)}</p>
                                 <p className="pos-transaction-amount"> + ${transaction.amount}</p>
                             </div>
                         }
                     </div>
-                        
+
                 ))}
 
             </div>
 
             <Modal open={openPayment}>
                 <Box className="payment-container">
-                    <CloseIcon className="close-icon" onClick={handlePaymentClose}/>
+                    <CloseIcon className="close-icon" onClick={handlePaymentClose} />
                     <h1>Payment</h1>
                     <p>Payee</p>
 
@@ -174,86 +172,79 @@ const ProfileWallet = (props)=> {
                         fullWidth
                     >
                         {
-                            users?.map((payee) => (
-                                <div>
-                                    {
-                                    user.id !== payee.id &&
-                                    <MenuItem 
-                                        value={payee.id}
-                                    >
-                                        {payee.firstName} {payee.lastName}
-                                    </MenuItem>
-                                    }
-                                </div>
+                            users?.filter((payee) => payee.id !== user.id).map((payee) => (
+
+                                <MenuItem value={payee.id}>
+                                    {payee.firstName} {payee.lastName} {payee.id}
+                                </MenuItem>
                             ))
                         }
-
                     </Select>
 
                     <p>Reference</p>
-                    <TextField 
-                        variant="filled" 
-                        type="text" 
+                    <TextField
+                        variant="filled"
+                        type="text"
                         name="reference"
-                        value={transaction.reference} 
+                        value={transaction.reference}
                         onChange={handleTransactionChange}
                         fullWidth
                     >
                     </TextField>
 
                     <p>Amount</p>
-                    <TextField 
-                        variant="filled" 
-                        type="number" 
+                    <TextField
+                        variant="filled"
+                        type="number"
                         name="amount"
-                        value={transaction.amount} 
+                        value={transaction.amount}
                         onChange={handleTransactionChange}
                         fullWidth
                     >
                     </TextField>
 
                     <div className="payment-buttons">
-                        <Button 
-                            variant="contained" 
+                        <Button
+                            variant="contained"
                             style={buttonStyle}
                             onClick={handlePayment}
                         >
                             Pay Now
                         </Button>
-                        <Button 
-                            variant="contained" 
+                        <Button
+                            variant="contained"
                             style={buttonStyle}
                             onClick={handlePaymentClose}
                         >
                             Cancel
                         </Button>
                     </div>
-                    
+
                 </Box>
             </Modal>
 
             <Modal open={openRecharge}>
                 <Box className="recharge-container">
-                    <CloseIcon className="close-icon" onClick={handleRechargeClose}/>
+                    <CloseIcon className="close-icon" onClick={handleRechargeClose} />
                     <h1>Recharge</h1>
                     <p>Amount</p>
-                    <TextField 
-                        variant="filled" 
-                        fullWidth 
+                    <TextField
+                        variant="filled"
+                        fullWidth
                         type="number"
                         onChange={handleRechargeAmountChange}
                     ></TextField>
 
                     <div className="payment-buttons">
-                        <Button 
-                            variant="contained" 
+                        <Button
+                            variant="contained"
                             style={buttonStyle}
                             onClick={handleRechargeWallet}
                         >
                             Recharge
                         </Button>
-                        <Button 
-                            variant="contained" 
+                        <Button
+                            variant="contained"
                             style={buttonStyle}
                             onClick={handleRechargeClose}
                         >
