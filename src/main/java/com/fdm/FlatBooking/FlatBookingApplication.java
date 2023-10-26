@@ -203,6 +203,14 @@ public class FlatBookingApplication implements CommandLineRunner {
 		pds.add(new PropertyDetails(1, 1, 1, 23000, 2));
 		pds.add(new PropertyDetails(2, 2, 1, 23000, 2));
 
+		ArrayList<Boolean> facilities = new ArrayList<>();
+		facilities.add(true);
+		facilities.add(false);
+		facilities.add(true);
+		facilities.add(false);
+		facilities.add(true);
+		facilities.add(false);
+
 		List<User> users = userRepository.findAll();
 
 		ArrayList<String> imageNames = new ArrayList<>();
@@ -213,7 +221,6 @@ public class FlatBookingApplication implements CommandLineRunner {
 		imageNames.add("cat5.jpg");
 		imageNames.add("cat6.jpg");
 
-		ArrayList<Boolean> features = new ArrayList<Boolean>();
 		ArrayList<Property> properties = new ArrayList<>();
 		properties.add(new Property("House", 500, 2000, users.get(0).getId(), null, addrs.get(0), "1 Red Hotel",
 				pds.get(0), features, new Date(20000000), true));
@@ -263,6 +270,7 @@ public class FlatBookingApplication implements CommandLineRunner {
 
 	private void createTransactions() {
 		List<User> users = userRepository.findAll();
+		System.out.println(users); 
 		ArrayList<Transaction> transactions = new ArrayList<Transaction>();
 		transactions.add(
 				new Transaction(users.get(0).getId(), users.get(1).getId(), new Date(20000000), 1000, "ref1"));

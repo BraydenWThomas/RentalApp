@@ -1,72 +1,65 @@
 import SearchBar from "./SearchBar";
-import { Container, Grid, Stack } from "@mui/material";
+import { Container, Grid, Stack, Button } from "@mui/material";
 import { useState, useEffect } from "react";
 import imagePlaceholder from "../Assets/No-Image-Placeholder.png";
 import StarIcon from "@mui/icons-material/Star";
 import axios from "axios";
-import FilterOverlay from "./FilterOverlay";
 import { useNavigate } from "react-router-dom";
 
-const PropertySearch = ({
-	searchTxt,
-	setSearchTxt,
-	searchResults,
-	setSearchResults,
-	searchFilters,
-	setSearchFilters,
-	user,
-	setDetailedProperty
-}) => {
+const PropertySearch = (props) => {
+
+	const user = props.user
+	const setUser = props.setUser
+
+
 	const searchStyle = {
 		padding: "10px",
 	};
 
-	const [openFilter, setOpenFilter] = useState(false);
+	const [allProps, setAllProps] = useState([]);
+
+
+	useEffect(() => {
+		axios.get("http://localhost:8080/api/v1/properties/saved/" + user.id)
+			.then((res) => {
+				setAllProps(res.data);
+			})
+	}, [user]);
+
+
 
 	return (
 		<Container>
 			<Grid container>
 				<Grid xs={12} style={searchStyle}>
-					<SearchBar
-						searchTxt={searchTxt}
-						setSearchTxt={setSearchTxt}
-						searchResults={searchResults}
-						setSearchResults={setSearchResults}
-						searchFilters={searchFilters}
-						setSearchFilters={setSearchFilters}
-						openFilter={openFilter}
-						setOpenFilter={setOpenFilter}
-					/>
+
 				</Grid>
 				<Grid xs={12}>
-					<p>
-						{searchResults.length +
-							" properties matched your search"}
-					</p>
-				</Grid>
-				<Grid xs={12}>
-					{searchResults.map((result) => (
+					{allProps.map((result) => (
 						<PropertyCard
 							property={result}
-							user={user}
-							setDetailedProperty={setDetailedProperty}
 							key={result.propertyId}
+							setUser={setUser}
+							user={user}
+							setDetailedProperty={props.setDetailedProperty}
 						/>
+
 					))}
 				</Grid>
 			</Grid>
-			<FilterOverlay
-				open={[openFilter, setOpenFilter]}
-				searchFilters={searchFilters}
-				setSearchFilters={setSearchFilters}
-				openFilter={openFilter}
-				setOpenFilter={setOpenFilter}
-			/>
 		</Container>
 	);
 };
 
-const PropertyCard = ({ property, user, setDetailedProperty }) => {
+const PropertyCard = (props) => {
+	const nav = useNavigate()
+
+	const property = props.property
+	const key = props.key
+	const user = props.user
+	const setUser = props.setUser
+
+
 	const containerStyle = {
 		display: "flex",
 		justifyContent: "center",
@@ -80,13 +73,6 @@ const PropertyCard = ({ property, user, setDetailedProperty }) => {
 	};
 
 	const imageStyle = {
-		height: "auto",
-		width: "30rem",
-		aspectRatio: '16/9',
-		objectFit: 'cover'
-	};
-
-	const imagePlaceholderStyle = {
 		height: "auto",
 		width: "30rem",
 	};
@@ -105,9 +91,36 @@ const PropertyCard = ({ property, user, setDetailedProperty }) => {
 		color: "#3D1670",
 	};
 
+	const buttonStyle = {
+		backgroundColor: '#A59DB7',
+		color: 'white',
+		fontFamily: 'Oswald',
+		marginTop: 30,
+		marginBottom: 30,
+	}
+
+	const removeFavourite = () => {
+		console.log("DELETE FAVORUTIE FROM USER :")
+		console.log(user)
+		console.log(property.propertyId)
+		axios
+			.post("http://localhost:8080/api/v1/users/removeFavourite/" + property.propertyId, user)
+			.then((res) => {
+				console.log(res.data)
+				setUser(res.data);
+			})
+			.catch((err) => {
+				console.log(err);
+			});
+	}
+
+	const detailsModal = () => {
+		props.setDetailedProperty(property)
+		nav("/details")
+	}
+
 	const [imageData, setImageData] = useState("");
 	const url = `http://localhost:8080/api/v1/properties/${property.propertyId}/photo`;
-	const nav = useNavigate()
 
 	axios
 		.get(url)
@@ -120,10 +133,7 @@ const PropertyCard = ({ property, user, setDetailedProperty }) => {
 
 	return (
 		<div style={containerStyle}>
-			<div style={boxStyle} onClick={() => {
-				setDetailedProperty(property)
-				nav("/details")
-			}}>
+			<div style={boxStyle}>
 				<link
 					href="https://fonts.googleapis.com/css?family=Oswald"
 					rel="stylesheet"
@@ -141,15 +151,16 @@ const PropertyCard = ({ property, user, setDetailedProperty }) => {
 					/>
 				) : (
 					<img
-						style={imagePlaceholderStyle}
+						style={imageStyle}
 						src={imagePlaceholder}
 						alt={"Property with " + property.propertyDescription}
 					/>
 				)}
 
+
 				<Grid container>
-					<Grid xs={10} style={infoStyle}>
-						<div>{"$" + property.rentalPrice + " per week"}</div>
+					<Grid container xs={6} style={infoStyle} direction="column" justifyContent="flex-start" alignItems="flex-start">
+						<h4>{"$" + property.rentalPrice + " per week"}</h4>
 						<div>
 							{property.address.unit +
 								" " +
@@ -171,15 +182,16 @@ const PropertyCard = ({ property, user, setDetailedProperty }) => {
 								" Car"}
 						</div>
 					</Grid>
-					<Grid xs={1} style={iconContainerStyle}>
-						{user?.bookmarkedProperties?.includes(
-							property.propertyId
-						) && <StarIcon fontSize="large" />}
+					<Grid container xs={5} style={iconContainerStyle} direction="row" justifyContent="space-evenly" alignItems="flex-start" >
+						<Button variant="contained" style={buttonStyle} onClick={detailsModal}>Info</Button>
+						<Button variant="contained" style={buttonStyle} onClick={removeFavourite}> Remove </Button>
 					</Grid>
 				</Grid>
 			</div>
 		</div>
 	);
 };
+
+
 
 export default PropertySearch;

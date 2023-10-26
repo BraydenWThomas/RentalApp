@@ -2,17 +2,21 @@ import "./App.css";
 import { Route, Routes } from "react-router-dom";
 import Navbar from "./Components/Navbar";
 import HomePage from "./Components/HomePage";
+import SavedProperties from "./Components/SavedProperties";
 import Profile from "./Components/Profile";
 import PropertySearch from "./Components/PropertySearch";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import "dayjs/locale/en-au";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { useState } from "react";
+import PropertyDetails from "./Components/PropertyDetails";
+import MyWalletPage from "./Components/MyWalletPage";
 
 function App() {
 	const [isLoggedIn, setIsLoggedIn] = useState(false);
 	const [user, setUser] = useState({});
 	const [searchTxt, setSearchTxt] = useState("");
+	const [detailedProperty, setDetailedProperty] = useState(null)
 
 	const [searchFilters, setSearchFilters] = useState({
 		locationFilters: [""],
@@ -40,10 +44,7 @@ function App() {
 
 	return (
 		<div className="App">
-			<LocalizationProvider
-				dateAdapter={AdapterDayjs}
-				adapterLocale="en-au"
-			>
+			<LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="en-au">
 				<Navbar isLoggedIn={isLoggedIn} user={user} setUser={setUser} />
 				<Routes>
 					<Route
@@ -60,9 +61,45 @@ function App() {
 								setSearchFilters={setSearchFilters}
 								searchResults={searchResults}
 								setSearchResults={setSearchResults}
+								setDetailedProperty={setDetailedProperty}
 							/>
 						}
 					/>
+					<Route
+						path="/details"
+						element={
+							<PropertyDetails detailedProperty={detailedProperty} user={user} />
+						}
+					/>
+
+					<Route path="/my-wallet"
+						element={
+							<MyWalletPage
+								user={user}
+								setUser={setUser}
+								isLoggedIn={isLoggedIn}
+							/>}
+					/>
+
+					<Route
+						path="/savedProperties"
+						element={
+							<SavedProperties
+								isLoggedIn={isLoggedIn}
+								setIsLoggedIn={setIsLoggedIn}
+								user={user}
+								setUser={setUser}
+								searchTxt={searchTxt}
+								setSearchTxt={setSearchTxt}
+								searchFilters={searchFilters}
+								setSearchFilters={setSearchFilters}
+								searchResults={searchResults}
+								setSearchResults={setSearchResults}
+								setDetailedProperty={setDetailedProperty}
+							/>
+						}
+					/>
+
 					{/* <Route path="/signup" element={<SignupPage />} /> */}
 					<Route
 						path="/profile"
@@ -86,6 +123,7 @@ function App() {
 								searchResults={searchResults}
 								setSearchResults={setSearchResults}
 								user={user}
+								setDetailedProperty={setDetailedProperty}
 							/>
 						}
 					/>

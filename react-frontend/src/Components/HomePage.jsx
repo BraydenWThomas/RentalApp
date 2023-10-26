@@ -7,6 +7,7 @@ import { useState, useEffect } from "react";
 import RegisterOverlay from "./RegisterOverlay";
 import FilterOverlay from "./FilterOverlay";
 import imagePlaceholder from "../Assets/No-Image-Placeholder.png";
+import { useNavigate } from "react-router-dom";
 
 const HomePage = (props) => {
 	const [openLogin, setOpenLogin] = useState(false);
@@ -151,6 +152,7 @@ const HomePage = (props) => {
 					{recentListings.map((listing) => (
 						<RecentListingCard
 							listing={listing}
+							setDetailedProperty={props.setDetailedProperty}
 							key={listing.propertyId}
 						/>
 					))}
@@ -190,7 +192,7 @@ const RecentSearchCard = ({ search }) => {
 	};
 
 	return (
-		<Grid container style={cardStyle}>
+		<Grid container style={cardStyle} >
 			<Grid xs={12}>
 				<b style={locationStyle}>{"This is a search"}</b>
 			</Grid>
@@ -225,7 +227,7 @@ const RecentSearchCard = ({ search }) => {
 	);
 };
 
-const RecentListingCard = ({ listing }) => {
+const RecentListingCard = ({ listing, setDetailedProperty }) => {
 	const cardStyle = {
 		borderRadius: "10px",
 		backgroundColor: "#A59DB740",
@@ -264,8 +266,13 @@ const RecentListingCard = ({ listing }) => {
 			});
 	}, []);
 
+	const nav = useNavigate()
+
 	return (
-		<div style={cardStyle}>
+		<div style={cardStyle} onClick={() => {
+			setDetailedProperty(listing)
+			nav("/details")
+		}}>
 			<div>
 				{listing.images.length !== "" ? (
 					<img

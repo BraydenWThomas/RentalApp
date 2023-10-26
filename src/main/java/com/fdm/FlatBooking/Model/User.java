@@ -170,4 +170,9 @@ public class User {
 		this.profilePhotoId = profilePhotoId;
 	}
 
+	@Override
+	public String toString() {
+		return "User [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", balance=" + balance + "]";
+	}
+
 }
