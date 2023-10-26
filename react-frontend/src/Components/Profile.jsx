@@ -13,6 +13,7 @@ import axios from "axios";
 const Profile = (props) => {
     const setIsLoggedIn = props.setIsLoggedIn;
     const user = props.user
+    const setUser = props.setUser
     const isLoggedIn = props.isLoggedIn
 
 
