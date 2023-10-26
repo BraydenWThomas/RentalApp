@@ -7,6 +7,7 @@ import { LocalizationProvider } from "@mui/x-date-pickers";
 import 'dayjs/locale/en-au';
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { useState } from "react";
+import MyWalletPage from "./Components/MyWalletPage";
 
 function App() {
 	const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -35,6 +36,14 @@ function App() {
 							setUser={setUser}
 							isLoggedIn={isLoggedIn}
 							setIsLoggedIn={setIsLoggedIn}
+						/>} 
+					/>
+					<Route path="/my-wallet" 
+					element={
+						<MyWalletPage 
+							user={user} 
+							setUser={setUser}
+							isLoggedIn={isLoggedIn}
 						/>} 
 					/>
 				</Routes>

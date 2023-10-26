@@ -190,7 +190,6 @@ public class UserController {
     	User user = optUser.get();
     	user.setBalance(amount);
     	this.userService.updateUser(user);
-    	System.out.println(user);
     	return user;
     }
     

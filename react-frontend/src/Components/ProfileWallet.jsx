@@ -151,6 +151,7 @@ const ProfileWallet = (props) => {
 
     return (
         <div className="profile-wallet-container">
+            <link href='https://fonts.googleapis.com/css?family=Oswald' rel='stylesheet'></link>
             <h1 className="profile-wallet-header">My Wallet</h1>
 
             <div className="wallet-contents">
