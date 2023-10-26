@@ -95,14 +95,21 @@ const FilterOverlay = (props) => {
 				<LocationSearch
 					locationFilters={locationFilters}
 					setLocationFilters={setLocationFilters}
+					searchFilters={props.searchFilters} 
+					setSearchFilters={props.setSearchFilters}
 				/>
 
 				<LocationFilters
 					locationFilters={locationFilters}
 					setLocationFilters={setLocationFilters}
+					searchFilters={props.searchFilters} 
+					setSearchFilters={props.setSearchFilters}
 				/>
 
-				<PropertyTypeSelect />
+				<PropertyTypeSelect 
+					searchFilters={props.searchFilters} 
+					setSearchFilters={props.setSearchFilters}
+				/>
 
 				<Divider style={{ marginTop: "20px" }} />
 
@@ -215,13 +222,16 @@ const LocationFilters = ({ locationFilters, setLocationFilters }) => {
 	);
 };
 
-const PropertyTypeSelect = () => {
+const PropertyTypeSelect = ({searchFilters, setSearchFilters }) => {
 	const [houseChecked, setHouseChecked] = useState(false);
 	const [apartmentChecked, setApartmentChecked] = useState(false);
 	const [townhouseChecked, setTownhouseChecked] = useState(false);
 	const [grannyFlatChecked, setgrannyFlatChecked] = useState(false);
 	const [roomChecked, setRoomChecked] = useState(false);
 	const [unitChecked, setUnitChecked] = useState(false);
+
+
+	
 
 	const checkBoxItemStyle = {
 		padding: "5px 10px 5px 10px",
@@ -255,9 +265,9 @@ const PropertyTypeSelect = () => {
 							control={
 								<Checkbox
 									color="appColor"
-									checked={houseChecked}
+									checked={searchFilters["propertyTypes"]['house']}
 									onChange={(e) => {
-										setHouseChecked(e.target.checked);
+										setSearchFilters(searchFilters => ({...searchFilters, propertyTypes:{...searchFilters.propertyTypes, house:(e.target.checked)}}))
 									}}
 								/>
 							}
@@ -269,9 +279,9 @@ const PropertyTypeSelect = () => {
 							control={
 								<Checkbox
 									color="appColor"
-									checked={apartmentChecked}
+									checked={searchFilters["propertyTypes"]['apartment']}
 									onChange={(e) => {
-										setApartmentChecked(e.target.checked);
+										setSearchFilters(searchFilters => ({...searchFilters, propertyTypes:{...searchFilters.propertyTypes, apartment:(e.target.checked)}}))
 									}}
 								/>
 							}
@@ -283,9 +293,9 @@ const PropertyTypeSelect = () => {
 							control={
 								<Checkbox
 									color="appColor"
-									checked={townhouseChecked}
+									checked={searchFilters["propertyTypes"]['townhouse']}
 									onChange={(e) => {
-										setTownhouseChecked(e.target.checked);
+										setSearchFilters(searchFilters => ({...searchFilters, propertyTypes:{...searchFilters.propertyTypes, townhouse:(e.target.checked)}}))
 									}}
 								/>
 							}
@@ -297,9 +307,9 @@ const PropertyTypeSelect = () => {
 							control={
 								<Checkbox
 									color="appColor"
-									checked={grannyFlatChecked}
+									checked={searchFilters["propertyTypes"]['grannyflat']}
 									onChange={(e) => {
-										setgrannyFlatChecked(e.target.checked);
+										setSearchFilters(searchFilters => ({...searchFilters, propertyTypes:{...searchFilters.propertyTypes, grannyflat:(e.target.checked)}}))
 									}}
 								/>
 							}
@@ -311,9 +321,9 @@ const PropertyTypeSelect = () => {
 							control={
 								<Checkbox
 									color="appColor"
-									checked={roomChecked}
+									checked={searchFilters["propertyTypes"]['room']}
 									onChange={(e) => {
-										setRoomChecked(e.target.checked);
+										setSearchFilters(searchFilters => ({...searchFilters, propertyTypes:{...searchFilters.propertyTypes, room:(e.target.checked)}}))
 									}}
 								/>
 							}
@@ -325,9 +335,9 @@ const PropertyTypeSelect = () => {
 							control={
 								<Checkbox
 									color="appColor"
-									checked={unitChecked}
+									checked={searchFilters["propertyTypes"]['unit']}
 									onChange={(e) => {
-										setUnitChecked(e.target.checked);
+										setSearchFilters(searchFilters => ({...searchFilters, propertyTypes:{...searchFilters.propertyTypes, unit:(e.target.checked)}}))
 									}}
 								/>
 							}

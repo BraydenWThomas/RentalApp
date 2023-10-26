@@ -52,6 +52,9 @@ public class PropertyController {
         return propertyService.getAllOwnProperties(userId);
     }
 
+    
+    //Get Properties by filter
+    //#TODO Needs to be updated to include all filters in front end
     @GetMapping("search")
     public List<Property> searchProperties(
             @RequestParam String searchTxt,
