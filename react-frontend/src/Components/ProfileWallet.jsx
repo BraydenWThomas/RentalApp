@@ -78,7 +78,6 @@ const ProfileWallet = (props) => {
     const handleRechargeClose = () => {
         setOpenRecharge(false)
         setRechargeAmount(0)
-        console.log(transactions)
     }
 
     const handleRechargeAmountChange = (e) => {

@@ -108,6 +108,7 @@ function App() {
 								user={user}
 								setUser={setUser}
 								setIsLoggedIn={setIsLoggedIn}
+								isLoggedIn={isLoggedIn}
 							/>
 						}
 					/>
