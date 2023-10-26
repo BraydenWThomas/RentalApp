@@ -53,6 +53,20 @@ public class UserController {
         return userService.findAllUsers();
     }
 
+    @GetMapping("/{userId}/name")
+    public String getUserName(@PathVariable String userId) {
+        Optional<User> userOpt = userService.findUserById(userId);
+
+        if (!userOpt.isPresent()) {
+            return "";
+        }
+
+        User user = userOpt.get();
+
+        return user.getFirstName() + " " + user.getLastName();
+
+    }
+
     @GetMapping("/{userId}/recentSearches")
     public List<PropertySearch> getRecentSearchesForUser(@PathVariable String userId) {
         return userService.getPropertySearchesForUser(userId);
@@ -158,22 +172,22 @@ public class UserController {
         userService.updateUser(user);
         return user;
     }
-    
+
     @PostMapping("/removeFavourite/{propertyId}")
     public User removeFavourite(@RequestBody User user, @PathVariable String propertyId) throws IOException {
-    	System.out.println("remove fav");
+        System.out.println("remove fav");
         Optional<User> userOpt = userService.findUserById(user.getId());
 
         if (!userOpt.isPresent()) {
             System.out.println("No user (" + user.getId() + ") to edit");
             return user;
         }
-        
+
         ArrayList<String> savedProperties = user.getBookmarkedProperties();
-        
+
         savedProperties.remove(propertyId);
         user.setBookmarkedProperties(savedProperties);
-        
+
         userService.updateUser(user);
         return user;
     }

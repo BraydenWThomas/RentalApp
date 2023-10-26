@@ -344,6 +344,8 @@ const PropertyTypeSelect = ({ searchFilters, setSearchFilters }) => {
 						/>
 					</Grid>
 				</Grid>
+
+				
 			</div>
 		</ThemeProvider>
 	);

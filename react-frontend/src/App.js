@@ -9,11 +9,13 @@ import { LocalizationProvider } from "@mui/x-date-pickers";
 import "dayjs/locale/en-au";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { useState } from "react";
+import PropertyDetails from "./Components/PropertyDetails";
 
 function App() {
 	const [isLoggedIn, setIsLoggedIn] = useState(false);
 	const [user, setUser] = useState({});
 	const [searchTxt, setSearchTxt] = useState("");
+	const [detailedProperty, setDetailedProperty] = useState(null)
 
 	const [searchFilters, setSearchFilters] = useState({
 		locationFilters: [""],
@@ -61,7 +63,14 @@ function App() {
 								setSearchFilters={setSearchFilters}
 								searchResults={searchResults}
 								setSearchResults={setSearchResults}
+								setDetailedProperty={setDetailedProperty}
 							/>
+						}
+					/>
+					<Route
+						path="/details"
+						element={
+							<PropertyDetails detailedProperty={detailedProperty} user={user} />
 						}
 					/>
 					<Route
@@ -78,6 +87,7 @@ function App() {
 								setSearchFilters={setSearchFilters}
 								searchResults={searchResults}
 								setSearchResults={setSearchResults}
+								setDetailedProperty={setDetailedProperty}
 							/>
 						}
 					/>
@@ -105,6 +115,7 @@ function App() {
 								searchResults={searchResults}
 								setSearchResults={setSearchResults}
 								user={user}
+								setDetailedProperty={setDetailedProperty}
 							/>
 						}
 					/>

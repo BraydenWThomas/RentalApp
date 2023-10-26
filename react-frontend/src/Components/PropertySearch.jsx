@@ -5,6 +5,7 @@ import imagePlaceholder from "../Assets/No-Image-Placeholder.png";
 import StarIcon from "@mui/icons-material/Star";
 import axios from "axios";
 import FilterOverlay from "./FilterOverlay";
+import { useNavigate } from "react-router-dom";
 
 const PropertySearch = ({
 	searchTxt,
@@ -14,6 +15,7 @@ const PropertySearch = ({
 	searchFilters,
 	setSearchFilters,
 	user,
+	setDetailedProperty
 }) => {
 	const searchStyle = {
 		padding: "10px",
@@ -47,6 +49,7 @@ const PropertySearch = ({
 						<PropertyCard
 							property={result}
 							user={user}
+							setDetailedProperty={setDetailedProperty}
 							key={result.propertyId}
 						/>
 					))}
@@ -63,7 +66,7 @@ const PropertySearch = ({
 	);
 };
 
-const PropertyCard = ({ property, user }) => {
+const PropertyCard = ({ property, user, setDetailedProperty }) => {
 	const containerStyle = {
 		display: "flex",
 		justifyContent: "center",
@@ -104,6 +107,7 @@ const PropertyCard = ({ property, user }) => {
 
 	const [imageData, setImageData] = useState("");
 	const url = `http://localhost:8080/api/v1/properties/${property.propertyId}/photo`;
+	const nav = useNavigate()
 
 	axios
 		.get(url)
@@ -116,7 +120,10 @@ const PropertyCard = ({ property, user }) => {
 
 	return (
 		<div style={containerStyle}>
-			<div style={boxStyle}>
+			<div style={boxStyle} onClick={() => {
+				setDetailedProperty(property)
+				nav("/details")
+			}}>
 				<link
 					href="https://fonts.googleapis.com/css?family=Oswald"
 					rel="stylesheet"
