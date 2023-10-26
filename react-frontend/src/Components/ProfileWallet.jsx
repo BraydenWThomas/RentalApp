@@ -14,6 +14,7 @@ const ProfileWallet = (props) => {
     const [transactions, setTransactions] = useState([])
     const [rechargeAmount, setRechargeAmount] = useState(0)
     const [users, setUsers] = useState([])
+    const [errorMessage, setErrorMessage] = useState("")
     const [transaction, setTransaction] = useState(
         {
             senderId: user.id,
@@ -65,7 +66,7 @@ const ProfileWallet = (props) => {
 
     const handlePaymentClose = () => {
         setTransaction({
-            senderId: "",
+            senderId: user.id,
             receiverId: "",
             date: "",
             amount: "",
@@ -77,6 +78,7 @@ const ProfileWallet = (props) => {
     const handleRechargeClose = () => {
         setOpenRecharge(false)
         setRechargeAmount(0)
+        console.log(transactions)
     }
 
     const handleRechargeAmountChange = (e) => {
@@ -97,18 +99,54 @@ const ProfileWallet = (props) => {
 
     const handlePayment = () => {
 
+        if (transaction.amount > user.balance) {
+            setErrorMessage("insufficient funds")
+        } else {
+
+            for (let payee of users) {
+                if (payee.id === transaction.receiverId) {
+                    axios.post(url + `users/${payee.id}/balance?amount=${payee.balance + transaction.amount*1}`)
+                        .then(response => {
+                            // console.log(response.data)
+                        })
+                        .catch(error => console.log(error))
+                    break
+                }
+            }
+            
+            axios.post(url + `users/${user.id}/balance?amount=${user.balance - transaction.amount}`)
+                .then(response => {
+                    props.setUser(response.data)
+                })
+                .catch(error => console.log(error))
+
+            const data = transaction
+            const date = new Date()
+            const isoDate = date.toISOString()
+            data.date = isoDate
+            
+            axios.post(url + "transactions", data)
+                .then(response => {
+                    loadTransactions()
+                })
+                .catch(error => console.log(error))
+
+            handlePaymentClose()
+
+        }
     }
 
     const handleTransactionChange = (event) => {
 
-        console.log(event.target)
+        setErrorMessage("")
 
         const { name, value } = event.target;
 
-        transaction.receiverId = value
-        setTransaction({ ...transaction })
-        console.log(transaction)
-        console.log(users)
+        setTransaction((prevState) => ({
+            ...prevState,
+            [name]: value
+        }))
+        
     }
 
     return (
@@ -136,19 +174,23 @@ const ProfileWallet = (props) => {
 
             <div className="transaction-log">
 
-                {transactions?.map((transaction) => (
+                {transactions?.sort((a,b) => (a.date > b.date) ? -1 : ((a.date > b.date) ? 1 : 0)).map((transaction) => (
                     <div>
                         {transaction.sender === user.id ?
                             <div className="transaction-entry">
                                 <img src={avatar} alt="avatar"></img>
-                                <p>{transaction.sender}</p>
+                                {users?.map((receiver) => (
+                                    receiver.id === transaction.receiver && <p>{receiver.firstName} {receiver.lastName}</p>
+                                ))}
                                 <p>{transaction.date.substring(0, 10)}</p>
                                 <p className="neg-transaction-amount"> - ${transaction.amount}</p>
                             </div>
                             :
                             <div className="transaction-entry">
                                 <img src={avatar} alt="avatar"></img>
-                                <p>{transaction.receiver}</p>
+                                {users?.map((sender) => (
+                                    sender.id === transaction.sender && <p>{sender.firstName} {sender.lastName}</p>
+                                ))}
                                 <p>{transaction.date.substring(0, 10)}</p>
                                 <p className="pos-transaction-amount"> + ${transaction.amount}</p>
                             </div>
@@ -202,6 +244,8 @@ const ProfileWallet = (props) => {
                         fullWidth
                     >
                     </TextField>
+
+                    <p style={{color: "red"}}>{errorMessage}</p>
 
                     <div className="payment-buttons">
                         <Button
