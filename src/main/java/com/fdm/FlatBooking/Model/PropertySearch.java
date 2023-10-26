@@ -1,73 +1,46 @@
 package com.fdm.FlatBooking.Model;
 
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
 public class PropertySearch {
-	private int budget;
-	private int numberOfBedrooms;
-	private int numberOfBathrooms;
-	private int numberOfCarspaces;
-	private List<String> preferredFeatures;
-	private Date moveInDate;
 
-	public PropertySearch(int budget, int numberOfBedrooms, int numberOfBathrooms, int numberOfCarspaces,
-			List<String> preferredFeatures, Date moveInDate) {
+
+	private PropertyTypes propertyTypes;
+	private DetailFilters detailFilters;
+	private String[] locationFilters;
+	
+	public PropertySearch(PropertyTypes propertyTypes, DetailFilters detailFilters, String[] locationFilters) {
 		super();
-		this.budget = budget;
-		this.numberOfBedrooms = numberOfBedrooms;
-		this.numberOfBathrooms = numberOfBathrooms;
-		this.numberOfCarspaces = numberOfCarspaces;
-		this.preferredFeatures = preferredFeatures;
-		this.moveInDate = moveInDate;
+		this.propertyTypes = propertyTypes;
+		this.detailFilters = detailFilters;
+		this.locationFilters = locationFilters;
 	}
-
-	public int getBudget() {
-		return budget;
+	public PropertyTypes getPropertyTypes() {
+		return propertyTypes;
 	}
-
-	public void setBudget(int budget) {
-		this.budget = budget;
+	public void setPropertyTypes(PropertyTypes propertyTypes) {
+		this.propertyTypes = propertyTypes;
 	}
-
-	public int getNumberOfBedrooms() {
-		return numberOfBedrooms;
+	public DetailFilters getDetailFilters() {
+		return detailFilters;
 	}
-
-	public void setNumberOfBedrooms(int numberOfBedrooms) {
-		this.numberOfBedrooms = numberOfBedrooms;
+	public void setDetailFilters(DetailFilters detailFilters) {
+		this.detailFilters = detailFilters;
 	}
-
-	public int getNumberOfBathrooms() {
-		return numberOfBathrooms;
+	public String[] getLocationFilters() {
+		return locationFilters;
 	}
-
-	public void setNumberOfBathrooms(int numberOfBathrooms) {
-		this.numberOfBathrooms = numberOfBathrooms;
+	public void setLocationFilters(String[] locationFilters) {
+		this.locationFilters = locationFilters;
 	}
-
-	public int getNumberOfCarspaces() {
-		return numberOfCarspaces;
+	@Override
+	public String toString() {
+		return "PropertySearch [propertyTypes=" + propertyTypes + ", detailFilters=" + detailFilters
+				+ ", locationFilters=" + Arrays.toString(locationFilters) + "]";
 	}
-
-	public void setNumberOfCarspaces(int numberOfCarspaces) {
-		this.numberOfCarspaces = numberOfCarspaces;
-	}
-
-	public List<String> getPreferredFeatures() {
-		return preferredFeatures;
-	}
-
-	public void setPreferredFeatures(List<String> preferredFeatures) {
-		this.preferredFeatures = preferredFeatures;
-	}
-
-	public Date getMoveInDate() {
-		return moveInDate;
-	}
-
-	public void setMoveInDate(Date moveInDate) {
-		this.moveInDate = moveInDate;
-	}
-
+	
+	
+	
 }

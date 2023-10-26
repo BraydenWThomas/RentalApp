@@ -5,10 +5,14 @@ import SearchBar from "./SearchBar";
 import axios from "axios";
 import { useState, useEffect } from "react";
 import RegisterOverlay from "./RegisterOverlay";
+import FilterOverlay from "./FilterOverlay";
+import imagePlaceholder from "../Assets/No-Image-Placeholder.png";
+import { useNavigate } from "react-router-dom";
 
 const HomePage = (props) => {
 	const [openLogin, setOpenLogin] = useState(false);
 	const [openRegister, setOpenRegister] = useState(false);
+	const [openFilter, setOpenFilter] = useState(false);
 	const [recentListings, setRecentListings] = useState([]);
 	const [recentSearches, setRecentSearches] = useState([]);
 	const [refreshListings, setRefreshListings] = useState(false);
@@ -54,50 +58,6 @@ const HomePage = (props) => {
 		axios.get("http://localhost:8080/api/v1/users/signout");
 		props.setIsLoggedIn(false);
 	};
-
-	// Dummy data
-	// const recentSearches = [
-	// 	{
-	// 		location: "Melbourne",
-	// 		info: "1 Bed, 2 Bath",
-	// 	},
-	// 	{
-	// 		location: "Hawthorne",
-	// 		info: "1 Bed, 1 Car",
-	// 	},
-	// 	{
-	// 		location: "Bendigo",
-	// 		info: "3 Bed, 2 Bath, 2 Car",
-	// 	},
-	// 	{
-	// 		location: "Ringwood",
-	// 		info: "1 Bed, 1 Bath",
-	// 	},
-	// ];
-
-	// Dummy data
-	// const recentLisings = [
-	// 	{
-	// 		price: "$350 pw",
-	// 		address: "123 Smith Street",
-	// 		features: "Large Living area",
-	// 	},
-	// 	{
-	// 		price: "$450 pw",
-	// 		address: "123 Smith Street",
-	// 		features: "Large Living area",
-	// 	},
-	// 	{
-	// 		price: "$500 pw",
-	// 		address: "123 Smith Street",
-	// 		features: "Large Living area",
-	// 	},
-	// 	{
-	// 		price: "$320 pw",
-	// 		address: "123 Smith Street",
-	// 		features: "Large Living area",
-	// 	},
-	// ];
 
 	const buttonStyle = {
 		backgroundColor: "#A59DB7",
@@ -149,7 +109,16 @@ const HomePage = (props) => {
 					<Grid container>
 						{/* Search */}
 						<Grid xs={12}>
-							<SearchBar />
+							<SearchBar
+								openFilter={openFilter}
+								setOpenFilter={setOpenFilter}
+								searchTxt={props.searchTxt}
+								setSearchTxt={props.setSearchTxt}
+								searchResults={props.searchResults}
+								setSearchResults={props.setSearchResults}
+								searchFilters={props.searchFilters}
+								setSearchFilters={props.setSearchFilters}
+							/>
 						</Grid>
 						{/* Recent Searches */}
 						<Grid xs={12}>
@@ -181,7 +150,11 @@ const HomePage = (props) => {
 					gap={10}
 				>
 					{recentListings.map((listing) => (
-						<RecentListingCard listing={listing} />
+						<RecentListingCard
+							listing={listing}
+							setDetailedProperty={props.setDetailedProperty}
+							key={listing.propertyId}
+						/>
 					))}
 				</ImageList>
 			</Container>
@@ -196,6 +169,11 @@ const HomePage = (props) => {
 				open={[openRegister, setOpenRegister]}
 				isLoggedIn={props.isLoggedIn}
 				setIsLoggedIn={props.setIsLoggedIn}
+			/>
+			<FilterOverlay
+				open={[openFilter, setOpenFilter]}
+				searchFilters={props.searchFilters}
+				setSearchFilters={props.setSearchFilters}
 			/>
 		</div>
 	);
@@ -214,26 +192,49 @@ const RecentSearchCard = ({ search }) => {
 	};
 
 	return (
-		<Grid container style={cardStyle}>
+		<Grid container style={cardStyle} >
 			<Grid xs={12}>
-				<b style={locationStyle}>{"$" + search.budget}</b>
+				<b style={locationStyle}>{"This is a search"}</b>
 			</Grid>
 			<Grid xs={12}>
-				{search.numberOfBedrooms +
-					" Bed | " +
-					search.numberOfBathrooms +
-					" Bath | " +
-					search.numberOfCarspaces +
-					" Car"}
+				<div style={{ display: "inline-block" }}>
+					{"$" +
+						search["detailFilters"]["minPrice"] +
+						" to $" +
+						search["detailFilters"]["maxPrice"]}
+				</div>
+				<div style={{ display: "inline-block" }}>
+					{"Bedrooms: " +
+						search["detailFilters"]["minBedrooms"] +
+						" to " +
+						search["detailFilters"]["maxBedrooms"]}
+				</div>
+				<div style={{ display: "inline-block" }}>
+					{"Car Spots: " +
+						search["detailFilters"]["minCars"] +
+						" to " +
+						search["detailFilters"]["maxCars"]}
+				</div>
+				<div style={{ display: "inline-block" }}>
+					{"Available Date: " + "N/A" + " to " + "N/A"}
+				</div>
+				{
+					//#TODO Preferred Features
+					//#TODO Property Type
+				}
 			</Grid>
 		</Grid>
 	);
 };
 
-const RecentListingCard = ({ listing }) => {
+const RecentListingCard = ({ listing, setDetailedProperty }) => {
 	const cardStyle = {
 		borderRadius: "10px",
 		backgroundColor: "#A59DB740",
+		display: 'flex',
+		flexDirection: 'column',
+		justifyContent: 'space-between'
+
 	};
 
 	const textStyle = {
@@ -246,34 +247,58 @@ const RecentListingCard = ({ listing }) => {
 		maxWidth: "100%",
 		height: "auto",
 		borderRadius: "10px 10px 0 0",
+		aspectRatio: '16/9',
+		objectFit: 'cover'
 	};
 
+	const api = "http://localhost:8080/api/v1";
+
+	const [imageData, setImageData] = useState("");
+
+	useEffect(() => {
+		axios
+			.get(api + `/properties/${listing.propertyId}/photo`)
+			.then((res) => {
+				setImageData(res.data);
+			})
+			.catch((e) => {
+				console.log(e);
+			});
+	}, []);
+
+	const nav = useNavigate()
+
 	return (
-		<Grid container style={cardStyle}>
-			<Grid xs={12}>
-				{/* <img
-					style={imageStyle}
-					src="https://carlislehomes.com.au/static/images/hal/CARL607554_Matisse33_003_2.jpg"
-					alt="House"
-				/> */}
-				{listing.images.length > 0 && (
+		<div style={cardStyle} onClick={() => {
+			setDetailedProperty(listing)
+			nav("/details")
+		}}>
+			<div>
+				{listing.images.length !== "" ? (
 					<img
 						style={imageStyle}
-						src={`data:image/jpg;base64,${listing.images[0].data}`}
+						src={`data:image/jpg;base64,${imageData}`}
+						alt="Property"
+					/>
+				) : (
+					<img
+						style={imageStyle}
+						src={imagePlaceholder}
+						alt="Property placeholder"
 					/>
 				)}
-			</Grid>
+			</div>
 			<div style={textStyle}>
-				<Grid xs={12}>{"Price: $" + listing.rentalPrice}</Grid>
-				<Grid xs={12}>
+				<div>{"Price: $" + listing.rentalPrice}</div>
+				<div>
 					{"Address: " +
 						listing.address.unit +
 						" " +
 						listing.address.street +
 						", " +
 						listing.address.suburb}
-				</Grid>
-				<Grid xs={12}>
+				</div>
+				<div>
 					{"Features: " +
 						listing.details.bedroom +
 						" Bed | " +
@@ -281,9 +306,9 @@ const RecentListingCard = ({ listing }) => {
 						" Bath | " +
 						listing.details.carPark +
 						" Car"}
-				</Grid>
+				</div>
 			</div>
-		</Grid>
+		</div>
 	);
 };
 

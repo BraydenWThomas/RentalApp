@@ -4,7 +4,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.ArrayList;
 
-import org.bson.BsonDateTime;
 import org.bson.types.Binary;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -24,14 +23,14 @@ public class Property {
 	private String propertyDescription;
 	private PropertyDetails details;
 
-	private List<Binary> images;
+	private List<String> imageIds;
 	private ArrayList<Boolean> facilities;
 
 	private Date latestUpdate;
 	private boolean currentlyAvailable;
 
 	public Property(String propertyType, int rentalPrice, int bondFee, String landlordId, String leaseeId,
-			Address address, String propertyDescription, PropertyDetails details, List<Binary> images,
+			Address address, String propertyDescription, PropertyDetails details,
 			ArrayList<Boolean> facilities, Date latestUpdate, boolean currentlyAvailable) {
 		super();
 		this.propertyType = propertyType;
@@ -42,7 +41,7 @@ public class Property {
 		this.address = address;
 		this.propertyDescription = propertyDescription;
 		this.details = details;
-		this.images = images;
+		this.imageIds = new ArrayList<String>();
 		this.facilities = facilities;
 		this.latestUpdate = latestUpdate;
 		this.currentlyAvailable = currentlyAvailable;
@@ -84,8 +83,8 @@ public class Property {
 		return details;
 	}
 
-	public List<Binary> getImages() {
-		return images;
+	public List<String> getImages() {
+		return imageIds;
 	}
 
 	public ArrayList<Boolean> getFacilities() {
@@ -136,8 +135,8 @@ public class Property {
 		this.details = details;
 	}
 
-	public void setImages(List<Binary> images) {
-		this.images = images;
+	public void setImages(List<String> imageIds) {
+		this.imageIds = imageIds;
 	}
 
 	public void setFacilities(ArrayList<Boolean> facilities) {
@@ -150,6 +149,10 @@ public class Property {
 
 	public void setCurrentlyAvailable(boolean currentlyAvailable) {
 		this.currentlyAvailable = currentlyAvailable;
+	}
+
+	public void addImageId(String imageId) {
+		this.imageIds.add(imageId);
 	}
 
 }

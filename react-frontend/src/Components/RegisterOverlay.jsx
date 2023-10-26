@@ -43,11 +43,12 @@ const RegisterOverlay = (props) => {
 		mobileError: "",
 		dobError: "",
 		passwordError: "",
-		confirmPasswordError: ""
-	})
+		confirmPasswordError: "",
+	});
 
-	const passwordValidatnStr = "(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-\\\/.><,])"
-	const regex = new RegExp(passwordValidatnStr)
+	const passwordValidatnStr =
+		"(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-\\/.><,])";
+	const regex = new RegExp(passwordValidatnStr);
 
 	const fileInputBtn = React.useRef(null);
 
@@ -124,61 +125,61 @@ const RegisterOverlay = (props) => {
 			mobileError: "",
 			dobError: "",
 			passwordError: "",
-			confirmPasswordError: ""
-		}
+			confirmPasswordError: "",
+		};
 
-		const res = regex.test(password)
+		const res = regex.test(password);
 
 		if (!res) {
-			newValidation.passwordError = "Password is not valid"
-			error = true
+			newValidation.passwordError = "Password is not valid";
+			error = true;
 		} else {
-			newValidation.passwordError = ""
+			newValidation.passwordError = "";
 		}
 
 		if (password !== password2) {
-			newValidation.confirmPasswordError = "Passwords do not match"
-			error = true
+			newValidation.confirmPasswordError = "Passwords do not match";
+			error = true;
 		} else {
-			newValidation.confirmPasswordError = ""
+			newValidation.confirmPasswordError = "";
 		}
 
 		if (firstName === "") {
-			newValidation.firstNameError = "Fill out this field"
-			error = true
+			newValidation.firstNameError = "Fill out this field";
+			error = true;
 		} else {
-			newValidation.firstNameError = ""
+			newValidation.firstNameError = "";
 		}
 
 		if (lastName === "") {
-			newValidation.lastNameError = "Fill out this field"
-			error = true
+			newValidation.lastNameError = "Fill out this field";
+			error = true;
 		} else {
-			newValidation.lastNameError = ""
+			newValidation.lastNameError = "";
 		}
 
 		if (email === "") {
-			newValidation.emailError = "Fill out this field"
-			error = true
+			newValidation.emailError = "Fill out this field";
+			error = true;
 		} else {
-			newValidation.emailError = ""
+			newValidation.emailError = "";
 		}
 
 		if (mobile === "") {
-			newValidation.mobileError = "Fill out this field"
-			error = true
+			newValidation.mobileError = "Fill out this field";
+			error = true;
 		} else {
-			newValidation.mobileError = ""
+			newValidation.mobileError = "";
 		}
 
 		if (dob > new Date()) {
-			newValidation.dobError = "Date of birth cannot be in the future"
-			error = true
+			newValidation.dobError = "Date of birth cannot be in the future";
+			error = true;
 		} else {
-			newValidation.dobError = ""
+			newValidation.dobError = "";
 		}
 
-		setValidation(newValidation)
+		setValidation(newValidation);
 
 		if (error) return;
 
@@ -217,15 +218,15 @@ const RegisterOverlay = (props) => {
 				nav("/");
 
 				// Reset form
-				setFirstName("")
-				setLastName("")
-				setEmail("")
-				setDob(null)
-				setGender("FEMALE")
-				setMobile("")
-				setPassword("")
-				setPassword2("")
-				setProfilePhoto(null)
+				setFirstName("");
+				setLastName("");
+				setEmail("");
+				setDob(null);
+				setGender("FEMALE");
+				setMobile("");
+				setPassword("");
+				setPassword2("");
+				setProfilePhoto(null);
 			})
 			.catch(console.log);
 		// }
@@ -262,17 +263,20 @@ const RegisterOverlay = (props) => {
 										className="formfield"
 										style={textfieldStyle}
 										required
-										error={validation.firstNameError.length > 0}
+										error={
+											validation.firstNameError.length > 0
+										}
 										helperText={validation.firstNameError}
 										id="outline-required"
 										onChange={(e) => {
 											setFirstName(e.target.value);
 											if (e.target.value == "") {
-												validation.firstNameError = "Fill out this field"
-												setValidation(validation)
+												validation.firstNameError =
+													"Fill out this field";
+												setValidation(validation);
 											} else {
-												validation.firstNameError = ""
-												setValidation(validation)
+												validation.firstNameError = "";
+												setValidation(validation);
 											}
 										}}
 									/>
@@ -287,16 +291,19 @@ const RegisterOverlay = (props) => {
 										style={textfieldStyle}
 										required
 										value={lastName}
-										error={validation.lastNameError.length > 0}
+										error={
+											validation.lastNameError.length > 0
+										}
 										helperText={validation.lastNameError}
 										onChange={(e) => {
 											setLastName(e.target.value);
 											if (e.target.value == "") {
-												validation.lastNameError = "Fill out this field"
-												setValidation(validation)
+												validation.lastNameError =
+													"Fill out this field";
+												setValidation(validation);
 											} else {
-												validation.lastNameError = ""
-												setValidation(validation)
+												validation.lastNameError = "";
+												setValidation(validation);
 											}
 										}}
 									/>
@@ -317,11 +324,12 @@ const RegisterOverlay = (props) => {
 										onChange={(e) => {
 											setEmail(e.target.value);
 											if (e.target.value == "") {
-												validation.emailError = "Fill out this field"
-												setValidation(validation)
+												validation.emailError =
+													"Fill out this field";
+												setValidation(validation);
 											} else {
-												validation.emailError = ""
-												setValidation(validation)
+												validation.emailError = "";
+												setValidation(validation);
 											}
 										}}
 									/>
@@ -340,11 +348,12 @@ const RegisterOverlay = (props) => {
 										onChange={(date) => {
 											setDob(date);
 											if (date > new Date()) {
-												validation.dobError = "Date of birth cannot be in the future"
-												setValidation(validation)
+												validation.dobError =
+													"Date of birth cannot be in the future";
+												setValidation(validation);
 											} else {
-												validation.dobError = ""
-												setValidation(validation)
+												validation.dobError = "";
+												setValidation(validation);
 											}
 										}}
 									/>
@@ -360,16 +369,19 @@ const RegisterOverlay = (props) => {
 										type="number"
 										required
 										value={mobile}
-										error={validation.mobileError.length > 0}
+										error={
+											validation.mobileError.length > 0
+										}
 										helperText={validation.mobileError}
 										onChange={(e) => {
 											setMobile(e.target.value);
 											if (e.target.value == "") {
-												validation.mobileError = "Fill out this field"
-												setValidation(validation)
+												validation.mobileError =
+													"Fill out this field";
+												setValidation(validation);
 											} else {
-												validation.mobileError = ""
-												setValidation(validation)
+												validation.mobileError = "";
+												setValidation(validation);
 											}
 										}}
 									/>
@@ -405,17 +417,20 @@ const RegisterOverlay = (props) => {
 										style={textfieldStyle}
 										required
 										value={password}
-										error={validation.passwordError.length > 0}
+										error={
+											validation.passwordError.length > 0
+										}
 										helperText={validation.passwordError}
 										type="password"
 										onChange={(e) => {
 											setPassword(e.target.value);
 											if (regex.test(e.target.value)) {
-												validation.passwordError = ""
-												setValidation(validation)
+												validation.passwordError = "";
+												setValidation(validation);
 											} else {
-												validation.passwordError = "Password is not valid"
-												setValidation(validation)
+												validation.passwordError =
+													"Password is not valid";
+												setValidation(validation);
 											}
 										}}
 									/>
@@ -432,17 +447,24 @@ const RegisterOverlay = (props) => {
 										style={textfieldStyle}
 										required
 										value={password2}
-										error={validation.confirmPasswordError.length > 0}
-										helperText={validation.confirmPasswordError}
+										error={
+											validation.confirmPasswordError
+												.length > 0
+										}
+										helperText={
+											validation.confirmPasswordError
+										}
 										type="password"
 										onChange={(e) => {
 											setPassword2(e.target.value);
 											if (e.target.value === password) {
-												validation.confirmPasswordError = ""
+												validation.confirmPasswordError =
+													"";
 											} else {
-												validation.confirmPasswordError = "Passwords do not match"
+												validation.confirmPasswordError =
+													"Passwords do not match";
 											}
-											setValidation(validation)
+											setValidation(validation);
 										}}
 									/>
 									<p className="fieldLabel">
@@ -471,7 +493,7 @@ const RegisterOverlay = (props) => {
 											type="file"
 											style={{ display: "none" }}
 											onChange={imageChanged}
-											value={profilePhoto}
+											// value={profilePhoto}
 											ref={fileInputBtn}
 										/>
 									</Stack>

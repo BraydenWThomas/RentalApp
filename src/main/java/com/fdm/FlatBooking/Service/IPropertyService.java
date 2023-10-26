@@ -1,7 +1,10 @@
 package com.fdm.FlatBooking.Service;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
+
+import org.springframework.web.multipart.MultipartFile;
 
 import com.fdm.FlatBooking.Model.Property;
 
@@ -59,13 +62,22 @@ public interface IPropertyService {
      * @param maxSize
      * @return
      */
-    List<Property> getPropertyWithFilters(int minBed, int maxBed, int minBath, int maxBath, int minBudget,
-            int maxBudget, int minCar, int maxCar, int minSize, int maxSize, String propertyType, boolean isAvailable);
+    List<Property> getPropertyWithFilters(String searchTxt, int minBed, int maxBed, int minBath, int maxBath,
+            int minBudget, int maxBudget, int minCar, int maxCar, int minSize, int maxSize, String propertyType,
+            boolean isAvailable);
 
     List<Property> getRecentListings();
 
     void addProperty(Property property);
 
     List<Property> getSavedPropertiesForUser(String userId);
+
+    void addPropertyPhoto(String propertyId, MultipartFile photo) throws IOException;
+
+    List<String> getPropertyPhotos(String propertyId) throws IllegalStateException, IOException;
+
+    String getPropertyPhoto(String propertyId) throws IllegalStateException, IOException;
+
+    List<Property> getAllOwnProperties(String userId);
 
 }
