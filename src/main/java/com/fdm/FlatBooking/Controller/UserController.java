@@ -2,9 +2,11 @@ package com.fdm.FlatBooking.Controller;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
 import java.util.Optional;
+import java.util.Properties;
 
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -153,6 +155,25 @@ public class UserController {
             System.out.println("No user (" + user.getId() + ") to edit");
         }
 
+        userService.updateUser(user);
+        return user;
+    }
+    
+    @PostMapping("/removeFavourite/{propertyId}")
+    public User removeFavourite(@RequestBody User user, @PathVariable String propertyId) throws IOException {
+    	System.out.println("remove fav");
+        Optional<User> userOpt = userService.findUserById(user.getId());
+
+        if (!userOpt.isPresent()) {
+            System.out.println("No user (" + user.getId() + ") to edit");
+            return user;
+        }
+        
+        ArrayList<String> savedProperties = user.getBookmarkedProperties();
+        
+        savedProperties.remove(propertyId);
+        user.setBookmarkedProperties(savedProperties);
+        
         userService.updateUser(user);
         return user;
     }

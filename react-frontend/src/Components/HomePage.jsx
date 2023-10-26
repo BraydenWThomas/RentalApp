@@ -11,7 +11,7 @@ import imagePlaceholder from "../Assets/No-Image-Placeholder.png";
 const HomePage = (props) => {
 	const [openLogin, setOpenLogin] = useState(false);
 	const [openRegister, setOpenRegister] = useState(false);
-	const [openFilter, setOpenFilter] = useState(true);
+	const [openFilter, setOpenFilter] = useState(false);
 	const [recentListings, setRecentListings] = useState([]);
 	const [recentSearches, setRecentSearches] = useState([]);
 	const [refreshListings, setRefreshListings] = useState(false);
@@ -189,7 +189,7 @@ const RecentSearchCard = ({ search }) => {
 		color: "#857E97",
 	};
 
-	return (
+	return ( 
 		<Grid container style={cardStyle}>
 			<Grid xs={12}>
 				<b style={locationStyle}>{"This is a search"}</b>

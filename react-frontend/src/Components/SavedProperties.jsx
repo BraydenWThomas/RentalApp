@@ -23,7 +23,7 @@ const PropertySearch = (props) => {
         .then((res) => {
             setAllProps(res.data);
     })
-      }, []);
+      }, [user]);
 
     
 
@@ -38,6 +38,8 @@ const PropertySearch = (props) => {
 						<PropertyCard
 							property={result}
 							key={result.propertyId}
+                            setUser = {setUser}
+                            user = {user}
 						/>
             
 					))}
@@ -53,6 +55,8 @@ const PropertyCard = (props) => {
 
     const property = props.property
     const key = props.key 
+    const user = props.user
+    const setUser = props.setUser 
     
 
 	const containerStyle = {
@@ -95,7 +99,22 @@ const PropertyCard = (props) => {
     }
 
     const removeFavourite =() =>{
+        console.log("DELETE FAVORUTIE FROM USER :")
+        console.log(user)
+        console.log(property.propertyId)
+        axios
+        .post("http://localhost:8080/api/v1/users/removeFavourite/"+property.propertyId, user)
+        .then((res) => {
+            console.log(res.data)
+            setUser(res.data);
+        })
+        .catch((err) => {
+            console.log(err);
+        });
+    }
 
+    const detailsModal =() => {
+        console.log("clicked detaisl modal")
     }
 
     const [imageData, setImageData] = useState("");
@@ -137,12 +156,8 @@ const PropertyCard = (props) => {
                 )}
 
 
-                <Grid
-                container
-                >
-					<Grid container xs={6} style={infoStyle} direction="column"
-  justifyContent="flex-start"
-  alignItems="flex-start">
+                <Grid container>
+					<Grid container xs={6} style={infoStyle} direction="column" justifyContent="flex-start" alignItems="flex-start">
 						<h4>{"$" + property.rentalPrice + " per week"}</h4>
 						<div>
 							{property.address.unit +
@@ -165,17 +180,9 @@ const PropertyCard = (props) => {
 								" Car"}
 						</div>
 					</Grid>
-					<Grid container xs={5} style={iconContainerStyle} direction="row"
-  justifyContent="space-evenly"
-  alignItems="flex-start" >
-                        <Button variant="contained" style={buttonStyle}>Apply</Button>
-                        <Button 
-                            variant="contained" 
-                            style={buttonStyle}
-                            onClick={removeFavourite}
-                        >
-                            Remove
-                        </Button>
+					<Grid container xs={5} style={iconContainerStyle} direction="row" justifyContent="space-evenly" alignItems="flex-start" >
+                        <Button variant="contained" style={buttonStyle} onClick={detailsModal}>Info</Button>
+                        <Button  variant="contained" style={buttonStyle} onClick={removeFavourite}> Remove </Button>
 					</Grid>
 				</Grid>
 			</div>
