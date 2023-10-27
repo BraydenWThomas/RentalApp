@@ -184,10 +184,14 @@ const LocationSearch = ({ locationFilters, setLocationFilters }) => {
 				variant="contained"
 				disableElevation
 				onClick={() => {
-					if (!locationFilters.includes(txt)) {
-						setLocationFilters([txt].concat(locationFilters));
-						setTxt("");
+					if(txt.length > 0){
+						console.log("contains something");
+						if (!locationFilters.includes(txt)) {
+							setLocationFilters([txt].concat(locationFilters));
+							setTxt("");
+						}
 					}
+					console.log(locationFilters);
 				}}
 			>
 				Add
